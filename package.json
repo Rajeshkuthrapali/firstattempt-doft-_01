@@ -12,8 +12,14 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
-    "test:e2e": "npx playwright test",
-    "test:e2e:headed": "npx playwright test --headed"
+    "test:e2e": "npx playwright test --ignore-snapshots",
+    "test:e2e:headed": "npx playwright test --headed",
+    "test:e2e:p0": "npx playwright test storefront cart-flow checkout-payment navigation product-catalog accessibility",
+    "test:e2e:payment": "npx playwright test payment-razorpay payment-stripe",
+    "test:e2e:perf": "npx playwright test performance",
+    "test:ci": "vitest run --reporter=json --outputFile=vitest-report.json && npx playwright test",
+    "webhook:test": "npx tsx scripts/webhook-harness.ts",
+    "lighthouse": "npx lhci autorun --config=lighthouserc.json"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.2.1",

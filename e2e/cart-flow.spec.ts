@@ -78,11 +78,16 @@ test.describe("Cart & Checkout Flow", () => {
   });
 
   test("clear cart button empties all items", async ({ page }) => {
-    // Add two different products
+    // Add Golden Hour
     await page.goto("/product/golden-hour");
     await page.click("#product-add-to-cart");
 
-    await page.goto("/product/midnight-oud");
+    // Navigate to Midnight Oud via SPA (avoid full reload which resets store)
+    await page
+      .getByLabel("View Midnight Oud details")
+      .first()
+      .click();
+    await expect(page).toHaveURL(/\/product\/midnight-oud/);
     await page.click("#product-add-to-cart");
 
     await page.click("#cart-toggle");

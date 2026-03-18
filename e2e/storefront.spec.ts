@@ -18,8 +18,8 @@ test.describe("Storefront — Homepage", () => {
   test("hero section is visible with headline", async ({ page }) => {
     const hero = page.locator("#hero");
     await expect(hero).toBeVisible();
-    await expect(page.getByText("signature")).toBeVisible();
-    await expect(page.getByText("Scented Collection")).toBeVisible();
+    await expect(hero.locator("h1")).toContainText("signature");
+    await expect(hero.locator("h1")).toContainText("Scented Collection");
   });
 
   test("announcement bar shows free shipping text", async ({ page }) => {
@@ -28,11 +28,8 @@ test.describe("Storefront — Homepage", () => {
     ).toBeVisible();
   });
 
-  test("LUMIÈRE brand wordmark is visible in nav", async ({ page }) => {
+  test("brand wordmark and navigation links are visible on desktop", async ({ page }) => {
     await expect(page.getByText("LUMIÈRE").first()).toBeVisible();
-  });
-
-  test("navigation links are visible on desktop", async ({ page }) => {
     await expect(page.getByRole("menuitem", { name: "Home" })).toBeVisible();
     await expect(page.getByRole("menuitem", { name: "Shop" })).toBeVisible();
     await expect(
@@ -54,16 +51,15 @@ test.describe("Storefront — Homepage", () => {
     await expect(page.getByText("Golden Hour").first()).toBeVisible();
   });
 
-  test("value props section is visible", async ({ page }) => {
-    await page.getByText("Hand-Poured").scrollIntoViewIfNeeded();
-    await expect(page.getByText("Hand-Poured")).toBeVisible();
-    await expect(page.getByText("100% Natural Soy")).toBeVisible();
-    await expect(page.getByText("Gift-Ready")).toBeVisible();
-  });
+  test("value props and footer section render correctly", async ({ page }) => {
+    const valueProps = page.locator("[aria-label='Brand values']");
+    await valueProps.scrollIntoViewIfNeeded();
+    await expect(valueProps.getByRole("heading", { name: "Hand-Poured" })).toBeVisible();
+    await expect(valueProps.getByRole("heading", { name: "100% Natural Soy" })).toBeVisible();
+    await expect(valueProps.getByRole("heading", { name: "Gift-Ready" })).toBeVisible();
 
-  test("footer renders with brand and newsletter", async ({ page }) => {
-    await page.getByText("Stay in Touch").scrollIntoViewIfNeeded();
-    await expect(page.getByText("Stay in Touch")).toBeVisible();
+    await page.getByRole("heading", { name: "Stay in Touch" }).scrollIntoViewIfNeeded();
+    await expect(page.getByRole("heading", { name: "Stay in Touch" })).toBeVisible();
     await expect(page.getByPlaceholder("Your email")).toBeVisible();
   });
 });

@@ -3,11 +3,28 @@ import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import "./index.css";
 import App from "./App.tsx";
+import { initGA4 } from "./lib/analytics.ts";
+import { initSentry, getErrorBoundary } from "./lib/sentry.ts";
 
-createRoot(document.getElementById("root")!).render(
+// Initialise observability (no-ops if env vars are not set)
+initGA4();
+void initSentry();
+
+const ErrorBoundary = getErrorBoundary();
+const AppTree = (
   <StrictMode>
     <BrowserRouter>
       <App />
     </BrowserRouter>
-  </StrictMode>,
+  </StrictMode>
+);
+
+createRoot(document.getElementById("root")!).render(
+  ErrorBoundary ? (
+    <ErrorBoundary fallback={<p>Something went wrong. Please refresh.</p>}>
+      {AppTree}
+    </ErrorBoundary>
+  ) : (
+    AppTree
+  ),
 );

@@ -1,0 +1,1075 @@
+{
+  "config": {
+    "configFile": "C:\\Users\\91807\\my-app\\playwright.config.ts",
+    "rootDir": "C:/Users/91807/my-app/e2e",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {},
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Users/91807/my-app/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "Desktop Chrome",
+        "name": "Desktop Chrome",
+        "testDir": "C:/Users/91807/my-app/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "C:/Users/91807/my-app/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "Mobile Safari",
+        "name": "Mobile Safari",
+        "testDir": "C:/Users/91807/my-app/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "html",
+        {
+          "open": "never"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "e2e-report.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "runAgents": "none",
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.58.2",
+    "workers": 8,
+    "webServer": {
+      "command": "npm run dev",
+      "url": "http://localhost:5173",
+      "reuseExistingServer": true,
+      "timeout": 120000
+    }
+  },
+  "suites": [
+    {
+      "title": "accessibility.spec.ts",
+      "file": "accessibility.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Accessibility",
+          "file": "accessibility.spec.ts",
+          "line": 8,
+          "column": 6,
+          "specs": [
+            {
+              "title": "skip-to-content link exists with correct target",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Desktop Chrome",
+                  "projectName": "Desktop Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ddd864604af8a6a0198f-a5c21dc15fb3b24fd9fc",
+              "file": "accessibility.spec.ts",
+              "line": 9,
+              "column": 3
+            },
+            {
+              "title": "main content region has correct id",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Desktop Chrome",
+                  "projectName": "Desktop Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ddd864604af8a6a0198f-eaf4c28ab3498d9651b4",
+              "file": "accessibility.spec.ts",
+              "line": 26,
+              "column": 3
+            },
+            {
+              "title": "page has semantic landmark roles (banner, contentinfo)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Desktop Chrome",
+                  "projectName": "Desktop Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ddd864604af8a6a0198f-def04acb197b292ab843",
+              "file": "accessibility.spec.ts",
+              "line": 33,
+              "column": 3
+            },
+            {
+              "title": "cart drawer has role='dialog' with aria-modal",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Desktop Chrome",
+                  "projectName": "Desktop Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ddd864604af8a6a0198f-f80536059d8ba8fb36a4",
+              "file": "accessibility.spec.ts",
+              "line": 40,
+              "column": 3
+            },
+            {
+              "title": "nav menubar has correct ARIA roles",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Desktop Chrome",
+                  "projectName": "Desktop Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ddd864604af8a6a0198f-3cd7cbd7fec2425d321a",
+              "file": "accessibility.spec.ts",
+              "line": 50,
+              "column": 3
+            },
+            {
+              "title": "product detail breadcrumb has aria-current",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Desktop Chrome",
+                  "projectName": "Desktop Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ddd864604af8a6a0198f-679c4aab953627e2b53e",
+              "file": "accessibility.spec.ts",
+              "line": 59,
+              "column": 3
+            },
+            {
+              "title": "all product card images have alt text",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Desktop Chrome",
+                  "projectName": "Desktop Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ddd864604af8a6a0198f-8f6b57768c1f2ae2216d",
+              "file": "accessibility.spec.ts",
+              "line": 66,
+              "column": 3
+            },
+            {
+              "title": "cart toggle buttons have descriptive aria-labels",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Desktop Chrome",
+                  "projectName": "Desktop Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ddd864604af8a6a0198f-2f564e6626795c2d3ad8",
+              "file": "accessibility.spec.ts",
+              "line": 79,
+              "column": 3
+            },
+            {
+              "title": "focus moves to close button when cart opens",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Desktop Chrome",
+                  "projectName": "Desktop Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ddd864604af8a6a0198f-15e8b492605d8159e9e2",
+              "file": "accessibility.spec.ts",
+              "line": 98,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "SEO verification",
+          "file": "accessibility.spec.ts",
+          "line": 110,
+          "column": 6,
+          "specs": [
+            {
+              "title": "homepage has proper meta description",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Desktop Chrome",
+                  "projectName": "Desktop Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ddd864604af8a6a0198f-daf71d05b821a3e6e562",
+              "file": "accessibility.spec.ts",
+              "line": 111,
+              "column": 3
+            },
+            {
+              "title": "page has exactly one h1 on homepage",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Desktop Chrome",
+                  "projectName": "Desktop Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ddd864604af8a6a0198f-c4a712f24b6047b87da8",
+              "file": "accessibility.spec.ts",
+              "line": 119,
+              "column": 3
+            },
+            {
+              "title": "page has exactly one h1 on PDP",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Desktop Chrome",
+                  "projectName": "Desktop Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ddd864604af8a6a0198f-7fe15ae2c038f6192430",
+              "file": "accessibility.spec.ts",
+              "line": 126,
+              "column": 3
+            },
+            {
+              "title": "product images have lazy loading",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Desktop Chrome",
+                  "projectName": "Desktop Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ddd864604af8a6a0198f-0952d53101d6c213c60e",
+              "file": "accessibility.spec.ts",
+              "line": 133,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "cart-flow.spec.ts",
+      "file": "cart-flow.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Cart & Checkout Flow",
+          "file": "cart-flow.spec.ts",
+          "line": 8,
+          "column": 6,
+          "specs": [
+            {
+              "title": "add product from PDP and verify cart",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Desktop Chrome",
+                  "projectName": "Desktop Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "1f2315bc14f58c0784bd-9cc6b3382d5e1847a46a",
+              "file": "cart-flow.spec.ts",
+              "line": 9,
+              "column": 3
+            },
+            {
+              "title": "increment and decrement quantity",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Desktop Chrome",
+                  "projectName": "Desktop Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "1f2315bc14f58c0784bd-fc49c1dc4315c173b386",
+              "file": "cart-flow.spec.ts",
+              "line": 41,
+              "column": 3
+            },
+            {
+              "title": "remove item from cart using delete button",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Desktop Chrome",
+                  "projectName": "Desktop Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "1f2315bc14f58c0784bd-0f8aaebfd7898d69db4f",
+              "file": "cart-flow.spec.ts",
+              "line": 65,
+              "column": 3
+            },
+            {
+              "title": "clear cart button empties all items",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Desktop Chrome",
+                  "projectName": "Desktop Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "1f2315bc14f58c0784bd-6482a050a8ca822d8f8d",
+              "file": "cart-flow.spec.ts",
+              "line": 80,
+              "column": 3
+            },
+            {
+              "title": "close cart drawer",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Desktop Chrome",
+                  "projectName": "Desktop Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "1f2315bc14f58c0784bd-7a87a766bac67313c02c",
+              "file": "cart-flow.spec.ts",
+              "line": 104,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "checkout-payment.spec.ts",
+      "file": "checkout-payment.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Checkout & Payment Flow",
+          "file": "checkout-payment.spec.ts",
+          "line": 9,
+          "column": 6,
+          "specs": [
+            {
+              "title": "checkout button appears only when cart has items",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Desktop Chrome",
+                  "projectName": "Desktop Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "e26ac85add3d4467daa5-2ce57ace3b314e9e6447",
+              "file": "checkout-payment.spec.ts",
+              "line": 10,
+              "column": 3
+            },
+            {
+              "title": "subtotal updates correctly when adding multiple items",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Desktop Chrome",
+                  "projectName": "Desktop Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "e26ac85add3d4467daa5-9f2434fde3330e52f602",
+              "file": "checkout-payment.spec.ts",
+              "line": 27,
+              "column": 3
+            },
+            {
+              "title": "shipping info is shown at checkout section",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Desktop Chrome",
+                  "projectName": "Desktop Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "e26ac85add3d4467daa5-74654de01bb80093bac2",
+              "file": "checkout-payment.spec.ts",
+              "line": 59,
+              "column": 3
+            },
+            {
+              "title": "free shipping banner in cart shows threshold",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Desktop Chrome",
+                  "projectName": "Desktop Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "e26ac85add3d4467daa5-b892343e90b342007994",
+              "file": "checkout-payment.spec.ts",
+              "line": 71,
+              "column": 3
+            },
+            {
+              "title": "checkout button has correct styling and is interactive",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Desktop Chrome",
+                  "projectName": "Desktop Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "e26ac85add3d4467daa5-4e0ca4434f9fa5f92036",
+              "file": "checkout-payment.spec.ts",
+              "line": 83,
+              "column": 3
+            },
+            {
+              "title": "WhatsApp support FAB is visible for payment help",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Desktop Chrome",
+                  "projectName": "Desktop Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "e26ac85add3d4467daa5-e53d7da9db5a980bff6c",
+              "file": "checkout-payment.spec.ts",
+              "line": 96,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "navigation.spec.ts",
+      "file": "navigation.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Navigation & Routing",
+          "file": "navigation.spec.ts",
+          "line": 8,
+          "column": 6,
+          "specs": [
+            {
+              "title": "clicking a product card navigates to PDP",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Desktop Chrome",
+                  "projectName": "Desktop Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "5d2868f7d23420c27cca-7d58cb63974eb478da5d",
+              "file": "navigation.spec.ts",
+              "line": 9,
+              "column": 3
+            },
+            {
+              "title": "PDP breadcrumb links work",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Desktop Chrome",
+                  "projectName": "Desktop Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "5d2868f7d23420c27cca-664f9b91dc5ee5263f70",
+              "file": "navigation.spec.ts",
+              "line": 22,
+              "column": 3
+            },
+            {
+              "title": "invalid product slug shows 404 page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Desktop Chrome",
+                  "projectName": "Desktop Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "5d2868f7d23420c27cca-3be567c697c60ac69ad5",
+              "file": "navigation.spec.ts",
+              "line": 33,
+              "column": 3
+            },
+            {
+              "title": "'You May Also Like' section shows related products",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Desktop Chrome",
+                  "projectName": "Desktop Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "5d2868f7d23420c27cca-af1d23d9b271416926c5",
+              "file": "navigation.spec.ts",
+              "line": 43,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "Navigation — Mobile",
+          "file": "navigation.spec.ts",
+          "line": 58,
+          "column": 6,
+          "specs": [
+            {
+              "title": "hamburger menu opens, shows nav links, and closes on link click",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Desktop Chrome",
+                  "projectName": "Desktop Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "5d2868f7d23420c27cca-babbb05758787d295550",
+              "file": "navigation.spec.ts",
+              "line": 61,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "product-catalog.spec.ts",
+      "file": "product-catalog.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Product Catalog — PDP",
+          "file": "product-catalog.spec.ts",
+          "line": 8,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Golden Hour PDP displays all product details",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Desktop Chrome",
+                  "projectName": "Desktop Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "5e142b040de130c93923-94db03409aa2b88f9291",
+              "file": "product-catalog.spec.ts",
+              "line": 9,
+              "column": 3
+            },
+            {
+              "title": "product image is displayed",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Desktop Chrome",
+                  "projectName": "Desktop Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "5e142b040de130c93923-eef94c39b659597e021f",
+              "file": "product-catalog.spec.ts",
+              "line": 52,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "Product Catalog — Sold Out",
+          "file": "product-catalog.spec.ts",
+          "line": 59,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Velvet Rose shows Sold Out on PDP",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Desktop Chrome",
+                  "projectName": "Desktop Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "5e142b040de130c93923-21afe3c02e99bd5b944b",
+              "file": "product-catalog.spec.ts",
+              "line": 60,
+              "column": 3
+            },
+            {
+              "title": "Velvet Rose card shows Sold Out overlay on homepage",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Desktop Chrome",
+                  "projectName": "Desktop Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "5e142b040de130c93923-21c37bf7789c6045d39d",
+              "file": "product-catalog.spec.ts",
+              "line": 69,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "Product Catalog — Categories",
+          "file": "product-catalog.spec.ts",
+          "line": 81,
+          "column": 6,
+          "specs": [
+            {
+              "title": "category badges render on product cards",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Desktop Chrome",
+                  "projectName": "Desktop Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "5e142b040de130c93923-d00aff8e2908b53d8251",
+              "file": "product-catalog.spec.ts",
+              "line": 82,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "Product Catalog — Bestsellers",
+          "file": "product-catalog.spec.ts",
+          "line": 95,
+          "column": 6,
+          "specs": [
+            {
+              "title": "bestsellers section is visible on homepage",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Desktop Chrome",
+                  "projectName": "Desktop Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "5e142b040de130c93923-eafd8380ad9d167dec44",
+              "file": "product-catalog.spec.ts",
+              "line": 96,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "storefront.spec.ts",
+      "file": "storefront.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Storefront — Homepage",
+          "file": "storefront.spec.ts",
+          "line": 9,
+          "column": 6,
+          "specs": [
+            {
+              "title": "page has correct title",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Desktop Chrome",
+                  "projectName": "Desktop Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "972707a4d1c1162f8b74-671af4539beb705c6920",
+              "file": "storefront.spec.ts",
+              "line": 14,
+              "column": 3
+            },
+            {
+              "title": "hero section is visible with headline",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Desktop Chrome",
+                  "projectName": "Desktop Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "972707a4d1c1162f8b74-c5cccd74edec1fcd1637",
+              "file": "storefront.spec.ts",
+              "line": 18,
+              "column": 3
+            },
+            {
+              "title": "announcement bar shows free shipping text",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Desktop Chrome",
+                  "projectName": "Desktop Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "972707a4d1c1162f8b74-b8212f7cde0135becd90",
+              "file": "storefront.spec.ts",
+              "line": 25,
+              "column": 3
+            },
+            {
+              "title": "brand wordmark and navigation links are visible on desktop",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Desktop Chrome",
+                  "projectName": "Desktop Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "972707a4d1c1162f8b74-1c0c1bc73a0b7cf227a5",
+              "file": "storefront.spec.ts",
+              "line": 31,
+              "column": 3
+            },
+            {
+              "title": "Shop Now CTA links to collection section",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Desktop Chrome",
+                  "projectName": "Desktop Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "972707a4d1c1162f8b74-c334c9f5ce9f4fa83cf9",
+              "file": "storefront.spec.ts",
+              "line": 43,
+              "column": 3
+            },
+            {
+              "title": "product cards are rendered in the grid",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Desktop Chrome",
+                  "projectName": "Desktop Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "972707a4d1c1162f8b74-7e871c3f862a3f8d6946",
+              "file": "storefront.spec.ts",
+              "line": 49,
+              "column": 3
+            },
+            {
+              "title": "value props and footer section render correctly",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Desktop Chrome",
+                  "projectName": "Desktop Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "972707a4d1c1162f8b74-2d5ecbc6505a4745cdfd",
+              "file": "storefront.spec.ts",
+              "line": 54,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-03-18T20:34:47.466Z",
+    "duration": 154.15200000000004,
+    "expected": 0,
+    "skipped": 42,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

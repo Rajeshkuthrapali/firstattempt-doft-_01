@@ -58,7 +58,7 @@ test.describe("Navigation & Routing", () => {
 test.describe("Navigation — Mobile", () => {
   test.use({ viewport: { width: 375, height: 812 } });
 
-  test("hamburger menu opens and shows nav links", async ({ page }) => {
+  test("hamburger menu opens, shows nav links, and closes on link click", async ({ page }) => {
     await page.goto("/");
 
     // Nav links should be hidden on mobile
@@ -71,13 +71,8 @@ test.describe("Navigation — Mobile", () => {
     // Now the nav links should be visible
     await expect(page.getByRole("menuitem", { name: "Home" })).toBeVisible();
     await expect(page.getByRole("menuitem", { name: "Shop" })).toBeVisible();
-  });
 
-  test("clicking a mobile nav link closes the menu", async ({ page }) => {
-    await page.goto("/");
-    await page.locator("#nav-toggle").click();
-
-    // Click a link
+    // Click a link — menu should close
     await page.getByRole("menuitem", { name: "Home" }).click();
 
     // Hamburger should show "Open menu" (menu closed)

@@ -25,40 +25,34 @@ test.describe("Product Catalog — PDP", () => {
       page.getByText(/mediterranean sunset/i),
     ).toBeVisible();
 
-    // Fragrance notes
-    await expect(page.getByText("Amber")).toBeVisible();
-    await expect(page.getByText("Vanilla")).toBeVisible();
-    await expect(page.getByText("Sandalwood")).toBeVisible();
+    // Fragrance notes (use .first() to avoid matching description text)
+    await expect(page.getByText("Amber").first()).toBeVisible();
+    await expect(page.getByText("Vanilla").first()).toBeVisible();
+    await expect(page.getByText("Sandalwood").first()).toBeVisible();
 
     // Specs
     await expect(page.getByText("~55h")).toBeVisible();
     await expect(page.getByText("280g")).toBeVisible();
     await expect(page.getByText("100% Soy")).toBeVisible();
+
+    // Category pill
+    await expect(page.getByText("signature").first()).toBeVisible();
+
+    // Trust badges
+    await expect(page.getByText(/cruelty free/i).first()).toBeVisible();
+    await expect(page.getByText(/eco packaging/i).first()).toBeVisible();
+    await expect(page.getByText(/cotton wick/i).first()).toBeVisible();
+
+    // Free shipping info
+    await expect(
+      page.getByText(/free shipping on orders above ₹3,000/i),
+    ).toBeVisible();
   });
 
   test("product image is displayed", async ({ page }) => {
     await page.goto("/product/golden-hour");
     const img = page.getByAltText("Golden Hour");
     await expect(img).toBeVisible();
-  });
-
-  test("category pill shows correct category", async ({ page }) => {
-    await page.goto("/product/golden-hour");
-    await expect(page.getByText("signature")).toBeVisible();
-  });
-
-  test("trust badges are displayed", async ({ page }) => {
-    await page.goto("/product/golden-hour");
-    await expect(page.getByText(/cruelty free/i)).toBeVisible();
-    await expect(page.getByText(/eco packaging/i)).toBeVisible();
-    await expect(page.getByText(/cotton wick/i)).toBeVisible();
-  });
-
-  test("in-stock message shows free shipping info", async ({ page }) => {
-    await page.goto("/product/golden-hour");
-    await expect(
-      page.getByText(/free shipping on orders above ₹3,000/i),
-    ).toBeVisible();
   });
 });
 
@@ -79,22 +73,18 @@ test.describe("Product Catalog — Sold Out", () => {
     // Find the Velvet Rose card
     const card = page.locator("#product-card-velvet-rose");
     if (await card.isVisible()) {
-      await expect(card.getByText("Sold Out")).toBeVisible();
+      await expect(card.getByText("Sold Out").first()).toBeVisible();
     }
   });
 });
 
 test.describe("Product Catalog — Categories", () => {
-  test("seasonal product shows correct badge", async ({ page }) => {
+  test("category badges render on product cards", async ({ page }) => {
     await page.goto("/");
     const seasonal = page.locator("#product-card-winter-spice");
     if (await seasonal.isVisible()) {
       await expect(seasonal.getByText("Seasonal")).toBeVisible();
     }
-  });
-
-  test("limited edition product shows correct badge", async ({ page }) => {
-    await page.goto("/");
     const limited = page.locator("#product-card-jasmine-noir");
     if (await limited.isVisible()) {
       await expect(limited.getByText("Limited Edition")).toBeVisible();
@@ -105,8 +95,8 @@ test.describe("Product Catalog — Categories", () => {
 test.describe("Product Catalog — Bestsellers", () => {
   test("bestsellers section is visible on homepage", async ({ page }) => {
     await page.goto("/");
-    await page.getByText("Most Loved").scrollIntoViewIfNeeded();
-    await expect(page.getByText("Most Loved")).toBeVisible();
-    await expect(page.getByText("Bestsellers")).toBeVisible();
+    await page.getByRole("heading", { name: "Bestsellers" }).scrollIntoViewIfNeeded();
+    await expect(page.getByText("Most Loved").first()).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Bestsellers" })).toBeVisible();
   });
 });

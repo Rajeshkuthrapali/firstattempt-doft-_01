@@ -4,6 +4,11 @@ import { defineConfig, devices } from "@playwright/test";
  * Playwright configuration for Lumière Candles E2E tests.
  * Launches the Vite dev server automatically, runs tests
  * against Desktop Chrome + Mobile Safari viewports.
+ *
+ * Reporters:
+ *  - HTML   → visual report (open manually)
+ *  - JSON   → structured pass/fail data for CI pipelines
+ *  - list   → real-time console progress with timing
  */
 export default defineConfig({
   testDir: "./e2e",
@@ -11,7 +16,11 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
-  reporter: [["html", { open: "never" }]],
+  reporter: [
+    ["list"],
+    ["html", { open: "never" }],
+    ["json", { outputFile: "e2e-report.json" }],
+  ],
   timeout: 30_000,
   use: {
     baseURL: "http://localhost:5173",
