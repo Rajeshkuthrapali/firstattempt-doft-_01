@@ -1,0 +1,311 @@
+// =============================================================================
+// Prisma Schema — Doft Candles Payment Backend
+// =============================================================================
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ---------------------------------------------------------------------------
+// Products & Variants
+// ---------------------------------------------------------------------------
+
+model Product {
+  id             String          @id @default(uuid())
+  title          String
+  slug           String          @unique
+  description    String?
+  images         String[]
+  fragranceFamily String?        @map("fragrance_family")
+  createdAt      DateTime        @default(now()) @map("created_at")
+  updatedAt      DateTime        @updatedAt @map("updated_at")
+
+  variants       Variant[]
+  collections    ProductCollection[]
+  categories     ProductCategory[]
+  wishlistItems  WishlistItem[]
+
+  @@map("products")
+}
+
+model Variant {
+  id              String     @id @default(uuid())
+  productId       String     @map("product_id")
+  color           String?
+  size            String?
+  fragrance       String?
+  weight          String?
+  priceCents      Int        @map("price_cents")
+  compareAtPrice  Int?       @map("compare_at_price")
+  stock           Int        @default(0)
+  sku             String     @unique
+
+  product         Product    @relation(fields: [productId], references: [id], onDelete: Cascade)
+  cartItems       CartItem[]
+  orderItems      OrderItem[]
+
+  @@map("variants")
+}
+
+// ---------------------------------------------------------------------------
+// Collections & Categories
+// ---------------------------------------------------------------------------
+
+model Collection {
+  id          String              @id @default(uuid())
+  title       String
+  slug        String              @unique
+  description String?
+  image       String?
+  sortOrder   Int                 @default(0) @map("sort_order")
+
+  products    ProductCollection[]
+
+  @@map("collections")
+}
+
+model ProductCollection {
+  productId    String     @map("product_id")
+  collectionId String     @map("collection_id")
+
+  product      Product    @relation(fields: [productId], references: [id], onDelete: Cascade)
+  collection   Collection @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+
+  @@id([productId, collectionId])
+  @@map("product_collections")
+}
+
+model Category {
+  id       String            @id @default(uuid())
+  name     String            @unique
+  slug     String            @unique
+
+  products ProductCategory[]
+
+  @@map("categories")
+}
+
+model ProductCategory {
+  productId  String   @map("product_id")
+  categoryId String   @map("category_id")
+
+  product    Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@id([productId, categoryId])
+  @@map("product_categories")
+}
+
+// ---------------------------------------------------------------------------
+// Users & Auth
+// ---------------------------------------------------------------------------
+
+model User {
+  id            String        @id @default(uuid())
+  email         String        @unique
+  passwordHash  String?       @map("password_hash")
+  name          String?
+  phone         String?
+  role          UserRole      @default(CUSTOMER)
+  createdAt     DateTime      @default(now()) @map("created_at")
+
+  addresses     Address[]
+  orders        Order[]
+  cart          Cart?
+  wishlistItems WishlistItem[]
+
+  @@map("users")
+}
+
+enum UserRole {
+  CUSTOMER
+  ADMIN
+}
+
+model Address {
+  id          String  @id @default(uuid())
+  userId      String  @map("user_id")
+  label       String? // "Home", "Office"
+  line1       String
+  line2       String?
+  city        String
+  state       String
+  postalCode  String  @map("postal_code")
+  country     String  @default("IN")
+  phone       String?
+  isDefault   Boolean @default(false) @map("is_default")
+
+  user        User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("addresses")
+}
+
+// ---------------------------------------------------------------------------
+// Cart (server-side for logged-in users)
+// ---------------------------------------------------------------------------
+
+model Cart {
+  id        String     @id @default(uuid())
+  userId    String     @unique @map("user_id")
+  createdAt DateTime   @default(now()) @map("created_at")
+  updatedAt DateTime   @updatedAt @map("updated_at")
+
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items     CartItem[]
+
+  @@map("carts")
+}
+
+model CartItem {
+  id        String  @id @default(uuid())
+  cartId    String  @map("cart_id")
+  variantId String  @map("variant_id")
+  quantity  Int     @default(1)
+
+  cart      Cart    @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  variant   Variant @relation(fields: [variantId], references: [id], onDelete: Cascade)
+
+  @@unique([cartId, variantId])
+  @@map("cart_items")
+}
+
+// ---------------------------------------------------------------------------
+// Orders & Payments
+// ---------------------------------------------------------------------------
+
+model Order {
+  id              String        @id @default(uuid())
+  userId          String?       @map("user_id")
+  status          OrderStatus   @default(PENDING)
+  totalCents      Int           @map("total_cents")
+  subtotalCents   Int           @map("subtotal_cents")
+  shippingCents   Int           @default(0) @map("shipping_cents")
+  discountCents   Int           @default(0) @map("discount_cents")
+  currency        String        @default("INR")
+  promoId         String?       @map("promo_id")
+  guestEmail      String?       @map("guest_email")
+  giftMessage     String?       @map("gift_message")
+
+  shippingAddress Json?         @map("shipping_address")
+  billingAddress  Json?         @map("billing_address")
+
+  createdAt       DateTime      @default(now()) @map("created_at")
+  updatedAt       DateTime      @updatedAt @map("updated_at")
+
+  user            User?         @relation(fields: [userId], references: [id])
+  promo           PromoCode?    @relation(fields: [promoId], references: [id])
+  items           OrderItem[]
+  payment         Payment?
+
+  @@index([userId])
+  @@index([status])
+  @@map("orders")
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+  REFUNDED
+}
+
+model OrderItem {
+  id          String  @id @default(uuid())
+  orderId     String  @map("order_id")
+  variantId   String  @map("variant_id")
+  quantity    Int
+  priceCents  Int     @map("price_cents")  // snapshot at time of order
+
+  order       Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  variant     Variant @relation(fields: [variantId], references: [id])
+
+  @@map("order_items")
+}
+
+model Payment {
+  id                String        @id @default(uuid())
+  orderId           String        @unique @map("order_id")
+  gateway           PaymentGateway
+  gatewayOrderId    String?       @map("gateway_order_id")    // razorpay_order_id / stripe PI
+  gatewayPaymentId  String?       @map("gateway_payment_id")  // razorpay_payment_id
+  gatewaySignature  String?       @map("gateway_signature")
+  status            PaymentStatus @default(CREATED)
+  amountCents       Int           @map("amount_cents")
+  currency          String        @default("INR")
+  method            String?       // upi, card, netbanking, wallet
+  refundId          String?       @map("refund_id")
+
+  createdAt         DateTime      @default(now()) @map("created_at")
+  updatedAt         DateTime      @updatedAt @map("updated_at")
+
+  order             Order         @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@index([gatewayOrderId])
+  @@index([gatewayPaymentId])
+  @@map("payments")
+}
+
+enum PaymentGateway {
+  RAZORPAY
+  STRIPE
+}
+
+enum PaymentStatus {
+  CREATED
+  AUTHORIZED
+  CAPTURED
+  FAILED
+  REFUNDED
+}
+
+// ---------------------------------------------------------------------------
+// Promo Codes
+// ---------------------------------------------------------------------------
+
+model PromoCode {
+  id                    String    @id @default(uuid())
+  code                  String    @unique
+  type                  PromoType
+  value                 Int       // percentage (e.g. 10) or fixed amount in cents
+  minOrderCents         Int?      @map("min_order_cents")
+  startsAt              DateTime  @map("starts_at")
+  expiresAt             DateTime  @map("expires_at")
+  usageLimit            Int?      @map("usage_limit")
+  timesUsed             Int       @default(0) @map("times_used")
+  applicableCollections String[]  @map("applicable_collections")
+  active                Boolean   @default(true)
+
+  orders                Order[]
+
+  @@map("promo_codes")
+}
+
+enum PromoType {
+  PERCENTAGE
+  FIXED
+}
+
+// ---------------------------------------------------------------------------
+// Wishlist
+// ---------------------------------------------------------------------------
+
+model WishlistItem {
+  id        String   @id @default(uuid())
+  userId    String   @map("user_id")
+  productId String   @map("product_id")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, productId])
+  @@map("wishlist_items")
+}

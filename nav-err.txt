@@ -1,0 +1,31 @@
+﻿
+[1m[46m RUN [49m[22m [36mv4.1.0 [39m[90mC:/Users/91807/my-app[39m
+
+ [31mΓ¥»[39m src/__tests__/unit/Nav.test.tsx [2m([22m[2m0 test[22m[2m)[22m
+node.exe : 
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" "C:\Users\91807\AppData\Roaming\ ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+[31mΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»[39m[1m[41m Failed Suites 1 
+[49m[22m[31mΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»[39m
+
+[41m[1m FAIL [22m[49m src/__tests__/unit/Nav.test.tsx[2m [ 
+src/__tests__/unit/Nav.test.tsx ][22m
+[31m[1mError[22m: Cannot find module '@testing-library/dom'
+Require stack:
+- C:\Users\91807\my-app\node_modules\@testing-library\react\dist\pure.js[39m
+[90m [2mΓ¥»[22m Object.<anonymous> 
+node_modules/@testing-library/react/dist/pure.js:[2m46:12[22m[39m
+
+[31m[2mΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+[1/1]ΓÄ»[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [2mno tests[22m
+[2m   Start at [22m 02:57:53
+[2m   Duration [22m 2.21s[2m (transform 78ms, setup 229ms, import 0ms, tests 0ms, environment 1.52s)[22m
+
