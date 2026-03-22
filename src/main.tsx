@@ -2,10 +2,10 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import "./index.css";
-import App from "./App.tsx";
-import { initGA4 } from "./lib/analytics.ts";
-import { initRUM } from "./lib/rum.ts";
-import { initSentry, getErrorBoundary } from "./lib/sentry.ts";
+import App from "./App";
+import { initGA4 } from "./lib/analytics";
+import { initRUM } from "./lib/rum";
+import { initSentry, getErrorBoundary } from "./lib/sentry";
 
 // Initialise synchronous observability first
 initGA4();
