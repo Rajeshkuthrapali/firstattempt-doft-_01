@@ -1,10 +1,12 @@
 import { Link, useLocation } from "react-router-dom";
 import { useUiStore } from "../stores/ui";
 import { useCartStore } from "../stores/cart";
+import { useAuthStore } from "../stores/auth";
 
 const navLinks = [
   { to: "/", label: "Home" },
   { to: "/collections", label: "Shop" },
+  { to: "/search", label: "Search" },
   { to: "/about", label: "Our Story" },
   { to: "/contact", label: "Contact" },
 ] as const;
@@ -17,9 +19,9 @@ const navLinks = [
  */
 export default function Nav() {
   const { pathname } = useLocation();
-  const { navOpen, toggleNav, closeNav } = useUiStore();
-  const toggleCart = useUiStore((s) => s.toggleCart);
+  const { navOpen, toggleNav, closeNav, toggleSearch, toggleCart } = useUiStore();
   const totalQty = useCartStore((s) => s.totalQty());
+  const user = useAuthStore((s) => s.user);
 
   return (
     <header
@@ -90,14 +92,27 @@ export default function Nav() {
         <div className="flex items-center gap-4">
           {/* Search */}
           <button
+            onClick={toggleSearch}
             className="hidden md:block p-1 text-[#6b5e54] hover:text-[#2d2926] transition-colors"
-            aria-label="Search"
+            aria-label="Open search"
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8}>
               <circle cx="11" cy="11" r="7" />
               <path strokeLinecap="round" d="m21 21-4.35-4.35" />
             </svg>
           </button>
+
+          {/* Account */}
+          <Link
+            to={user ? "/account" : "/auth"}
+            className="hidden md:block p-1 text-[#6b5e54] hover:text-[#2d2926] transition-colors"
+            aria-label={user ? `Account: ${user.name}` : "Sign in"}
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8}>
+              <circle cx="12" cy="8" r="4" />
+              <path strokeLinecap="round" d="M4 20c0-4 3.58-7 8-7s8 3 8 7" />
+            </svg>
+          </Link>
 
           {/* Cart */}
           <button

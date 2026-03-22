@@ -1,6 +1,7 @@
 import { Outlet, Link } from "react-router-dom";
 import Nav from "./Nav";
 import CartDrawer from "./CartDrawer";
+import SearchBar from "./search/SearchBar";
 
 /**
  * Root layout shell — warm cream background, clean footer
@@ -17,6 +18,7 @@ export default function LayoutShell() {
 
       <Nav />
       <CartDrawer />
+      <SearchBar />
 
       {/* Page content offset for fixed nav + announcement bar */}
       <main className="pt-[108px]" id="main-content" role="main">

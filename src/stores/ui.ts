@@ -1,20 +1,21 @@
 import { create } from "zustand";
 
-/** Global UI state (navigation drawer, modals, etc.) */
+/** Global UI state (navigation drawer, modals, search overlay, etc.) */
 interface UiState {
   /** Whether the mobile navigation drawer is open */
   navOpen: boolean;
-  /** Toggle the mobile navigation drawer */
   toggleNav: () => void;
-  /** Explicitly close the navigation drawer */
   closeNav: () => void;
 
   /** Whether the cart drawer is visible */
   cartOpen: boolean;
-  /** Toggle the cart drawer */
   toggleCart: () => void;
-  /** Explicitly close the cart drawer */
   closeCart: () => void;
+
+  /** Whether the search overlay is open */
+  searchOpen: boolean;
+  toggleSearch: () => void;
+  closeSearch: () => void;
 }
 
 /**
@@ -29,4 +30,8 @@ export const useUiStore = create<UiState>((set) => ({
   cartOpen: false,
   toggleCart: () => set((s) => ({ cartOpen: !s.cartOpen })),
   closeCart: () => set({ cartOpen: false }),
+
+  searchOpen: false,
+  toggleSearch: () => set((s) => ({ searchOpen: !s.searchOpen })),
+  closeSearch: () => set({ searchOpen: false }),
 }));

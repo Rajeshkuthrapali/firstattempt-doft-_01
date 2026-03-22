@@ -40,7 +40,7 @@ describe("Nav component", () => {
 
   it("renders search button with ARIA label (desktop)", () => {
     renderWithRouter(<Nav />);
-    const searchBtn = screen.getByLabelText("Search");
+    const searchBtn = screen.getByLabelText("Open search");
     expect(searchBtn).toBeInTheDocument();
   });
 
@@ -66,8 +66,8 @@ describe("Nav component", () => {
     renderWithRouter(<Nav />);
     const menubar = screen.getByRole("menubar");
     expect(menubar).toBeInTheDocument();
-    // Desktop menubar should have 4 menu items
+    // Desktop menubar should have 5 menu items (Home, Shop, Search, Our Story, Contact)
     const desktopItems = menubar.querySelectorAll("[role='menuitem']");
-    expect(desktopItems).toHaveLength(4);
+    expect(desktopItems).toHaveLength(5);
   });
 });
