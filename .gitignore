@@ -7,16 +7,42 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Build output
 dist
 dist-ssr
-*.local
+build
+
+# Testing
+coverage/
+test-results/
+playwright-report/
+
+# Next.js
+.next/
+out/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Database
+prisma/dev.db
+prisma/dev.db-journal
 
 # Editor directories and files
-.vscode/*
+.vscode/
 !.vscode/extensions.json
 .idea
+
+# OS
 .DS_Store
+Thumbs.db
 *.suo
 *.ntvs*
 *.njsproj

@@ -1,15 +1,5 @@
 import { defineConfig, devices } from "@playwright/test";
 
-/**
- * Playwright configuration for Lumière Candles E2E tests.
- * Launches the Vite dev server automatically, runs tests
- * against Desktop Chrome + Mobile Safari viewports.
- *
- * Reporters:
- *  - HTML   → visual report (open manually)
- *  - JSON   → structured pass/fail data for CI pipelines
- *  - list   → real-time console progress with timing
- */
 export default defineConfig({
   testDir: "./e2e",
   fullyParallel: true,
@@ -23,13 +13,13 @@ export default defineConfig({
   ],
   timeout: 30_000,
   use: {
-    baseURL: "http://localhost:5173",
+    baseURL: "http://localhost:3000",
     trace: "on-first-retry",
     screenshot: "only-on-failure",
   },
   webServer: {
     command: "npm run dev",
-    url: "http://localhost:5173",
+    url: "http://localhost:3000",
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,
   },
