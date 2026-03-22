@@ -6,6 +6,8 @@
  * The gtag snippet is loaded in `index.html`.
  */
 
+export { GoogleAnalytics } from "./analytics.tsx";
+
 /** Type-safe gtag interface */
 declare global {
   interface Window {
