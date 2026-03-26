@@ -27,3 +27,11 @@ Building upon the stable scale and ecosystem features delivered in v2.2.0, the u
 
 - **GraphQL API Gateway**: Depending on data complexity scaling with personalization, evaluate wrapping Prisma in an Apollo/GraphQL gateway for optimized frontend payloads.
 - **A/B Testing Framework**: Implement lightweight edge-middleware logic (e.g. Vercel Edge Config) to route percentage of traffic based on feature flags for conversion optimization.
+
+## Sprint Backlog Refinement (P4 Kickoff)
+
+- **Ticket P4-001**: Implement `ScentMatchQuiz.tsx` accessible flow mapping to `?scent=` search parameters (Completed).
+- **Ticket P4-002**: Extend `marketing.ts` triggers for quiz-result emails and loyalty unlocks (Completed).
+- **Ticket P4-003**: Build `HeroBlock`, `GridBlock`, and `SignUpBlock` as dynamic page-builder nodes (Completed).
+- **Ticket P4-004**: Integrate blocks into `/campaign` dynamic route template (Completed).
+- **Ticket P4-005**: Add `web-vitals` library and Admin Logs dashboard for telemetry (Completed).

@@ -16,9 +16,12 @@ import AdminOverview from "./pages/admin/AdminOverview";
 import AdminProducts from "./pages/admin/AdminProducts";
 import AdminOrders from "./pages/admin/AdminOrders";
 import AdminInventory from "./pages/admin/AdminInventory";
+import AdminLogs from "./pages/admin/AdminLogs";
 
 import AccountLoyalty from "./pages/AccountLoyalty";
 import GiftRegistry from "./pages/GiftRegistry";
+import ScentMatchQuiz from "./components/ScentMatchQuiz";
+import Campaign from "./pages/Campaign";
 
 /**
  * Root application component.
@@ -47,6 +50,13 @@ export default function App() {
         {/* Gifting */}
         <Route path="registry" element={<GiftRegistry />} />
 
+        {/* Personalization */}
+        <Route path="scent-match" element={<ScentMatchQuiz />} />
+
+        {/* CMS Campaigns */}
+        <Route path="campaign/:slug" element={<Campaign />} />
+        <Route path="campaign" element={<Campaign />} />
+
         {/* Blog / Editorial */}
         <Route path="blog" element={<Blog />} />
         <Route path="blog/:slug" element={<BlogArticle />} />
@@ -62,6 +72,7 @@ export default function App() {
         <Route path="products" element={<AdminProducts />} />
         <Route path="orders" element={<AdminOrders />} />
         <Route path="inventory" element={<AdminInventory />} />
+        <Route path="logs" element={<AdminLogs />} />
       </Route>
     </Routes>
   );

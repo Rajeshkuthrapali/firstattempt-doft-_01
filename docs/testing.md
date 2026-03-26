@@ -73,13 +73,15 @@ Tests run against **Desktop Chrome** (1280×720) and **Mobile Safari** (iPhone 1
 
 1. Copy `server/.env.example` → `server/.env`
 2. Set Razorpay test keys:
-   ```
+
+```
    RAZORPAY_KEY_ID=rzp_test_xxxxxxxxxxxx
    RAZORPAY_KEY_SECRET=your_test_secret
    RAZORPAY_WEBHOOK_SECRET=your_webhook_secret
-   ```
-3. (Optional) Set Stripe test keys for global payment tests
-4. Start the server: `cd server && npm run dev`
+```
+
+3.(Optional) Set Stripe test keys for global payment tests
+4.Start the server: `cd server && npm run dev`
 
 ### Running
 
@@ -235,7 +237,9 @@ start .lighthouseci\$(Get-ChildItem .lighthouseci\*.html | Select-Object -First 
 ```
 
 Expected output on pass:
+
 ```
+
 ✅  assert.categories:performance = 0.9x >= 0.90
 ✅  assert.categories:accessibility = 0.9x >= 0.90
 ✅  assert.categories:best-practices = 0.9x >= 0.90

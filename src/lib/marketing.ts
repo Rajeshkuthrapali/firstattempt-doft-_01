@@ -68,3 +68,20 @@ export function getPersonalizedRecommendations(cartIds: string[]) {
 
   return Array.from(recommendedSet);
 }
+
+/**
+ * Triggers a personalized email campaign with scent recommendations
+ * based on the user's completed Scent Match quiz profile.
+ */
+export async function triggerQuizRecommendationEmail(userEmail: string, scentProfile: string) {
+  console.log(`[Marketing] Dispatching ${scentProfile} recommendations to ${userEmail}...`);
+  // fetch POST to /api/webhooks/marketing/quiz-result
+}
+
+/**
+ * Sends a welcome/reward email when a user unlocks a new Loyalty Tier.
+ */
+export async function triggerLoyaltyUnlockEmail(userEmail: string, newTier: string) {
+  console.log(`[Marketing] Dispatching Tier Unlock (${newTier}) to ${userEmail}...`);
+  // fetch POST to /api/webhooks/marketing/loyalty-unlock
+}

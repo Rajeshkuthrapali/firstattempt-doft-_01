@@ -178,10 +178,12 @@ Image URL generation uses [`@cloudinary/url-gen`](https://cloudinary.com/documen
 1. Create a free account at [cloudinary.com](https://cloudinary.com/).
 2. Copy your **Cloud Name** from the dashboard.
 3. Add it to `.env.local`:
-   ```
-   VITE_CLOUDINARY_CLOUD_NAME=your_cloud_name
-   ```
-4. Upload product images to Cloudinary and use their **public IDs** as `product.image` values.
+
+```
+VITE_CLOUDINARY_CLOUD_NAME=your_cloud_name
+```
+
+4.Upload product images to Cloudinary and use their **public IDs** as `product.image` values.
 
 ### Usage
 
@@ -226,4 +228,3 @@ This uses the version constant built into the installed SDK, cast to its own `La
 | -------------------- | --------------------------------------------------------- |
 | `v2.0.0`             | P0 complete — all features, unit + E2E tests, CI pipeline |
 | `v2.0-core-commerce` | Earlier stable milestone                                  |
-

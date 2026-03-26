@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { products, type Product } from "../data/products";
 import { useCartStore } from "../stores/cart";
 import { useWishlistStore } from "../stores/wishlist";
@@ -17,8 +17,10 @@ type Category = "all" | Product["category"];
  * Features: category filter, curated favourites section, related/recommended products.
  */
 export default function Collections() {
+  const [searchParams] = useSearchParams();
+  const scentParams = searchParams.get("scent") || "";
   const [activeCategory, setActiveCategory] = useState<Category>("all");
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState(scentParams);
   const addItem = useCartStore((s) => s.addItem);
   const { toggle, has } = useWishlistStore();
 

@@ -7,6 +7,7 @@ const adminLinks = [
   { to: "/admin/products", label: "Products" },
   { to: "/admin/orders", label: "Orders" },
   { to: "/admin/inventory", label: "Inventory" },
+  { to: "/admin/logs", label: "Logs" },
 ];
 
 /**
