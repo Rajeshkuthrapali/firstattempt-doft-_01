@@ -73,8 +73,44 @@ export function addBreadcrumb(
 /**
  * Set user context for error tracking.
  */
-export function setUser(user: { id: string; email: string } | null) {
+export function setUser(_user: { id: string; email: string } | null) {
   if (SENTRY_DSN) {
     // Sentry.setUser(user);
   }
 }
+
+// ── P2 Breadcrumbs ────────────────────────────────────────────────────────────
+
+/**
+ * Record a wishlist interaction breadcrumb.
+ * @param action - "add" or "remove"
+ * @param productId - Product identifier
+ */
+export function breadcrumbWishlist(action: "add" | "remove", productId: string): void {
+  addBreadcrumb("wishlist", `Wishlist ${action}`, { product_id: productId });
+}
+
+/**
+ * Record a search query breadcrumb.
+ * @param query - The search term submitted
+ * @param resultCount - Number of results returned
+ */
+export function breadcrumbSearch(query: string, resultCount: number): void {
+  addBreadcrumb("search", "Search submitted", { query, result_count: resultCount });
+}
+
+/**
+ * Record an abandoned-cart recovery breadcrumb.
+ */
+export function breadcrumbAbandonedCartRecovery(): void {
+  addBreadcrumb("cart", "Abandoned cart recovery triggered");
+}
+
+/**
+ * Record a quick-view modal open breadcrumb.
+ * @param productId - Product being previewed
+ */
+export function breadcrumbQuickView(productId: string): void {
+  addBreadcrumb("ui", "Quick view opened", { product_id: productId });
+}
+

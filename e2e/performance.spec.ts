@@ -94,7 +94,10 @@ test.describe("Performance — Rendering", () => {
             const lastEntry = entries[entries.length - 1];
             resolve(lastEntry.startTime);
           });
-          observer.observe({ type: "largest-contentful-paint", buffered: true });
+          observer.observe({
+            type: "largest-contentful-paint",
+            buffered: true,
+          });
           // Fallback timeout
           setTimeout(() => resolve(-1), 5000);
         }),

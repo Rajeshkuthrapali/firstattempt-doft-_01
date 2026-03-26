@@ -23,15 +23,29 @@ export function Footer() {
       <div className="mx-auto max-w-7xl px-6 pb-8 pt-16">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           <div>
-            <h3 className="mb-4 font-heading text-xl font-bold text-gold">DOFT</h3>
-            <p className="text-sm leading-relaxed text-[#aaa]">Experience the world through smell. Handcrafted luxury fragrances in timeless glass.</p>
+            <h3 className="mb-4 font-heading text-xl font-bold text-gold">
+              DOFT
+            </h3>
+            <p className="text-sm leading-relaxed text-[#aaa]">
+              Experience the world through smell. Handcrafted luxury fragrances
+              in timeless glass.
+            </p>
           </div>
           {Object.entries(FOOTER_LINKS).map(([title, links]) => (
             <div key={title}>
-              <h4 className="mb-4 font-heading text-sm font-bold uppercase tracking-wider text-gold">{title}</h4>
+              <h4 className="mb-4 font-heading text-sm font-bold uppercase tracking-wider text-gold">
+                {title}
+              </h4>
               <ul className="space-y-3">
                 {links.map((link) => (
-                  <li key={link.label}><Link href={link.href} className="text-sm text-[#bbb] transition-colors hover:text-white">{link.label}</Link></li>
+                  <li key={link.label}>
+                    <Link
+                      href={link.href}
+                      className="text-sm text-[#bbb] transition-colors hover:text-white"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
                 ))}
               </ul>
             </div>
@@ -40,13 +54,21 @@ export function Footer() {
         <div className="mt-12 border-t border-[#333] pt-8">
           <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
             <div>
-              <h4 className="font-heading text-sm font-bold uppercase tracking-wider text-gold">Newsletter</h4>
-              <p className="mt-1 text-sm text-[#999]">Subscribe for exclusive deals and updates.</p>
+              <h4 className="font-heading text-sm font-bold uppercase tracking-wider text-gold">
+                Newsletter
+              </h4>
+              <p className="mt-1 text-sm text-[#999]">
+                Subscribe for exclusive deals and updates.
+              </p>
             </div>
-            <div className="w-full max-w-md"><NewsletterForm /></div>
+            <div className="w-full max-w-md">
+              <NewsletterForm />
+            </div>
           </div>
         </div>
-        <div className="mt-8 border-t border-[#333] pt-6 text-center text-xs text-[#666]">© {new Date().getFullYear()} DOFT Candles. All rights reserved.</div>
+        <div className="mt-8 border-t border-[#333] pt-6 text-center text-xs text-[#666]">
+          © {new Date().getFullYear()} DOFT Candles. All rights reserved.
+        </div>
       </div>
     </footer>
   );

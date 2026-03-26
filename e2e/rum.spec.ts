@@ -65,7 +65,9 @@ test.describe("RUM – web_vital GA4 events", () => {
     const lcpPayload = lcpEvent![2] as Record<string, unknown>;
     expect(lcpPayload.event_category).toBe("Web Vitals");
     expect(lcpPayload.non_interaction).toBe(true);
-    expect(["good", "needs-improvement", "poor"]).toContain(lcpPayload.metric_rating);
+    expect(["good", "needs-improvement", "poor"]).toContain(
+      lcpPayload.metric_rating,
+    );
     expect(typeof lcpPayload.value).toBe("number");
   });
 });

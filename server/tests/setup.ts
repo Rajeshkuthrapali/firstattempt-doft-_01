@@ -5,7 +5,10 @@ import { vi } from "vitest";
 
 // Mock environment variables before anything imports env.ts
 process.env.PORT = "4001";
-process.env.NODE_ENV = "test";
+Object.defineProperty(process.env, "NODE_ENV", {
+  value: "test",
+  configurable: true,
+});
 process.env.DATABASE_URL = "postgresql://test:test@localhost:5432/test_db";
 process.env.JWT_SECRET = "test-secret-key-must-be-at-least-32-characters-long";
 process.env.JWT_EXPIRES_IN = "1h";

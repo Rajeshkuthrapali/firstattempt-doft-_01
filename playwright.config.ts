@@ -13,13 +13,13 @@ export default defineConfig({
   ],
   timeout: 30_000,
   use: {
-    baseURL: "http://localhost:3000",
+    baseURL: "http://localhost:5173",
     trace: "on-first-retry",
     screenshot: "only-on-failure",
   },
   webServer: {
     command: "npm run dev",
-    url: "http://localhost:3000",
+    url: "http://localhost:5173",
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,
   },
@@ -27,6 +27,18 @@ export default defineConfig({
     {
       name: "Desktop Chrome",
       use: { ...devices["Desktop Chrome"] },
+    },
+    {
+      name: "Desktop Safari",
+      use: { ...devices["Desktop Safari"] },
+    },
+    {
+      name: "Desktop Firefox",
+      use: { ...devices["Desktop Firefox"] },
+    },
+    {
+      name: "Desktop Edge",
+      use: { ...devices["Desktop Edge"], channel: "msedge" },
     },
     {
       name: "Mobile Safari",

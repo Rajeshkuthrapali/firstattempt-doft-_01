@@ -21,9 +21,7 @@ test.describe("Product Catalog — PDP", () => {
     await expect(page.getByText("₹2,499").first()).toBeVisible();
 
     // Description
-    await expect(
-      page.getByText(/mediterranean sunset/i),
-    ).toBeVisible();
+    await expect(page.getByText(/mediterranean sunset/i)).toBeVisible();
 
     // Fragrance notes (use .first() to avoid matching description text)
     await expect(page.getByText("Amber").first()).toBeVisible();
@@ -95,8 +93,12 @@ test.describe("Product Catalog — Categories", () => {
 test.describe("Product Catalog — Bestsellers", () => {
   test("bestsellers section is visible on homepage", async ({ page }) => {
     await page.goto("/");
-    await page.getByRole("heading", { name: "Bestsellers" }).scrollIntoViewIfNeeded();
+    await page
+      .getByRole("heading", { name: "Bestsellers" })
+      .scrollIntoViewIfNeeded();
     await expect(page.getByText("Most Loved").first()).toBeVisible();
-    await expect(page.getByRole("heading", { name: "Bestsellers" })).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: "Bestsellers" }),
+    ).toBeVisible();
   });
 });

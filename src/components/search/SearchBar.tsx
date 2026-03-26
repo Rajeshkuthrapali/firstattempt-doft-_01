@@ -22,7 +22,10 @@ export default function SearchBar() {
 
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
-      if (e.key === "Escape") { closeSearch(); clear(); }
+      if (e.key === "Escape") {
+        closeSearch();
+        clear();
+      }
     }
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
@@ -48,18 +51,35 @@ export default function SearchBar() {
       {/* Backdrop */}
       <div
         className="absolute inset-0 bg-black/40 backdrop-blur-sm"
-        onClick={() => { closeSearch(); clear(); }}
+        onClick={() => {
+          closeSearch();
+          clear();
+        }}
         aria-hidden="true"
       />
 
       {/* Search panel */}
       <div className="relative bg-[#faf7f4] shadow-xl">
-        <form onSubmit={handleSubmit} className="mx-auto flex max-w-3xl items-center gap-3 px-6 py-4">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="text-[#9a8d82] flex-shrink-0" aria-hidden="true">
+        <form
+          onSubmit={handleSubmit}
+          className="mx-auto flex max-w-3xl items-center gap-3 px-6 py-4"
+        >
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={1.8}
+            className="text-[#9a8d82] flex-shrink-0"
+            aria-hidden="true"
+          >
             <circle cx="11" cy="11" r="7" />
             <path strokeLinecap="round" d="m21 21-4.35-4.35" />
           </svg>
-          <label htmlFor="nav-search-input" className="sr-only">Search products</label>
+          <label htmlFor="nav-search-input" className="sr-only">
+            Search products
+          </label>
           <input
             id="nav-search-input"
             ref={inputRef}
@@ -73,11 +93,21 @@ export default function SearchBar() {
           />
           <button
             type="button"
-            onClick={() => { closeSearch(); clear(); }}
+            onClick={() => {
+              closeSearch();
+              clear();
+            }}
             className="text-[#9a8d82] hover:text-[#2d2926] transition-colors"
             aria-label="Close search"
           >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8}>
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={1.8}
+            >
               <path strokeLinecap="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
@@ -92,23 +122,43 @@ export default function SearchBar() {
             className="mx-auto max-w-3xl px-6 pb-4 space-y-1"
           >
             {hits.map(({ product }) => (
-              <li key={product.id} role="option" aria-selected="false">
-                <button
-                  type="button"
-                  onClick={() => {
+              <li 
+                key={product.id} 
+                role="option" 
+                aria-selected="false"
+                tabIndex={0}
+                onClick={() => {
+                  navigate(`/product/${product.slug}`);
+                  closeSearch();
+                  clear();
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
                     navigate(`/product/${product.slug}`);
                     closeSearch();
                     clear();
-                  }}
-                  className="w-full flex items-center gap-4 rounded p-2 text-left hover:bg-[#f3ece4] transition-colors"
-                >
-                  <img src={product.image} alt="" aria-hidden="true" className="h-10 w-10 rounded object-cover flex-shrink-0" />
+                  }
+                }}
+                className="w-full flex items-center gap-4 rounded p-2 text-left hover:bg-[#f3ece4] transition-colors cursor-pointer"
+              >
+                  <img
+                    src={product.image}
+                    alt=""
+                    aria-hidden="true"
+                    className="h-10 w-10 rounded object-cover flex-shrink-0"
+                  />
                   <div className="min-w-0">
-                    <p className="text-sm font-medium text-[#2d2926] truncate">{product.name}</p>
-                    <p className="text-xs text-[#9a8d82] truncate">{product.tagline}</p>
+                    <p className="text-sm font-medium text-[#2d2926] truncate">
+                      {product.name}
+                    </p>
+                    <p className="text-xs text-[#9a8d82] truncate">
+                      {product.tagline}
+                    </p>
                   </div>
-                  <span className="ml-auto text-xs font-semibold text-[#2d2926] flex-shrink-0">{formatPrice(product.price)}</span>
-                </button>
+                  <span className="ml-auto text-xs font-semibold text-[#2d2926] flex-shrink-0">
+                    {formatPrice(product.price)}
+                  </span>
               </li>
             ))}
           </ul>

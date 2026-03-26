@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, vi } from "vitest";
+import { describe, it, expect, beforeEach } from "vitest";
 import { useAuthStore } from "../../stores/auth";
 import { useWishlistStore } from "../../stores/wishlist";
 import { useSearchStore } from "../../stores/search";
@@ -42,8 +42,28 @@ describe("useAuthStore", () => {
 
   it("setDefaultAddress marks exactly one address as default", () => {
     const store = useAuthStore.getState();
-    store.saveAddress({ label: "Home", name: "A", line1: "1", city: "X", state: "Y", postalCode: "Z", country: "IN", phone: "0", isDefault: false });
-    store.saveAddress({ label: "Work", name: "B", line1: "2", city: "X", state: "Y", postalCode: "Z", country: "IN", phone: "0", isDefault: false });
+    store.saveAddress({
+      label: "Home",
+      name: "A",
+      line1: "1",
+      city: "X",
+      state: "Y",
+      postalCode: "Z",
+      country: "IN",
+      phone: "0",
+      isDefault: false,
+    });
+    store.saveAddress({
+      label: "Work",
+      name: "B",
+      line1: "2",
+      city: "X",
+      state: "Y",
+      postalCode: "Z",
+      country: "IN",
+      phone: "0",
+      isDefault: false,
+    });
     const { addresses } = useAuthStore.getState();
     useAuthStore.getState().setDefaultAddress(addresses[1].id);
     const updated = useAuthStore.getState().addresses;
@@ -53,15 +73,41 @@ describe("useAuthStore", () => {
 
   it("removeAddress deletes the address by id", () => {
     const store = useAuthStore.getState();
-    store.saveAddress({ label: "Home", name: "A", line1: "1", city: "X", state: "Y", postalCode: "Z", country: "IN", phone: "0", isDefault: false });
+    store.saveAddress({
+      label: "Home",
+      name: "A",
+      line1: "1",
+      city: "X",
+      state: "Y",
+      postalCode: "Z",
+      country: "IN",
+      phone: "0",
+      isDefault: false,
+    });
     const { addresses } = useAuthStore.getState();
     useAuthStore.getState().removeAddress(addresses[0].id);
     expect(useAuthStore.getState().addresses).toHaveLength(0);
   });
 
   it("addOrder prepends to order history", () => {
-    useAuthStore.getState().addOrder({ id: "ord-001", date: "2026-03-23", total: 2499, status: "confirmed", items: [] });
-    useAuthStore.getState().addOrder({ id: "ord-002", date: "2026-03-24", total: 3499, status: "shipped", items: [] });
+    useAuthStore
+      .getState()
+      .addOrder({
+        id: "ord-001",
+        date: "2026-03-23",
+        total: 2499,
+        status: "confirmed",
+        items: [],
+      });
+    useAuthStore
+      .getState()
+      .addOrder({
+        id: "ord-002",
+        date: "2026-03-24",
+        total: 3499,
+        status: "shipped",
+        items: [],
+      });
     const { orders } = useAuthStore.getState();
     expect(orders[0].id).toBe("ord-002"); // newest first
     expect(orders).toHaveLength(2);
@@ -70,8 +116,29 @@ describe("useAuthStore", () => {
   it("logout clears user, orders, and addresses", () => {
     useAuthStore.setState({
       user: { id: "u1", email: "a@b.com", name: "A", provider: "email" },
-      addresses: [{ id: "x", label: "L", name: "N", line1: "1", city: "C", state: "S", postalCode: "Z", country: "IN", phone: "0", isDefault: false }],
-      orders: [{ id: "o1", date: "2026-01-01", total: 999, status: "delivered", items: [] }],
+      addresses: [
+        {
+          id: "x",
+          label: "L",
+          name: "N",
+          line1: "1",
+          city: "C",
+          state: "S",
+          postalCode: "Z",
+          country: "IN",
+          phone: "0",
+          isDefault: false,
+        },
+      ],
+      orders: [
+        {
+          id: "o1",
+          date: "2026-01-01",
+          total: 999,
+          status: "delivered",
+          items: [],
+        },
+      ],
     });
     useAuthStore.getState().logout();
     const s = useAuthStore.getState();
@@ -117,7 +184,9 @@ describe("useWishlistStore", () => {
 // ── Search Store ────────────────────────────────────────────────────────────
 
 describe("useSearchStore", () => {
-  beforeEach(() => useSearchStore.setState({ query: "", hits: [], isOpen: false }));
+  beforeEach(() =>
+    useSearchStore.setState({ query: "", hits: [], isOpen: false }),
+  );
 
   it("setQuery with empty string returns no hits", () => {
     useSearchStore.getState().setQuery("");
@@ -173,7 +242,9 @@ describe("useCheckoutStore", () => {
   });
 
   it("resetGift restores defaults", () => {
-    useCheckoutStore.getState().setGift({ enabled: true, wrapping: "premium", message: "Hello!" });
+    useCheckoutStore
+      .getState()
+      .setGift({ enabled: true, wrapping: "premium", message: "Hello!" });
     useCheckoutStore.getState().resetGift();
     const { gift } = useCheckoutStore.getState();
     expect(gift.enabled).toBe(false);
@@ -189,7 +260,9 @@ describe("useCheckoutStore", () => {
 
   it("checkAbandonedCart shows banner after abandonment threshold", () => {
     // Simulate last warning was > 30 min ago
-    useCheckoutStore.setState({ lastAbandonmentWarning: Date.now() - 31 * 60 * 1000 });
+    useCheckoutStore.setState({
+      lastAbandonmentWarning: Date.now() - 31 * 60 * 1000,
+    });
     useCheckoutStore.getState().checkAbandonedCart(false);
     expect(useCheckoutStore.getState().showRecoveryBanner).toBe(true);
   });

@@ -16,7 +16,9 @@ test.describe("SEO & Performance", () => {
 
   test("homepage should have Organization JSON-LD", async ({ page }) => {
     await page.goto("/");
-    const jsonLd = await page.locator('script[type="application/ld+json"]').first();
+    const jsonLd = await page
+      .locator('script[type="application/ld+json"]')
+      .first();
     const text = await jsonLd.textContent();
     expect(text).toContain("Organization");
     expect(text).toContain("DOFT Candles");
@@ -24,7 +26,9 @@ test.describe("SEO & Performance", () => {
 
   test("product page should have Product JSON-LD", async ({ page }) => {
     await page.goto("/products/signature-trio-wax-tablets");
-    const scripts = await page.locator('script[type="application/ld+json"]').all();
+    const scripts = await page
+      .locator('script[type="application/ld+json"]')
+      .all();
     const texts = await Promise.all(scripts.map((s) => s.textContent()));
     const productLd = texts.find((t) => t?.includes('"Product"'));
     expect(productLd).toBeTruthy();
@@ -33,7 +37,9 @@ test.describe("SEO & Performance", () => {
 
   test("product page should have Breadcrumb JSON-LD", async ({ page }) => {
     await page.goto("/products/signature-trio-wax-tablets");
-    const scripts = await page.locator('script[type="application/ld+json"]').all();
+    const scripts = await page
+      .locator('script[type="application/ld+json"]')
+      .all();
     const texts = await Promise.all(scripts.map((s) => s.textContent()));
     const breadcrumbLd = texts.find((t) => t?.includes("BreadcrumbList"));
     expect(breadcrumbLd).toBeTruthy();
@@ -46,9 +52,13 @@ test.describe("SEO & Performance", () => {
     await expect(breadcrumb.locator("text=Home")).toBeVisible();
   });
 
-  test("collection page should have CollectionPage JSON-LD", async ({ page }) => {
+  test("collection page should have CollectionPage JSON-LD", async ({
+    page,
+  }) => {
     await page.goto("/collections/bestsellers");
-    const scripts = await page.locator('script[type="application/ld+json"]').all();
+    const scripts = await page
+      .locator('script[type="application/ld+json"]')
+      .all();
     const texts = await Promise.all(scripts.map((s) => s.textContent()));
     const collectionLd = texts.find((t) => t?.includes("CollectionPage"));
     expect(collectionLd).toBeTruthy();
@@ -56,10 +66,16 @@ test.describe("SEO & Performance", () => {
 
   test("product page should have OG meta tags", async ({ page }) => {
     await page.goto("/products/rose-mini-bowl-candle");
-    const ogTitle = await page.getAttribute('meta[property="og:title"]', "content");
+    const ogTitle = await page.getAttribute(
+      'meta[property="og:title"]',
+      "content",
+    );
     expect(ogTitle).toBeTruthy();
 
-    const ogType = await page.getAttribute('meta[property="og:type"]', "content");
+    const ogType = await page.getAttribute(
+      'meta[property="og:type"]',
+      "content",
+    );
     expect(ogType).toBeTruthy();
   });
 

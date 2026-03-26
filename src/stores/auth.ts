@@ -69,7 +69,9 @@ interface AuthState {
   clearError: () => void;
 }
 
-const API = (import.meta.env.VITE_API_BASE_URL as string | undefined) ?? "http://localhost:4000/api";
+const API =
+  (import.meta.env.VITE_API_BASE_URL as string | undefined) ??
+  "http://localhost:4000/api";
 
 /**
  * Zustand auth + account store.
@@ -93,7 +95,8 @@ export const useAuthStore = create<AuthState>()(
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email, password }),
           });
-          if (!res.ok) throw new Error((await res.json()).message ?? "Login failed");
+          if (!res.ok)
+            throw new Error((await res.json()).message ?? "Login failed");
           const { user } = await res.json();
           set({ user, isLoading: false });
           trackEvent("login", { method: "email" });
@@ -110,7 +113,10 @@ export const useAuthStore = create<AuthState>()(
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ name, email, password }),
           });
-          if (!res.ok) throw new Error((await res.json()).message ?? "Registration failed");
+          if (!res.ok)
+            throw new Error(
+              (await res.json()).message ?? "Registration failed",
+            );
           const { user } = await res.json();
           set({ user, isLoading: false });
           trackEvent("sign_up", { method: "email" });
@@ -120,12 +126,18 @@ export const useAuthStore = create<AuthState>()(
       },
 
       loginWithGoogle: () => {
-        const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID as string | undefined;
+        const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID as
+          | string
+          | undefined;
         if (!clientId) {
-          console.warn("[Auth] VITE_GOOGLE_CLIENT_ID not set — Google OAuth unavailable");
+          console.warn(
+            "[Auth] VITE_GOOGLE_CLIENT_ID not set — Google OAuth unavailable",
+          );
           return;
         }
-        const redirect = encodeURIComponent(`${window.location.origin}/auth/callback`);
+        const redirect = encodeURIComponent(
+          `${window.location.origin}/auth/callback`,
+        );
         window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirect}&response_type=code&scope=openid+email+profile`;
       },
 
@@ -152,8 +164,7 @@ export const useAuthStore = create<AuthState>()(
           addresses: s.addresses.map((a) => ({ ...a, isDefault: a.id === id })),
         })),
 
-      addOrder: (order) =>
-        set((s) => ({ orders: [order, ...s.orders] })),
+      addOrder: (order) => set((s) => ({ orders: [order, ...s.orders] })),
 
       clearError: () => set({ error: null }),
     }),

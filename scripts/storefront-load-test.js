@@ -33,13 +33,13 @@ export const options = {
   stages: [
     { duration: "30s", target: 20 }, // ramp to 20 VUs
     { duration: "60s", target: 50 }, // hold at 50 VUs
-    { duration: "30s", target: 0 },  // ramp down
+    { duration: "30s", target: 0 }, // ramp down
   ],
   thresholds: {
-    http_req_duration:  ["p(95)<600"],   // 95th percentile < 600ms
-    http_req_failed:    ["rate<0.005"],  // error rate < 0.5%
-    page_load_time:     ["p(95)<600"],
-    storefront_errors:  ["rate<0.005"],
+    http_req_duration: ["p(95)<600"], // 95th percentile < 600ms
+    http_req_failed: ["rate<0.005"], // error rate < 0.5%
+    page_load_time: ["p(95)<600"],
+    storefront_errors: ["rate<0.005"],
   },
 };
 

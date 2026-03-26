@@ -6,16 +6,16 @@
 
 ## Quick Reference
 
-| Command | Description |
-|---------|-------------|
-| `npm test` | Run Vitest unit tests |
-| `npm run test:e2e` | Run all Playwright E2E tests |
-| `npm run test:e2e:p0` | Run P0 storefront E2E tests only |
+| Command                    | Description                         |
+| -------------------------- | ----------------------------------- |
+| `npm test`                 | Run Vitest unit tests               |
+| `npm run test:e2e`         | Run all Playwright E2E tests        |
+| `npm run test:e2e:p0`      | Run P0 storefront E2E tests only    |
 | `npm run test:e2e:payment` | Run Razorpay + Stripe payment tests |
-| `npm run test:e2e:perf` | Run performance E2E tests |
-| `npm run test:ci` | Run unit + E2E (CI mode) |
-| `npm run lighthouse` | Run Lighthouse CI audit |
-| `npm run webhook:test` | Simulate webhook delivery |
+| `npm run test:e2e:perf`    | Run performance E2E tests           |
+| `npm run test:ci`          | Run unit + E2E (CI mode)            |
+| `npm run lighthouse`       | Run Lighthouse CI audit             |
+| `npm run webhook:test`     | Simulate webhook delivery           |
 
 ---
 
@@ -62,6 +62,7 @@ npx playwright test --debug -g "hero section"
 ```
 
 #### Browsers
+
 Tests run against **Desktop Chrome** (1280×720) and **Mobile Safari** (iPhone 13, 390×844).
 
 ---
@@ -104,17 +105,17 @@ npm run webhook:test -- stripe payment_intent.succeeded <uuid>
 
 ### Test Coverage
 
-| Flow | Tests |
-|------|-------|
-| Order creation | ✅ |
-| Payment initiation (Razorpay) | ✅ |
-| Signature verification (valid + invalid) | ✅ |
-| payment.captured webhook | ✅ |
-| payment.failed webhook | ✅ |
-| refund.created webhook | ✅ |
-| Webhook idempotency (duplicate handling) | ✅ |
-| Stripe PaymentIntent lifecycle | ✅ |
-| Stripe webhook (success + failure) | ✅ |
+| Flow                                     | Tests |
+| ---------------------------------------- | ----- |
+| Order creation                           | ✅    |
+| Payment initiation (Razorpay)            | ✅    |
+| Signature verification (valid + invalid) | ✅    |
+| payment.captured webhook                 | ✅    |
+| payment.failed webhook                   | ✅    |
+| refund.created webhook                   | ✅    |
+| Webhook idempotency (duplicate handling) | ✅    |
+| Stripe PaymentIntent lifecycle           | ✅    |
+| Stripe webhook (success + failure)       | ✅    |
 
 ---
 
@@ -131,15 +132,15 @@ Push/PR → Unit Tests → E2E Tests → Build → Lighthouse
 
 ### Jobs
 
-| Job | Trigger | Fails pipeline? |
-|-----|---------|-----------------|
-| **Unit Tests** | push, PR | ✅ Yes |
-| **E2E Tests** | after unit tests | ✅ Yes |
-| **Build** | after unit tests | ✅ Yes |
-| **Lighthouse** | after build | ⚠️ Warns only |
-| **Deploy Staging** | main push only | ✅ Yes |
-| **Deploy Production** | v* tag push only | ✅ Yes |
-| **Rollback** | manual dispatch | N/A |
+| Job                   | Trigger           | Fails pipeline? |
+| --------------------- | ----------------- | --------------- |
+| **Unit Tests**        | push, PR          | ✅ Yes          |
+| **E2E Tests**         | after unit tests  | ✅ Yes          |
+| **Build**             | after unit tests  | ✅ Yes          |
+| **Lighthouse**        | after build       | ⚠️ Warns only   |
+| **Deploy Staging**    | main push only    | ✅ Yes          |
+| **Deploy Production** | v\* tag push only | ✅ Yes          |
+| **Rollback**          | manual dispatch   | N/A             |
 
 ### Artifacts Uploaded
 
@@ -152,12 +153,12 @@ Push/PR → Unit Tests → E2E Tests → Build → Lighthouse
 
 ### Environment Secrets
 
-| Secret | Environment | Description |
-|--------|-------------|-------------|
-| `VERCEL_TOKEN` | staging, production | Vercel deployment token |
-| `RAZORPAY_KEY_ID` | staging, production | Razorpay API key |
-| `RAZORPAY_KEY_SECRET` | production | Razorpay secret |
-| `STRIPE_SECRET_KEY` | production | Stripe API key (optional) |
+| Secret                | Environment         | Description               |
+| --------------------- | ------------------- | ------------------------- |
+| `VERCEL_TOKEN`        | staging, production | Vercel deployment token   |
+| `RAZORPAY_KEY_ID`     | staging, production | Razorpay API key          |
+| `RAZORPAY_KEY_SECRET` | production          | Razorpay secret           |
+| `STRIPE_SECRET_KEY`   | production          | Stripe API key (optional) |
 
 ### Rollback
 
@@ -174,12 +175,12 @@ To rollback production to the previous deployment:
 
 ### Naming Conventions
 
-| Branch Type | Pattern | Example |
-|-------------|---------|---------|
-| Feature | `feature/<scope>-<description>` | `feature/p1-wishlist` |
-| Release | `release/v<major>.<minor>.<patch>` | `release/v2.1.0` |
-| Hotfix | `hotfix/<description>` | `hotfix/fix-cart-crash` |
-| Chore | `chore/<description>` | `chore/update-deps` |
+| Branch Type | Pattern                            | Example                 |
+| ----------- | ---------------------------------- | ----------------------- |
+| Feature     | `feature/<scope>-<description>`    | `feature/p1-wishlist`   |
+| Release     | `release/v<major>.<minor>.<patch>` | `release/v2.1.0`        |
+| Hotfix      | `hotfix/<description>`             | `hotfix/fix-cart-crash` |
+| Chore       | `chore/<description>`              | `chore/update-deps`     |
 
 ### Tagging Rules
 
@@ -202,16 +203,44 @@ feature/p1-wishlist → PR to main → CI runs → Merge → Auto-deploy staging
 
 ### Lighthouse CI (Synthetic)
 
-Runs in CI against the built static bundle. Thresholds:
+Runs in CI against the built static bundle. All four categories are **hard failures** (❌ pipeline blocked) at ≥ 0.90:
 
-| Metric | Threshold | Action |
-|--------|-----------|--------|
-| Performance | ≥ 85 | ⚠️ Warn |
-| Accessibility | ≥ 90 | ❌ Fail |
-| SEO | ≥ 90 | ❌ Fail |
-| CLS | < 0.1 | ❌ Fail |
-| LCP | < 3.5s | ⚠️ Warn |
-| TBT | < 300ms | ⚠️ Warn |
+| Metric         | Threshold | Action  |
+| -------------- | --------- | ------- |
+| Performance    | ≥ 90      | ❌ Fail |
+| Accessibility  | ≥ 90      | ❌ Fail |
+| Best Practices | ≥ 90      | ❌ Fail |
+| SEO            | ≥ 90      | ❌ Fail |
+| CLS            | < 0.1     | ❌ Fail |
+| LCP            | < 3.5s    | ⚠️ Warn |
+| TBT            | < 300ms   | ⚠️ Warn |
+
+#### Running Lighthouse CI Locally
+
+```bash
+# 1. Build the production bundle
+npm run build
+
+# 2. Install LHCI CLI (one-time global install)
+npm install -g @lhci/cli@0.14.x
+
+# 3. Run LHCI against the dist/ build (serves it via static server internally)
+lhci autorun --config=lighthouserc.json
+
+# 4. Open the HTML report to get a full visual breakdown
+#    macOS / Linux:
+open .lighthouseci/*.html
+#    Windows:
+start .lighthouseci\$(Get-ChildItem .lighthouseci\*.html | Select-Object -First 1 -ExpandProperty Name)
+```
+
+Expected output on pass:
+```
+✅  assert.categories:performance = 0.9x >= 0.90
+✅  assert.categories:accessibility = 0.9x >= 0.90
+✅  assert.categories:best-practices = 0.9x >= 0.90
+✅  assert.categories:seo = 0.9x >= 0.90
+```
 
 ### Load Testing (k6)
 
@@ -233,20 +262,21 @@ Thresholds: p95 < 500ms, error rate < 1%, 50 concurrent users.
 
 Tracked events (when `VITE_GA4_MEASUREMENT_ID` is set):
 
-| Event | Trigger |
-|-------|---------|
-| `page_view` | SPA route change |
-| `view_item` | PDP page load |
-| `add_to_cart` | Add to Cart button |
-| `remove_from_cart` | Remove from Cart |
-| `view_cart` | Cart drawer opened |
-| `begin_checkout` | Checkout button clicked |
-| `purchase` | Payment success |
-| `payment_error` | Payment failure |
+| Event              | Trigger                 |
+| ------------------ | ----------------------- |
+| `page_view`        | SPA route change        |
+| `view_item`        | PDP page load           |
+| `add_to_cart`      | Add to Cart button      |
+| `remove_from_cart` | Remove from Cart        |
+| `view_cart`        | Cart drawer opened      |
+| `begin_checkout`   | Checkout button clicked |
+| `purchase`         | Payment success         |
+| `payment_error`    | Payment failure         |
 
 ### Sentry Error Monitoring
 
 When `VITE_SENTRY_DSN` is set:
+
 - **ErrorBoundary** wraps the entire React tree
 - **Breadcrumbs** for checkout steps
 - **capturePaymentError()** with gateway/order context tags

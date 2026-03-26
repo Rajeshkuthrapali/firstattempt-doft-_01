@@ -1,5 +1,13 @@
 import { describe, it, expect } from "vitest";
-import { palette, fontFamily, fontSize, spacing, radius, shadow, transition } from "../../design/tokens";
+import {
+  palette,
+  fontFamily,
+  fontSize,
+  spacing,
+  radius,
+  shadow,
+  transition,
+} from "../../design/tokens";
 
 describe("Design tokens — palette", () => {
   it("defines the cream background", () => {

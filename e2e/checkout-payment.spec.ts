@@ -33,10 +33,7 @@ test.describe("Checkout & Payment Flow", () => {
 
     // Navigate to Midnight Oud via SPA (avoid page.goto which resets state)
     // Use the "You May Also Like" section's Midnight Oud link
-    await page
-      .getByLabel("View Midnight Oud details")
-      .first()
-      .click();
+    await page.getByLabel("View Midnight Oud details").first().click();
     await expect(page).toHaveURL(/\/product\/midnight-oud/);
     await page.click("#product-add-to-cart");
 
@@ -51,9 +48,7 @@ test.describe("Checkout & Payment Flow", () => {
     ).toBeVisible();
 
     // Verify subtotal contains ₹5,998
-    await expect(
-      page.locator("#cart-drawer").getByText("5,998"),
-    ).toBeVisible();
+    await expect(page.locator("#cart-drawer").getByText("5,998")).toBeVisible();
   });
 
   test("shipping info is shown at checkout section", async ({ page }) => {
@@ -73,7 +68,10 @@ test.describe("Checkout & Payment Flow", () => {
     await page.click("#cart-toggle");
 
     await expect(
-      page.locator("#cart-drawer").getByText(/free shipping/i).first(),
+      page
+        .locator("#cart-drawer")
+        .getByText(/free shipping/i)
+        .first(),
     ).toBeVisible();
     await expect(
       page.locator("#cart-drawer").getByText(/3000/i).first(),
@@ -93,9 +91,7 @@ test.describe("Checkout & Payment Flow", () => {
     await expect(checkoutBtn).toBeEnabled();
   });
 
-  test("WhatsApp support FAB is visible for payment help", async ({
-    page,
-  }) => {
+  test("WhatsApp support FAB is visible for payment help", async ({ page }) => {
     await page.goto("/");
     const whatsapp = page.getByLabel("Chat on WhatsApp");
     await expect(whatsapp).toBeVisible();

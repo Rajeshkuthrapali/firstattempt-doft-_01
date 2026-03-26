@@ -2,10 +2,10 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 
 // ── Mock web-vitals BEFORE importing rum ──────────────────────────────────────
 vi.mock("web-vitals", () => ({
-  onLCP:  vi.fn(),
-  onINP:  vi.fn(),
-  onCLS:  vi.fn(),
-  onFCP:  vi.fn(),
+  onLCP: vi.fn(),
+  onINP: vi.fn(),
+  onCLS: vi.fn(),
+  onFCP: vi.fn(),
   onTTFB: vi.fn(),
 }));
 
@@ -53,7 +53,7 @@ describe("sendToGA4 (called by web-vitals observers)", () => {
     expect(gtagSpy).toHaveBeenCalledWith("event", "web_vital", {
       event_category: "Web Vitals",
       event_label: "v3-lcp",
-      value: 1235,           // Math.round(1234.5)
+      value: 1235, // Math.round(1234.5)
       metric_name: "LCP",
       metric_rating: "good",
       non_interaction: true,
@@ -65,10 +65,14 @@ describe("sendToGA4 (called by web-vitals observers)", () => {
     const cb = captureCallback(onCLS as ReturnType<typeof vi.fn>);
     cb({ id: "v3-cls", name: "CLS", value: 0.123, rating: "good" });
 
-    expect(gtagSpy).toHaveBeenCalledWith("event", "web_vital", expect.objectContaining({
-      metric_name: "CLS",
-      value: 123,             // Math.round(0.123 * 1000)
-    }));
+    expect(gtagSpy).toHaveBeenCalledWith(
+      "event",
+      "web_vital",
+      expect.objectContaining({
+        metric_name: "CLS",
+        value: 123, // Math.round(0.123 * 1000)
+      }),
+    );
   });
 
   it("fires gtag web_vital event for INP (v3 metric)", () => {
@@ -76,11 +80,15 @@ describe("sendToGA4 (called by web-vitals observers)", () => {
     const cb = captureCallback(onINP as ReturnType<typeof vi.fn>);
     cb({ id: "v3-inp", name: "INP", value: 180, rating: "good" });
 
-    expect(gtagSpy).toHaveBeenCalledWith("event", "web_vital", expect.objectContaining({
-      metric_name: "INP",
-      value: 180,
-      metric_rating: "good",
-    }));
+    expect(gtagSpy).toHaveBeenCalledWith(
+      "event",
+      "web_vital",
+      expect.objectContaining({
+        metric_name: "INP",
+        value: 180,
+        metric_rating: "good",
+      }),
+    );
   });
 
   it("no-ops when window.gtag is absent", () => {

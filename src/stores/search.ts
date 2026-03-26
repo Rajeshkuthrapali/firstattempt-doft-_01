@@ -26,8 +26,10 @@ function searchProducts(q: string): SearchHit[] {
   return products
     .filter((p) => p.inStock)
     .flatMap((p) => {
-      if (p.name.toLowerCase().includes(lower)) return [{ product: p, matchedOn: "name" }];
-      if (p.tagline.toLowerCase().includes(lower)) return [{ product: p, matchedOn: "tagline" }];
+      if (p.name.toLowerCase().includes(lower))
+        return [{ product: p, matchedOn: "name" }];
+      if (p.tagline.toLowerCase().includes(lower))
+        return [{ product: p, matchedOn: "tagline" }];
       if (p.notes.some((n) => n.toLowerCase().includes(lower)))
         return [{ product: p, matchedOn: "notes" }];
       if (p.category.toLowerCase().includes(lower))
@@ -47,7 +49,8 @@ export const useSearchStore = create<SearchState>()((set) => ({
   hits: [],
   isOpen: false,
 
-  setQuery: (q) => set({ query: q, hits: searchProducts(q), isOpen: q.length > 0 }),
+  setQuery: (q) =>
+    set({ query: q, hits: searchProducts(q), isOpen: q.length > 0 }),
   clear: () => set({ query: "", hits: [], isOpen: false }),
   open: () => set({ isOpen: true }),
   close: () => set({ isOpen: false }),

@@ -4,7 +4,10 @@ import { ShoppingBag, Check } from "lucide-react";
 import { useCartStore } from "@/lib/store/cart";
 import type { Product, Variant } from "@prisma/client";
 
-interface AddToCartButtonProps { product: Product; variant: Variant; }
+interface AddToCartButtonProps {
+  product: Product;
+  variant: Variant;
+}
 
 export function AddToCartButton({ product, variant }: AddToCartButtonProps) {
   const addItem = useCartStore((s) => s.addItem);
@@ -29,9 +32,22 @@ export function AddToCartButton({ product, variant }: AddToCartButtonProps) {
   }
 
   return (
-    <button onClick={handle} disabled={disabled}
-      className={`btn-luxury flex w-full items-center justify-center gap-2 py-3.5 text-sm font-bold uppercase tracking-widest transition-all ${disabled ? "cursor-not-allowed bg-border text-text-muted" : added ? "bg-green-600 text-white" : "bg-primary text-white hover:-translate-y-0.5 hover:bg-accent hover:shadow-lg"}`}>
-      {disabled ? "Out of Stock" : added ? (<><Check size={16} /> Added!</>) : (<><ShoppingBag size={16} /> Add to Cart</>)}
+    <button
+      onClick={handle}
+      disabled={disabled}
+      className={`btn-luxury flex w-full items-center justify-center gap-2 py-3.5 text-sm font-bold uppercase tracking-widest transition-all ${disabled ? "cursor-not-allowed bg-border text-text-muted" : added ? "bg-green-600 text-white" : "bg-primary text-white hover:-translate-y-0.5 hover:bg-accent hover:shadow-lg"}`}
+    >
+      {disabled ? (
+        "Out of Stock"
+      ) : added ? (
+        <>
+          <Check size={16} /> Added!
+        </>
+      ) : (
+        <>
+          <ShoppingBag size={16} /> Add to Cart
+        </>
+      )}
     </button>
   );
 }

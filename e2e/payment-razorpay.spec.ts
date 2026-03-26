@@ -145,9 +145,7 @@ test.describe("Razorpay Payment Flow", () => {
 });
 
 test.describe("Razorpay Webhook Delivery", () => {
-  test("payment.captured webhook updates order status", async ({
-    request,
-  }) => {
+  test("payment.captured webhook updates order status", async ({ request }) => {
     // Create order + initiate payment
     const orderRes = await request.post(`${API_BASE}/orders`, {
       data: {
@@ -338,16 +336,13 @@ test.describe("Razorpay Webhook Delivery", () => {
       .createHmac("sha256", webhookSecret)
       .update(payload1)
       .digest("hex");
-    const res1 = await request.post(
-      `${API_BASE}/payments/webhooks/razorpay`,
-      {
-        data: payload1,
-        headers: {
-          "Content-Type": "application/json",
-          "X-Razorpay-Signature": sig1,
-        },
+    const res1 = await request.post(`${API_BASE}/payments/webhooks/razorpay`, {
+      data: payload1,
+      headers: {
+        "Content-Type": "application/json",
+        "X-Razorpay-Signature": sig1,
       },
-    );
+    });
     expect(res1.ok()).toBeTruthy();
 
     // Send duplicate webhook (retry scenario)
@@ -356,16 +351,13 @@ test.describe("Razorpay Webhook Delivery", () => {
       .createHmac("sha256", webhookSecret)
       .update(payload2)
       .digest("hex");
-    const res2 = await request.post(
-      `${API_BASE}/payments/webhooks/razorpay`,
-      {
-        data: payload2,
-        headers: {
-          "Content-Type": "application/json",
-          "X-Razorpay-Signature": sig2,
-        },
+    const res2 = await request.post(`${API_BASE}/payments/webhooks/razorpay`, {
+      data: payload2,
+      headers: {
+        "Content-Type": "application/json",
+        "X-Razorpay-Signature": sig2,
       },
-    );
+    });
     // Should succeed (idempotent) — not create duplicate records
     expect(res2.ok()).toBeTruthy();
 

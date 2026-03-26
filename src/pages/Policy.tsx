@@ -42,7 +42,9 @@ export default function Policy() {
       </h1>
       <div className="prose prose-sm max-w-none text-[#6b5e54] leading-relaxed">
         {policy.content.split("\n\n").map((para, i) => (
-          <p key={i} className="mb-4 whitespace-pre-line">{para}</p>
+          <p key={i} className="mb-4 whitespace-pre-line">
+            {para}
+          </p>
         ))}
       </div>
     </div>

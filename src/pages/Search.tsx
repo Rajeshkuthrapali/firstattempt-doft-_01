@@ -32,11 +32,18 @@ export default function Search() {
 
       {/* Search input */}
       <div className="relative mb-10">
-        <label htmlFor="search-input" className="sr-only">Search products</label>
+        <label htmlFor="search-input" className="sr-only">
+          Search products
+        </label>
         <svg
           className="absolute left-4 top-1/2 -translate-y-1/2 text-[#9a8d82]"
-          width="18" height="18" viewBox="0 0 24 24" fill="none"
-          stroke="currentColor" strokeWidth={1.8} aria-hidden="true"
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth={1.8}
+          aria-hidden="true"
         >
           <circle cx="11" cy="11" r="7" />
           <path strokeLinecap="round" d="m21 21-4.35-4.35" />
@@ -57,19 +64,30 @@ export default function Search() {
 
       {/* Results */}
       {query && (
-        <section id="search-results" aria-live="polite" aria-label="Search results">
+        <section
+          id="search-results"
+          aria-live="polite"
+          aria-label="Search results"
+        >
           {hits.length === 0 ? (
             <p className="text-sm text-[#9a8d82]">
-              No results for "<strong>{query}</strong>". Try a scent note or category.
+              No results for "<strong>{query}</strong>". Try a scent note or
+              category.
             </p>
           ) : (
             <>
               <p className="text-xs text-[#9a8d82] uppercase tracking-widest mb-4">
                 {hits.length} result{hits.length !== 1 ? "s" : ""} for "{query}"
               </p>
-              <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" role="list">
+              <ul
+                className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+                role="list"
+              >
                 {hits.map(({ product, matchedOn }) => (
-                  <li key={product.id} className="group rounded border border-[#e8e0d8] overflow-hidden">
+                  <li
+                    key={product.id}
+                    className="group rounded border border-[#e8e0d8] overflow-hidden"
+                  >
                     <Link to={`/product/${product.slug}`} className="block">
                       <img
                         src={product.image}
@@ -80,9 +98,15 @@ export default function Search() {
                         <p className="text-[10px] uppercase tracking-widest text-[#c4a093] mb-1">
                           Matched on {matchedOn}
                         </p>
-                        <h3 className="text-sm font-semibold text-[#2d2926]">{product.name}</h3>
-                        <p className="text-xs text-[#9a8d82] mt-0.5">{product.tagline}</p>
-                        <p className="mt-2 text-sm font-semibold text-[#2d2926]">{formatPrice(product.price)}</p>
+                        <h3 className="text-sm font-semibold text-[#2d2926]">
+                          {product.name}
+                        </h3>
+                        <p className="text-xs text-[#9a8d82] mt-0.5">
+                          {product.tagline}
+                        </p>
+                        <p className="mt-2 text-sm font-semibold text-[#2d2926]">
+                          {formatPrice(product.price)}
+                        </p>
                       </div>
                     </Link>
                     <div className="px-4 pb-4">
@@ -104,7 +128,10 @@ export default function Search() {
       {/* Curated Favourites (shown when no query) */}
       {!query && (
         <section aria-labelledby="curated-heading">
-          <h2 id="curated-heading" className="text-xs font-semibold uppercase tracking-[0.2em] text-[#9a8d82] mb-6">
+          <h2
+            id="curated-heading"
+            className="text-xs font-semibold uppercase tracking-[0.2em] text-[#9a8d82] mb-6"
+          >
             Curated Favourites
           </h2>
           <ul className="grid gap-6 sm:grid-cols-3" role="list">
@@ -119,8 +146,12 @@ export default function Search() {
                     />
                   </div>
                   <div className="mt-3">
-                    <h3 className="text-sm font-semibold text-[#2d2926]">{p.name}</h3>
-                    <p className="text-xs text-[#9a8d82]">{formatPrice(p.price)}</p>
+                    <h3 className="text-sm font-semibold text-[#2d2926]">
+                      {p.name}
+                    </h3>
+                    <p className="text-xs text-[#9a8d82]">
+                      {formatPrice(p.price)}
+                    </p>
                   </div>
                 </Link>
               </li>

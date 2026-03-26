@@ -8,7 +8,9 @@ import { test, expect } from "@playwright/test";
 test.describe("Auth page", () => {
   test("renders login form with required fields", async ({ page }) => {
     await page.goto("/auth");
-    await expect(page.getByRole("heading", { name: /welcome back/i })).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: /welcome back/i }),
+    ).toBeVisible();
     await expect(page.locator("#auth-email")).toBeVisible();
     await expect(page.locator("#auth-password")).toBeVisible();
     await expect(page.getByRole("button", { name: /sign in/i })).toBeVisible();
@@ -17,16 +19,22 @@ test.describe("Auth page", () => {
   test("switches to registration mode", async ({ page }) => {
     await page.goto("/auth");
     await page.getByRole("button", { name: /create account/i }).click();
-    await expect(page.getByRole("heading", { name: /create account/i })).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: /create account/i }),
+    ).toBeVisible();
     await expect(page.locator("#auth-name")).toBeVisible();
   });
 
   test("Google OAuth button renders", async ({ page }) => {
     await page.goto("/auth");
-    await expect(page.getByRole("button", { name: /continue with google/i })).toBeVisible();
+    await expect(
+      page.getByRole("button", { name: /continue with google/i }),
+    ).toBeVisible();
   });
 
-  test("account page redirects unauthenticated users to /auth", async ({ page }) => {
+  test("account page redirects unauthenticated users to /auth", async ({
+    page,
+  }) => {
     await page.goto("/account");
     await expect(page).toHaveURL(/\/auth/);
   });
@@ -36,9 +44,13 @@ test.describe("Auth page", () => {
  * P1 Feature — Search E2E.
  */
 test.describe("Search", () => {
-  test("search page shows curated favourites when query is empty", async ({ page }) => {
+  test("search page shows curated favourites when query is empty", async ({
+    page,
+  }) => {
     await page.goto("/search");
-    await expect(page.getByRole("heading", { name: /curated favourites/i })).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: /curated favourites/i }),
+    ).toBeVisible();
   });
 
   test("search returns results for 'amber'", async ({ page }) => {
@@ -60,7 +72,9 @@ test.describe("Search", () => {
     await page.goto("/");
     await page.getByLabel("Open search").click();
     await page.keyboard.press("Escape");
-    await expect(page.getByRole("dialog", { name: /search/i })).not.toBeVisible();
+    await expect(
+      page.getByRole("dialog", { name: /search/i }),
+    ).not.toBeVisible();
   });
 });
 
@@ -70,14 +84,18 @@ test.describe("Search", () => {
 test.describe("Collections page", () => {
   test("renders heading and category filters", async ({ page }) => {
     await page.goto("/collections");
-    await expect(page.getByRole("heading", { name: /our collection/i })).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: /our collection/i }),
+    ).toBeVisible();
     await expect(page.getByRole("button", { name: "All" })).toBeVisible();
     await expect(page.getByRole("button", { name: "Signature" })).toBeVisible();
   });
 
   test("curated favourites section is visible", async ({ page }) => {
     await page.goto("/collections");
-    await expect(page.getByRole("heading", { name: /curated favourites/i })).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: /curated favourites/i }),
+    ).toBeVisible();
   });
 
   test("filter by Seasonal shows only seasonal products", async ({ page }) => {
@@ -94,7 +112,9 @@ test.describe("Collections page", () => {
     await expect(wishlistBtn).toBeVisible();
     await wishlistBtn.click();
     // After click the label should change to 'Remove from wishlist'
-    await expect(page.getByLabel(/remove from wishlist/i).first()).toBeVisible();
+    await expect(
+      page.getByLabel(/remove from wishlist/i).first(),
+    ).toBeVisible();
   });
 });
 
@@ -114,7 +134,9 @@ test.describe("Checkout page", () => {
 test.describe("Contact page", () => {
   test("renders the Contact Us heading", async ({ page }) => {
     await page.goto("/contact");
-    await expect(page.getByRole("heading", { name: /contact us/i })).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: /contact us/i }),
+    ).toBeVisible();
   });
 
   test("all form fields are present", async ({ page }) => {
@@ -122,7 +144,9 @@ test.describe("Contact page", () => {
     await expect(page.locator("#contact-name")).toBeVisible();
     await expect(page.locator("#contact-email")).toBeVisible();
     await expect(page.locator("#contact-message")).toBeVisible();
-    await expect(page.getByRole("button", { name: /send message/i })).toBeVisible();
+    await expect(
+      page.getByRole("button", { name: /send message/i }),
+    ).toBeVisible();
   });
 
   test("form submission shows confirmation", async ({ page }) => {

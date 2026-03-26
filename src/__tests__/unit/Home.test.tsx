@@ -101,9 +101,7 @@ describe("Home page — Clean Burning section", () => {
 describe("Home page — Lifestyle banner", () => {
   it("renders the lifestyle section with aria-label", () => {
     renderWithRouter(<Home />);
-    const section = screen.getByLabelText(
-      "Lifestyle imagery and brand quote",
-    );
+    const section = screen.getByLabelText("Lifestyle imagery and brand quote");
     expect(section).toBeInTheDocument();
   });
 

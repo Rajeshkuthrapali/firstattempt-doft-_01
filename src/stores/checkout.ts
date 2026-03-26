@@ -25,7 +25,11 @@ interface CheckoutState {
   checkAbandonedCart: (cartIsEmpty: boolean) => void;
 }
 
-const DEFAULT_GIFT: GiftOptions = { enabled: false, message: "", wrapping: "none" };
+const DEFAULT_GIFT: GiftOptions = {
+  enabled: false,
+  message: "",
+  wrapping: "none",
+};
 
 /** Time after which an unfinished cart is considered "abandoned" (30 min). */
 const ABANDONMENT_THRESHOLD_MS = 30 * 60 * 1000;
@@ -41,8 +45,7 @@ export const useCheckoutStore = create<CheckoutState>()(
       lastAbandonmentWarning: null,
       showRecoveryBanner: false,
 
-      setGift: (opts) =>
-        set((s) => ({ gift: { ...s.gift, ...opts } })),
+      setGift: (opts) => set((s) => ({ gift: { ...s.gift, ...opts } })),
 
       resetGift: () => set({ gift: { ...DEFAULT_GIFT } }),
 
@@ -52,7 +55,10 @@ export const useCheckoutStore = create<CheckoutState>()(
       dismissRecoveryBanner: () => set({ showRecoveryBanner: false }),
 
       checkAbandonedCart: (cartIsEmpty) => {
-        if (cartIsEmpty) { set({ showRecoveryBanner: false }); return; }
+        if (cartIsEmpty) {
+          set({ showRecoveryBanner: false });
+          return;
+        }
         const { lastAbandonmentWarning } = get();
         const elapsed = lastAbandonmentWarning
           ? Date.now() - lastAbandonmentWarning

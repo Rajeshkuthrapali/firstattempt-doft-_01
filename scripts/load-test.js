@@ -48,9 +48,7 @@ export default function () {
 
   // 2. Create order
   const orderPayload = JSON.stringify({
-    items: [
-      { productId: "golden-hour", variantId: "gh-default", quantity: 1 },
-    ],
+    items: [{ productId: "golden-hour", variantId: "gh-default", quantity: 1 }],
     shippingAddress: {
       name: `Load Test User ${__VU}`,
       line1: "123 Load Test Street",

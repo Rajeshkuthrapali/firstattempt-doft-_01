@@ -21,7 +21,12 @@ export default defineConfig({
     css: false,
     coverage: {
       provider: "v8",
-      include: ["src/components/**", "src/pages/**", "src/stores/**", "src/data/**"],
+      include: [
+        "src/components/**",
+        "src/pages/**",
+        "src/stores/**",
+        "src/data/**",
+      ],
       exclude: ["src/__tests__/**"],
     },
   },

@@ -24,13 +24,20 @@ export default function Contact() {
         Contact Us
       </h1>
       <p className="text-sm text-[#6b5e54] mb-10 leading-relaxed">
-        We'd love to hear from you — whether it's a question about an order, a gifting enquiry, or just a love note for your favourite candle.
+        We'd love to hear from you — whether it's a question about an order, a
+        gifting enquiry, or just a love note for your favourite candle.
       </p>
 
       {submitted ? (
-        <div role="alert" aria-live="polite" className="rounded bg-[#f3ece4] border border-[#e8d8d0] p-8 text-center">
+        <div
+          role="alert"
+          aria-live="polite"
+          className="rounded bg-[#f3ece4] border border-[#e8d8d0] p-8 text-center"
+        >
           <p className="text-2xl mb-2">🕯️</p>
-          <p className="text-base font-semibold text-[#2d2926]">Thank you, {name}!</p>
+          <p className="text-base font-semibold text-[#2d2926]">
+            Thank you, {name}!
+          </p>
           <p className="text-sm text-[#6b5e54] mt-2">
             We'll get back to you at {email} within 1–2 business days.
           </p>

@@ -9,6 +9,13 @@ import Search from "./pages/Search";
 import Checkout from "./pages/Checkout";
 import Contact from "./pages/Contact";
 import Policy from "./pages/Policy";
+import Blog from "./pages/Blog";
+import BlogArticle from "./pages/BlogArticle";
+import AdminLayout from "./pages/admin/AdminLayout";
+import AdminOverview from "./pages/admin/AdminOverview";
+import AdminProducts from "./pages/admin/AdminProducts";
+import AdminOrders from "./pages/admin/AdminOrders";
+import AdminInventory from "./pages/admin/AdminInventory";
 
 /**
  * Root application component.
@@ -33,10 +40,23 @@ export default function App() {
         <Route path="auth" element={<Auth />} />
         <Route path="account" element={<Account />} />
 
+        {/* Blog / Editorial */}
+        <Route path="blog" element={<Blog />} />
+        <Route path="blog/:slug" element={<BlogArticle />} />
+
         {/* Content & Legal */}
         <Route path="contact" element={<Contact />} />
         <Route path="policy/:slug" element={<Policy />} />
       </Route>
+
+      {/* Admin — own layout with sidebar + role guard */}
+      <Route path="admin" element={<AdminLayout />}>
+        <Route index element={<AdminOverview />} />
+        <Route path="products" element={<AdminProducts />} />
+        <Route path="orders" element={<AdminOrders />} />
+        <Route path="inventory" element={<AdminInventory />} />
+      </Route>
     </Routes>
   );
 }
+

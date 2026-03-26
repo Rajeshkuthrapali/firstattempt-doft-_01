@@ -6,7 +6,6 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { CartSidebar } from "@/components/cart/CartSidebar";
 import { PreviewBanner } from "@/components/cms/PreviewBanner";
-import { GoogleAnalytics } from "@/lib/analytics";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -22,9 +21,7 @@ const lato = Lato({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(
-    process.env.NEXTAUTH_URL ?? "https://doftcandles.com",
-  ),
+  metadataBase: new URL(process.env.NEXTAUTH_URL ?? "https://doftcandles.com"),
   title: {
     default: "DOFT - Luxury Scented Candles & Fragrances",
     template: "%s | DOFT",
@@ -86,7 +83,6 @@ export default async function RootLayout({
         <main className="flex-1">{children}</main>
         <Footer />
         <CartSidebar />
-        <GoogleAnalytics />
       </body>
     </html>
   );

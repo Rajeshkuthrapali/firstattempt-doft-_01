@@ -27,8 +27,8 @@ import { check, sleep } from "k6";
 import { Counter, Trend } from "k6/metrics";
 
 const orderCreationTime = new Trend("order_creation_time", true);
-const paymentInitTime   = new Trend("payment_init_time", true);
-const errorCount        = new Counter("checkout_errors");
+const paymentInitTime = new Trend("payment_init_time", true);
+const errorCount = new Counter("checkout_errors");
 
 const BASE_URL = __ENV.BASE_URL || "http://localhost:4000/api";
 
@@ -36,13 +36,13 @@ export const options = {
   stages: [
     { duration: "15s", target: 10 }, // ramp up
     { duration: "60s", target: 30 }, // sustained load
-    { duration: "15s", target: 0 },  // ramp down
+    { duration: "15s", target: 0 }, // ramp down
   ],
   thresholds: {
-    http_req_duration:   ["p(95)<800"],   // 95th percentile < 800ms
-    http_req_failed:     ["rate<0.005"],  // error rate < 0.5%
+    http_req_duration: ["p(95)<800"], // 95th percentile < 800ms
+    http_req_failed: ["rate<0.005"], // error rate < 0.5%
     order_creation_time: ["p(95)<300"],
-    payment_init_time:   ["p(95)<400"],
+    payment_init_time: ["p(95)<400"],
   },
 };
 
@@ -73,11 +73,18 @@ export default function () {
   const orderOk = check(orderRes, {
     "order: 200/201": (r) => r.status === 200 || r.status === 201,
     "order: has id": (r) => {
-      try { return !!JSON.parse(r.body).data.id; } catch { return false; }
+      try {
+        return !!JSON.parse(r.body).data.id;
+      } catch {
+        return false;
+      }
     },
   });
 
-  if (!orderOk) { errorCount.add(1); return; }
+  if (!orderOk) {
+    errorCount.add(1);
+    return;
+  }
 
   const orderId = JSON.parse(orderRes.body).data.id;
 
@@ -91,7 +98,11 @@ export default function () {
   check(payRes, {
     "payment: 200": (r) => r.status === 200,
     "payment: has razorpayOrderId": (r) => {
-      try { return !!JSON.parse(r.body).data.razorpayOrderId; } catch { return false; }
+      try {
+        return !!JSON.parse(r.body).data.razorpayOrderId;
+      } catch {
+        return false;
+      }
     },
   });
 

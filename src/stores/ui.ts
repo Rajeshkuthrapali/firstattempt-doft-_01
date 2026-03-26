@@ -16,6 +16,11 @@ interface UiState {
   searchOpen: boolean;
   toggleSearch: () => void;
   closeSearch: () => void;
+
+  /** Quick-view modal — stores the product ID being previewed, or null when closed */
+  quickViewProductId: string | null;
+  openQuickView: (productId: string) => void;
+  closeQuickView: () => void;
 }
 
 /**
@@ -34,4 +39,8 @@ export const useUiStore = create<UiState>((set) => ({
   searchOpen: false,
   toggleSearch: () => set((s) => ({ searchOpen: !s.searchOpen })),
   closeSearch: () => set({ searchOpen: false }),
+
+  quickViewProductId: null,
+  openQuickView: (productId) => set({ quickViewProductId: productId }),
+  closeQuickView: () => set({ quickViewProductId: null }),
 }));

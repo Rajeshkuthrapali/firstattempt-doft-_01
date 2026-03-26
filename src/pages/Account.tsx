@@ -9,7 +9,8 @@ import { formatPrice } from "../lib/format";
  * Redirects to /auth if user is not logged in.
  */
 export default function Account() {
-  const { user, orders, addresses, logout, removeAddress, setDefaultAddress } = useAuthStore();
+  const { user, orders, addresses, logout, removeAddress, setDefaultAddress } =
+    useAuthStore();
   const wishlistIds = useWishlistStore((s) => s.ids);
   const wishlistProducts = products.filter((p) => wishlistIds.includes(p.id));
 
@@ -23,7 +24,9 @@ export default function Account() {
           <h1 className="font-['Cormorant_Garamond',serif] text-3xl font-semibold text-[#2d2926]">
             My Account
           </h1>
-          <p className="mt-1 text-sm text-[#6b5e54]">Welcome back, {user.name}</p>
+          <p className="mt-1 text-sm text-[#6b5e54]">
+            Welcome back, {user.name}
+          </p>
         </div>
         <button
           onClick={logout}
@@ -52,40 +55,59 @@ export default function Account() {
 
         {/* ── Right column: content ── */}
         <div className="lg:col-span-2 space-y-12">
-
           {/* ── Orders ── */}
           <section id="orders" aria-labelledby="orders-heading">
-            <h2 id="orders-heading" className="text-xs font-semibold uppercase tracking-[0.2em] text-[#9a8d82] mb-4">
+            <h2
+              id="orders-heading"
+              className="text-xs font-semibold uppercase tracking-[0.2em] text-[#9a8d82] mb-4"
+            >
               Order History
             </h2>
             {orders.length === 0 ? (
               <div className="rounded border border-dashed border-[#e8e0d8] p-8 text-center">
                 <p className="text-sm text-[#9a8d82]">No orders yet.</p>
-                <Link to="/" className="mt-3 inline-block text-xs text-[#c4a093] hover:underline uppercase tracking-widest">
+                <Link
+                  to="/"
+                  className="mt-3 inline-block text-xs text-[#c4a093] hover:underline uppercase tracking-widest"
+                >
                   Shop Now
                 </Link>
               </div>
             ) : (
               <ul className="space-y-4" role="list">
                 {orders.map((order) => (
-                  <li key={order.id} className="rounded border border-[#e8e0d8] p-4">
+                  <li
+                    key={order.id}
+                    className="rounded border border-[#e8e0d8] p-4"
+                  >
                     <div className="flex items-center justify-between mb-2">
                       <span className="text-xs font-semibold uppercase tracking-wider text-[#2d2926]">
                         #{order.id.slice(-8).toUpperCase()}
                       </span>
-                      <span className={`text-xs px-2 py-0.5 rounded-full ${
-                        order.status === "delivered" ? "bg-green-50 text-green-700" :
-                        order.status === "cancelled" ? "bg-red-50 text-red-700" :
-                        "bg-amber-50 text-amber-700"
-                      }`}>
+                      <span
+                        className={`text-xs px-2 py-0.5 rounded-full ${
+                          order.status === "delivered"
+                            ? "bg-green-50 text-green-700"
+                            : order.status === "cancelled"
+                              ? "bg-red-50 text-red-700"
+                              : "bg-amber-50 text-amber-700"
+                        }`}
+                      >
                         {order.status}
                       </span>
                     </div>
-                    <p className="text-xs text-[#9a8d82]">{new Date(order.date).toLocaleDateString("en-IN")}</p>
+                    <p className="text-xs text-[#9a8d82]">
+                      {new Date(order.date).toLocaleDateString("en-IN")}
+                    </p>
                     <ul className="mt-2 space-y-1">
                       {order.items.map((item, i) => (
-                        <li key={i} className="flex justify-between text-sm text-[#6b5e54]">
-                          <span>{item.name} × {item.qty}</span>
+                        <li
+                          key={i}
+                          className="flex justify-between text-sm text-[#6b5e54]"
+                        >
+                          <span>
+                            {item.name} × {item.qty}
+                          </span>
                           <span>{formatPrice(item.price * item.qty)}</span>
                         </li>
                       ))}
@@ -102,7 +124,10 @@ export default function Account() {
           {/* ── Addresses ── */}
           <section id="addresses" aria-labelledby="addresses-heading">
             <div className="flex items-center justify-between mb-4">
-              <h2 id="addresses-heading" className="text-xs font-semibold uppercase tracking-[0.2em] text-[#9a8d82]">
+              <h2
+                id="addresses-heading"
+                className="text-xs font-semibold uppercase tracking-[0.2em] text-[#9a8d82]"
+              >
                 Saved Addresses
               </h2>
               <Link
@@ -117,18 +142,28 @@ export default function Account() {
             ) : (
               <ul className="grid gap-4 sm:grid-cols-2" role="list">
                 {addresses.map((addr) => (
-                  <li key={addr.id} className={`rounded border p-4 ${addr.isDefault ? "border-[#c4a093]" : "border-[#e8e0d8]"}`}>
+                  <li
+                    key={addr.id}
+                    className={`rounded border p-4 ${addr.isDefault ? "border-[#c4a093]" : "border-[#e8e0d8]"}`}
+                  >
                     <div className="flex items-start justify-between">
                       <div>
-                        <p className="text-xs font-semibold uppercase tracking-wider text-[#2d2926]">{addr.label}</p>
+                        <p className="text-xs font-semibold uppercase tracking-wider text-[#2d2926]">
+                          {addr.label}
+                        </p>
                         <p className="mt-1 text-sm text-[#6b5e54] leading-relaxed">
-                          {addr.name}<br />
-                          {addr.line1}{addr.line2 ? `, ${addr.line2}` : ""}<br />
+                          {addr.name}
+                          <br />
+                          {addr.line1}
+                          {addr.line2 ? `, ${addr.line2}` : ""}
+                          <br />
                           {addr.city}, {addr.state} {addr.postalCode}
                         </p>
                       </div>
                       {addr.isDefault && (
-                        <span className="text-[10px] bg-[#f3ece4] text-[#c4a093] px-2 py-0.5 rounded-full font-medium">Default</span>
+                        <span className="text-[10px] bg-[#f3ece4] text-[#c4a093] px-2 py-0.5 rounded-full font-medium">
+                          Default
+                        </span>
                       )}
                     </div>
                     <div className="mt-3 flex gap-3">
@@ -156,20 +191,31 @@ export default function Account() {
 
           {/* ── Wishlist ── */}
           <section id="wishlist" aria-labelledby="wishlist-heading">
-            <h2 id="wishlist-heading" className="text-xs font-semibold uppercase tracking-[0.2em] text-[#9a8d82] mb-4">
+            <h2
+              id="wishlist-heading"
+              className="text-xs font-semibold uppercase tracking-[0.2em] text-[#9a8d82] mb-4"
+            >
               Wishlist
             </h2>
             {wishlistProducts.length === 0 ? (
               <div className="rounded border border-dashed border-[#e8e0d8] p-8 text-center">
-                <p className="text-sm text-[#9a8d82]">Your wishlist is empty.</p>
-                <Link to="/" className="mt-3 inline-block text-xs text-[#c4a093] hover:underline uppercase tracking-widest">
+                <p className="text-sm text-[#9a8d82]">
+                  Your wishlist is empty.
+                </p>
+                <Link
+                  to="/"
+                  className="mt-3 inline-block text-xs text-[#c4a093] hover:underline uppercase tracking-widest"
+                >
                   Browse Products
                 </Link>
               </div>
             ) : (
               <ul className="grid gap-4 sm:grid-cols-2" role="list">
                 {wishlistProducts.map((p) => (
-                  <li key={p.id} className="flex gap-4 rounded border border-[#e8e0d8] p-3">
+                  <li
+                    key={p.id}
+                    className="flex gap-4 rounded border border-[#e8e0d8] p-3"
+                  >
                     <img
                       src={p.image}
                       alt={p.name}
@@ -182,7 +228,9 @@ export default function Account() {
                       >
                         {p.name}
                       </Link>
-                      <p className="text-xs text-[#9a8d82] mt-0.5">{formatPrice(p.price)}</p>
+                      <p className="text-xs text-[#9a8d82] mt-0.5">
+                        {formatPrice(p.price)}
+                      </p>
                     </div>
                   </li>
                 ))}

@@ -6,8 +6,6 @@
  * The gtag snippet is loaded in `index.html`.
  */
 
-
-
 /** Type-safe gtag interface */
 declare global {
   interface Window {
@@ -177,13 +175,20 @@ export interface CheckoutItem {
  * @param name - GA4 event name
  * @param params - Event parameters
  */
-export function trackEvent(name: string, params: Record<string, unknown>): void {
+export function trackEvent(
+  name: string,
+  params: Record<string, unknown>,
+): void {
   if (typeof window === "undefined" || !window.gtag) return;
   window.gtag("event", name, params);
 }
 
 /** User added a product to their wishlist. */
-export function trackWishlistAdd(itemId: string, itemName: string, price: number): void {
+export function trackWishlistAdd(
+  itemId: string,
+  itemName: string,
+  price: number,
+): void {
   trackEvent("add_to_wishlist", {
     currency: "INR",
     value: price,
@@ -197,7 +202,9 @@ export function trackWishlistRemove(itemId: string, itemName: string): void {
 }
 
 /** New account successfully created. */
-export function trackAccountCreated(method: "email" | "google" | "facebook"): void {
+export function trackAccountCreated(
+  method: "email" | "google" | "facebook",
+): void {
   trackEvent("account_created", { method });
 }
 
@@ -216,6 +223,14 @@ export function trackGiftOptionSelected(
   wrapping: "standard" | "premium" | "none",
   hasMessage: boolean,
 ): void {
-  trackEvent("gift_option_selected", { wrapping_type: wrapping, has_message: hasMessage });
+  trackEvent("gift_option_selected", {
+    wrapping_type: wrapping,
+    has_message: hasMessage,
+  });
+}
+
+/** User opened a quick-view modal for a product. */
+export function trackQuickView(itemId: string, itemName: string): void {
+  trackEvent("quick_view", { item_id: itemId, item_name: itemName });
 }
 
