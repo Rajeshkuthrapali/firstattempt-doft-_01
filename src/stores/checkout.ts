@@ -5,6 +5,7 @@ export interface GiftOptions {
   enabled: boolean;
   message: string; // max 200 chars
   wrapping: "standard" | "premium" | "none";
+  scheduledDeliveryDate?: Date | null;
 }
 
 interface CheckoutState {
@@ -29,6 +30,7 @@ const DEFAULT_GIFT: GiftOptions = {
   enabled: false,
   message: "",
   wrapping: "none",
+  scheduledDeliveryDate: null,
 };
 
 /** Time after which an unfinished cart is considered "abandoned" (30 min). */

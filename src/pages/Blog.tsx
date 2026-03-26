@@ -1,5 +1,6 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { posts } from "../data/posts";
+import { fetchPosts } from "../lib/sanity";
 
 const categoryLabels: Record<string, string> = {
   lifestyle: "Lifestyle",
@@ -13,6 +14,24 @@ const categoryLabels: Record<string, string> = {
  * Showcases brand storytelling for SEO and lifestyle positioning.
  */
 export default function BlogPage() {
+  const [posts, setPosts] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchPosts().then((data) => {
+      setPosts(data);
+      setLoading(false);
+    });
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="flex min-h-[60vh] items-center justify-center">
+        <p className="text-sm uppercase tracking-widest text-[#9a8d82]">Loading Journal...</p>
+      </div>
+    );
+  }
+
   const sorted = [...posts].sort(
     (a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime(),
   );

@@ -42,13 +42,34 @@ export default function AdminOrders() {
 
   const statuses: OrderStatus[] = ["pending", "paid", "dispatched", "delivered", "cancelled"];
 
+  function exportCSV() {
+    const headers = ["Order ID,Customer Email,Total,Status,Date,Items\n"];
+    const rows = orders.map(o => `${o.id},${o.email},${o.total},${o.status},${o.createdAt},${o.items}\n`);
+    const blob = new Blob(headers.concat(rows), { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", `orders_export_${new Date().toISOString().split('T')[0]}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
   return (
     <div>
       <div className="flex items-center justify-between mb-8">
-        <h1 className="font-['Cormorant_Garamond',serif] text-3xl font-medium text-[#2d2926]">
-          Orders
-        </h1>
-        <span className="text-sm text-[#9a8d82]">{orders.length} orders</span>
+        <div>
+          <h1 className="font-['Cormorant_Garamond',serif] text-3xl font-medium text-[#2d2926]">
+            Orders
+          </h1>
+          <p className="text-sm text-[#9a8d82] mt-1">{orders.length} orders total</p>
+        </div>
+        <button
+          onClick={exportCSV}
+          className="rounded bg-[#2d2926] px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.15em] text-white hover:bg-[#c4a093] transition-colors"
+        >
+          Export CSV
+        </button>
       </div>
 
       <div className="overflow-x-auto rounded-lg border border-[#e8e0d8] bg-white">

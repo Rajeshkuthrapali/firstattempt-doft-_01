@@ -17,6 +17,9 @@ import AdminProducts from "./pages/admin/AdminProducts";
 import AdminOrders from "./pages/admin/AdminOrders";
 import AdminInventory from "./pages/admin/AdminInventory";
 
+import AccountLoyalty from "./pages/AccountLoyalty";
+import GiftRegistry from "./pages/GiftRegistry";
+
 /**
  * Root application component.
  * All routes wrapped in the shared LayoutShell (Nav + Footer + SearchBar).
@@ -39,6 +42,10 @@ export default function App() {
         {/* Auth & Account */}
         <Route path="auth" element={<Auth />} />
         <Route path="account" element={<Account />} />
+        <Route path="account/loyalty" element={<AccountLoyalty />} />
+        
+        {/* Gifting */}
+        <Route path="registry" element={<GiftRegistry />} />
 
         {/* Blog / Editorial */}
         <Route path="blog" element={<Blog />} />

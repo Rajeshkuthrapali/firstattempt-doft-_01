@@ -220,6 +220,26 @@ export default function Checkout() {
                         {gift.message.length}/200
                       </p>
                     </div>
+
+                    <div>
+                      <label
+                        htmlFor="scheduled-delivery"
+                        className="block text-xs font-medium uppercase tracking-widest text-[#9a8d82] mb-1"
+                      >
+                        Scheduled Delivery Date{" "}
+                        <span className="normal-case">
+                          (optional)
+                        </span>
+                      </label>
+                      <input
+                        id="scheduled-delivery"
+                        type="date"
+                        min={new Date().toISOString().split("T")[0]}
+                        value={gift.scheduledDeliveryDate ? new Date(gift.scheduledDeliveryDate).toISOString().split("T")[0] : ""}
+                        onChange={(e) => setGift({ scheduledDeliveryDate: e.target.value ? new Date(e.target.value) : null })}
+                        className="w-full border border-[#e8e0d8] bg-white px-4 py-3 text-sm text-[#2d2926] outline-none focus:border-[#c4a093] transition-colors rounded-sm"
+                      />
+                    </div>
                   </div>
                 )}
               </div>

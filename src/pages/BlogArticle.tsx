@@ -1,5 +1,6 @@
+import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { getPostBySlug } from "../data/posts";
+import { fetchPost } from "../lib/sanity";
 
 /**
  * Individual blog article page.
@@ -7,7 +8,32 @@ import { getPostBySlug } from "../data/posts";
  */
 export default function BlogArticle() {
   const { slug } = useParams<{ slug: string }>();
-  const post = getPostBySlug(slug ?? "");
+  const [post, setPost] = useState<any | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!slug) {
+      // Defer state update to avoid synchronous cascading render warning
+      Promise.resolve().then(() => setLoading(false));
+      return;
+    }
+    let isMounted = true;
+    fetchPost(slug).then((data) => {
+      if (isMounted) {
+        setPost(data);
+        setLoading(false);
+      }
+    });
+    return () => { isMounted = false; };
+  }, [slug]);
+
+  if (loading) {
+    return (
+      <div className="flex min-h-[60vh] items-center justify-center">
+        <p className="text-sm uppercase tracking-widest text-[#9a8d82]">Loading Article...</p>
+      </div>
+    );
+  }
 
   if (!post) {
     return (

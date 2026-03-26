@@ -4,7 +4,7 @@ import { Trend, Rate } from "k6/metrics";
 
 /**
  * k6 Concurrent Checkout Load Test
- * Simulates 50 VUs hitting the checkout API concurrently,
+ * Simulates 200 VUs hitting the checkout API concurrently,
  * including a gift-wrap parameter to exercise that code path.
  *
  * Run locally:
@@ -20,9 +20,9 @@ const errorRate = new Rate("checkout_errors");
 
 export const options = {
   stages: [
-    { duration: "30s", target: 10 },  // Ramp up to 10 VUs
-    { duration: "60s", target: 50 },  // Ramp up to 50 VUs
-    { duration: "60s", target: 50 },  // Hold at 50 VUs
+    { duration: "30s", target: 40 },  // Ramp up to 40 VUs
+    { duration: "60s", target: 200 }, // Ramp up to 200 VUs
+    { duration: "60s", target: 200 }, // Hold at 200 VUs
     { duration: "30s", target: 0 },   // Ramp down
   ],
   thresholds: {

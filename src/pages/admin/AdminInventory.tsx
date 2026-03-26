@@ -35,17 +35,38 @@ export default function AdminInventory() {
 
   const lowStockCount = inventory.filter((r) => r.stock <= LOW_STOCK_THRESHOLD).length;
 
+  function exportCSV() {
+    const headers = ["Product ID,Name,Category,Price,Stock\n"];
+    const rows = inventory.map(r => `${r.id},"${r.name.replace(/"/g, '""')}",${r.category},${r.price},${r.stock}\n`);
+    const blob = new Blob(headers.concat(rows), { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", `inventory_export_${new Date().toISOString().split('T')[0]}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
   return (
     <div>
       <div className="flex items-center justify-between mb-8">
-        <h1 className="font-['Cormorant_Garamond',serif] text-3xl font-medium text-[#2d2926]">
-          Inventory
-        </h1>
-        {lowStockCount > 0 && (
-          <span className="rounded-full bg-amber-50 px-3 py-1 text-xs font-medium text-amber-700">
-            ⚠ {lowStockCount} item{lowStockCount > 1 ? "s" : ""} low / out of stock
-          </span>
-        )}
+        <div>
+          <h1 className="font-['Cormorant_Garamond',serif] text-3xl font-medium text-[#2d2926]">
+            Inventory
+          </h1>
+          {lowStockCount > 0 && (
+            <p className="mt-2 rounded-full bg-amber-50 px-3 py-1 text-xs font-medium text-amber-700 inline-block">
+              ⚠ {lowStockCount} item{lowStockCount > 1 ? "s" : ""} low / out of stock
+            </p>
+          )}
+        </div>
+        <button
+          onClick={exportCSV}
+          className="rounded bg-[#2d2926] px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.15em] text-white hover:bg-[#c4a093] transition-colors"
+        >
+          Export CSV
+        </button>
       </div>
 
       <div className="overflow-x-auto rounded-lg border border-[#e8e0d8] bg-white">
