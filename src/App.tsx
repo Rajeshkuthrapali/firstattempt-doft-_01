@@ -17,6 +17,8 @@ import AdminProducts from "./pages/admin/AdminProducts";
 import AdminOrders from "./pages/admin/AdminOrders";
 import AdminInventory from "./pages/admin/AdminInventory";
 import AdminLogs from "./pages/admin/AdminLogs";
+import AdminExperiments from "./pages/admin/AdminExperiments";
+import Rewards from "./pages/Rewards";
 
 import AccountLoyalty from "./pages/AccountLoyalty";
 import GiftRegistry from "./pages/GiftRegistry";
@@ -46,6 +48,7 @@ export default function App() {
         <Route path="auth" element={<Auth />} />
         <Route path="account" element={<Account />} />
         <Route path="account/loyalty" element={<AccountLoyalty />} />
+        <Route path="rewards" element={<Rewards />} />
         
         {/* Gifting */}
         <Route path="registry" element={<GiftRegistry />} />
@@ -73,6 +76,7 @@ export default function App() {
         <Route path="orders" element={<AdminOrders />} />
         <Route path="inventory" element={<AdminInventory />} />
         <Route path="logs" element={<AdminLogs />} />
+        <Route path="experiments" element={<AdminExperiments />} />
       </Route>
     </Routes>
   );
