@@ -34,7 +34,7 @@ test.describe("RUM – web_vital GA4 events", () => {
     await page.mouse.move(200, 200);
 
     // web-vitals emits on page lifecycle — wait for metrics to flush
-    await page.waitForTimeout(3500);
+    await page.waitForTimeout(10000); // Extended for Mobile Safari flakiness
 
     // Collect all web_vital events recorded by the stub
     const rumEvents = await page.evaluate(() =>

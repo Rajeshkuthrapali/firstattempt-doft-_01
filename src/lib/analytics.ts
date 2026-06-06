@@ -234,3 +234,34 @@ export function trackQuickView(itemId: string, itemName: string): void {
   trackEvent("quick_view", { item_id: itemId, item_name: itemName });
 }
 
+// ── P6 Revenue Attribution ────────────────────────────────────────────────────
+
+/** Attributes a purchase to an active A/B experiment variant. */
+export function trackExperimentRevenue(
+  experimentId: string,
+  variantId: string,
+  revenue: number,
+  transactionId: string,
+): void {
+  trackEvent("experiment_revenue", {
+    experiment_id: experimentId,
+    variant_id: variantId,
+    currency: "INR",
+    value: revenue,
+    transaction_id: transactionId,
+  });
+}
+
+/** Tracks loyalty points used as payment during checkout. */
+export function trackLoyaltyRedemption(
+  pointsUsed: number,
+  discountValue: number,
+  transactionId: string,
+): void {
+  trackEvent("loyalty_redemption", {
+    points_used: pointsUsed,
+    discount_value: discountValue,
+    currency: "INR",
+    transaction_id: transactionId,
+  });
+}

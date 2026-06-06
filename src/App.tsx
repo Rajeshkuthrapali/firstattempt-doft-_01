@@ -18,8 +18,12 @@ import AdminOrders from "./pages/admin/AdminOrders";
 import AdminInventory from "./pages/admin/AdminInventory";
 import AdminLogs from "./pages/admin/AdminLogs";
 import AdminExperiments from "./pages/admin/AdminExperiments";
+import AdminFeed from "./pages/admin/AdminFeed";
+import AdminLoyalty from "./pages/admin/AdminLoyalty";
+import AdminCohorts from "./pages/admin/AdminCohorts";
+import AdminIntelligence from "./pages/admin/AdminIntelligence";
+import AdminLaunch from "./pages/admin/AdminLaunch";
 import Rewards from "./pages/Rewards";
-
 import AccountLoyalty from "./pages/AccountLoyalty";
 import GiftRegistry from "./pages/GiftRegistry";
 import ScentMatchQuiz from "./components/ScentMatchQuiz";
@@ -27,7 +31,7 @@ import Campaign from "./pages/Campaign";
 
 /**
  * Root application component.
- * All routes wrapped in the shared LayoutShell (Nav + Footer + SearchBar).
+ * All routes wrapped in the shared LayoutShell (Nav + Footer + SupportWidget).
  */
 export default function App() {
   return (
@@ -49,7 +53,7 @@ export default function App() {
         <Route path="account" element={<Account />} />
         <Route path="account/loyalty" element={<AccountLoyalty />} />
         <Route path="rewards" element={<Rewards />} />
-        
+
         {/* Gifting */}
         <Route path="registry" element={<GiftRegistry />} />
 
@@ -77,8 +81,12 @@ export default function App() {
         <Route path="inventory" element={<AdminInventory />} />
         <Route path="logs" element={<AdminLogs />} />
         <Route path="experiments" element={<AdminExperiments />} />
+        <Route path="feed" element={<AdminFeed />} />
+        <Route path="loyalty" element={<AdminLoyalty />} />
+        <Route path="cohorts" element={<AdminCohorts />} />
+        <Route path="intelligence" element={<AdminIntelligence />} />
+        <Route path="launch" element={<AdminLaunch />} />
       </Route>
     </Routes>
   );
 }
-

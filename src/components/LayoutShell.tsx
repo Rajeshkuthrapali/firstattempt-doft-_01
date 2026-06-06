@@ -3,6 +3,7 @@ import Nav from "./Nav";
 import CartDrawer from "./CartDrawer";
 import SearchBar from "./search/SearchBar";
 import QuickViewModal from "./QuickViewModal";
+import SupportWidget from "./SupportWidget";
 
 /**
  * Root layout shell — warm cream background, clean footer
@@ -164,6 +165,7 @@ export default function LayoutShell() {
           </div>
         </div>
       </footer>
+      <SupportWidget />
     </div>
   );
 }

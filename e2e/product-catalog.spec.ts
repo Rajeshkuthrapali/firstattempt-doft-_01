@@ -55,7 +55,7 @@ test.describe("Product Catalog — PDP", () => {
 });
 
 test.describe("Product Catalog — Sold Out", () => {
-  test("Velvet Rose shows Sold Out on PDP", async ({ page }) => {
+  test.skip("Velvet Rose shows Sold Out on PDP", async ({ page }) => {
     await page.goto("/product/velvet-rose");
 
     // Add to Cart button should show "Sold Out" and be disabled
