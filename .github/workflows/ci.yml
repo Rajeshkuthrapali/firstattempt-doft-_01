@@ -2,7 +2,7 @@ name: CI — Lumière Candles
 
 on:
   push:
-    branches: [main, "feature/**"]
+    branches: [main, "feature/p1-enhancements"]
     tags: ["v*"]
   pull_request:
     branches: [main]
@@ -108,7 +108,46 @@ jobs:
           retention-days: 14
 
   # ─────────────────────────────────────────────────────
-  # Job 3: Build verification
+  # Job 3: Validate Test Artifacts (jq parsing)
+  # ─────────────────────────────────────────────────────
+  validate-artifacts:
+    name: ✅ Validate Reports
+    runs-on: ubuntu-latest
+    needs: [unit-tests, e2e-tests]
+    if: always()
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: vitest-report
+          path: reports/vitest
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: playwright-json-report
+          path: reports/playwright
+
+      - name: Parse Vitest report
+        run: |
+          R=reports/vitest/vitest-report.json
+          [ -s "$R" ] || (echo "❌ Vitest report missing or empty" && exit 1)
+          FAILED=$(jq '.testResults | map(.status) | map(select(.=="failed")) | length' "$R")
+          TOTAL=$(jq '.numTotalTests' "$R")
+          echo "Vitest: $TOTAL total, $FAILED failed"
+          [ "$FAILED" -eq 0 ] || (echo "❌ $FAILED/$TOTAL Vitest tests failed" && exit 1)
+          echo "✅ Vitest: all $TOTAL tests passed"
+
+      - name: Parse Playwright report
+        run: |
+          R=reports/playwright/e2e-report.json
+          [ -s "$R" ] || (echo "❌ Playwright report missing or empty" && exit 1)
+          FAILED=$(jq '[.suites[].specs[].tests[].results[].status] | map(select(.=="failed" or .=="timedOut")) | length' "$R")
+          TOTAL=$(jq '[.suites[].specs[].tests[]] | length' "$R")
+          echo "Playwright: $TOTAL total, $FAILED failed/timedOut"
+          [ "$FAILED" -eq 0 ] || (echo "❌ $FAILED/$TOTAL Playwright tests failed" && exit 1)
+          echo "✅ Playwright: all $TOTAL tests passed"
+
+  # ─────────────────────────────────────────────────────
+  # Job 4: Build verification
   # ─────────────────────────────────────────────────────
   build:
     name: 🏗️ Build
@@ -138,7 +177,7 @@ jobs:
           retention-days: 7
 
   # ─────────────────────────────────────────────────────
-  # Job 4: Lighthouse Performance Audit
+  # Job 5: Lighthouse Performance Audit
   # ─────────────────────────────────────────────────────
   lighthouse:
     name: 🔦 Lighthouse Audit
@@ -166,18 +205,91 @@ jobs:
       - name: Run Lighthouse CI
         run: |
           npm install -g @lhci/cli@0.14.x
-          lhci autorun --config=lighthouserc.json || true
+          lhci autorun --config=lighthouserc.json
 
-      - name: Upload Lighthouse report
+      - name: Upload Lighthouse HTML report
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: lighthouse-report
-          path: .lighthouseci/
+          name: lighthouse-html-report
+          path: .lighthouseci/*.html
           retention-days: 14
 
+      - name: Upload Lighthouse JSON report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-json-report
+          path: .lighthouseci/*.json
+          retention-days: 14
+
+      - name: Parse Lighthouse scores
+        if: always()
+        run: |
+          for f in .lighthouseci/*.json; do
+            [ -s "$f" ] || continue
+            PERF=$(jq '.categories.performance.score' "$f")
+            A11Y=$(jq '.categories.accessibility.score' "$f")
+            SEO=$(jq  '.categories.seo.score' "$f")
+            BP=$(jq   '.categories["best-practices"].score' "$f")
+            echo "$(basename $f): perf=$PERF a11y=$A11Y seo=$SEO bp=$BP"
+            jq -e '[.categories | to_entries[] | .value.score] | all(. >= 0.90)' "$f" > /dev/null \
+              || (echo "❌ Lighthouse regression in $(basename $f)" && exit 1)
+          done
+          echo "✅ Lighthouse: all categories ≥ 0.90"
+
   # ─────────────────────────────────────────────────────
-  # Job 5: Deploy to Staging (on main push)
+  # Job 6: Dockerized k6 Load Tests
+  # ─────────────────────────────────────────────────────
+  load-tests:
+    name: 🐳 Load Tests (k6 via Docker)
+    runs-on: ubuntu-latest
+    needs: build
+    continue-on-error: false
+    if: github.ref == 'refs/heads/feature/p1-enhancements' || startsWith(github.ref, 'refs/tags/v')
+    env:
+      STOREFRONT_URL: ${{ vars.STAGING_URL || 'http://localhost:5173' }}
+      API_URL: ${{ vars.STAGING_API_URL || 'http://localhost:4000/api' }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+      - name: Serve dist locally
+        run: npx serve dist -l 5173 &
+
+      - name: Wait for server
+        run: npx wait-on http://localhost:5173 --timeout 30000
+
+      - name: Storefront load test
+        # --network=host works on Linux (ubuntu-latest); lets container reach localhost
+        run: |
+          docker run --rm -i --network=host \
+            -e BASE_URL=${{ env.STOREFRONT_URL }} \
+            grafana/k6 run - < scripts/storefront-load-test.js
+
+      - name: Checkout flow load test
+        run: |
+          docker run --rm -i --network=host \
+            -e BASE_URL=${{ env.API_URL }} \
+            grafana/k6 run - < scripts/checkout-load-test.js
+
+  # ─────────────────────────────────────────────────────
+  # Job 7: Deploy to Staging (on main push)
   # ─────────────────────────────────────────────────────
   deploy-staging:
     name: 🚀 Deploy Staging
@@ -206,7 +318,7 @@ jobs:
           echo "🚀 Deployed to staging: $DEPLOY_URL"
 
   # ─────────────────────────────────────────────────────
-  # Job 6: Deploy to Production (on v* tag push)
+  # Job 8: Deploy to Production (on v* tag push)
   # ─────────────────────────────────────────────────────
   deploy-production:
     name: 🏷️ Deploy Production
@@ -233,7 +345,7 @@ jobs:
           echo "🏷️ Production deploy: ${{ github.ref_name }}"
 
   # ─────────────────────────────────────────────────────
-  # Job 7: Manual Rollback (workflow_dispatch)
+  # Job 9: Manual Rollback (workflow_dispatch)
   # ─────────────────────────────────────────────────────
   rollback:
     name: ⏪ Rollback Production
@@ -247,4 +359,3 @@ jobs:
           npm install -g vercel@latest
           vercel rollback --token=${{ secrets.VERCEL_TOKEN }}
           echo "⏪ Production rolled back to previous deployment"
-

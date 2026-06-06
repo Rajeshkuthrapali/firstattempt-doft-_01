@@ -1,1 +1,1331 @@
-﻿{"numTotalTestSuites":43,"numPassedTestSuites":37,"numFailedTestSuites":6,"numPendingTestSuites":0,"numTotalTests":118,"numPassedTests":103,"numFailedTests":15,"numPendingTests":0,"numTodoTests":0,"snapshot":{"added":0,"failure":false,"filesAdded":0,"filesRemoved":0,"filesRemovedList":[],"filesUnmatched":0,"filesUpdated":0,"matched":0,"total":0,"unchecked":0,"uncheckedKeysByFile":[],"unmatched":0,"updated":0,"didUpdate":false},"startTime":1773782956901,"success":false,"testResults":[{"assertionResults":[{"ancestorTitles":["Cart Store ΓÇö addItem"],"fullName":"Cart Store ΓÇö addItem adds a new product with qty 1","status":"passed","title":"adds a new product with qty 1","duration":5.7760999999995875,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["Cart Store ΓÇö addItem"],"fullName":"Cart Store ΓÇö addItem increments qty when the same product is added again","status":"passed","title":"increments qty when the same product is added again","duration":1.0788000000002285,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["Cart Store ΓÇö addItem"],"fullName":"Cart Store ΓÇö addItem adds different products as separate lines","status":"passed","title":"adds different products as separate lines","duration":0.7651999999998225,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["Cart Store ΓÇö removeItem"],"fullName":"Cart Store ΓÇö removeItem decrements qty by one","status":"passed","title":"decrements qty by one","duration":0.8337999999994281,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["Cart Store ΓÇö removeItem"],"fullName":"Cart Store ΓÇö removeItem removes the line when qty hits zero","status":"passed","title":"removes the line when qty hits zero","duration":0.7305999999998676,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["Cart Store ΓÇö removeItem"],"fullName":"Cart Store ΓÇö removeItem does nothing for a non-existent product ID","status":"passed","title":"does nothing for a non-existent product ID","duration":0.6509000000005472,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["Cart Store ΓÇö deleteLine"],"fullName":"Cart Store ΓÇö deleteLine removes the entire line regardless of qty","status":"passed","title":"removes the entire line regardless of qty","duration":0.7394999999996799,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["Cart Store ΓÇö deleteLine"],"fullName":"Cart Store ΓÇö deleteLine only removes the specified product line","status":"passed","title":"only removes the specified product line","duration":0.6647000000002663,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["Cart Store ΓÇö clearCart"],"fullName":"Cart Store ΓÇö clearCart empties all items","status":"passed","title":"empties all items","duration":0.6070999999992637,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["Cart Store ΓÇö totalQty"],"fullName":"Cart Store ΓÇö totalQty returns 0 for an empty cart","status":"passed","title":"returns 0 for an empty cart","duration":0.5664000000006126,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["Cart Store ΓÇö totalQty"],"fullName":"Cart Store ΓÇö totalQty sums quantities across all lines","status":"passed","title":"sums quantities across all lines","duration":0.5886000000000422,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["Cart Store ΓÇö totalPrice"],"fullName":"Cart Store ΓÇö totalPrice returns 0 for an empty cart","status":"passed","title":"returns 0 for an empty cart","duration":0.4421999999995023,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["Cart Store ΓÇö totalPrice"],"fullName":"Cart Store ΓÇö totalPrice calculates total correctly","status":"passed","title":"calculates total correctly","duration":0.3429999999998472,"failureMessages":[],"meta":{},"tags":[]}],"startTime":1773782961126,"endTime":1773782961141.4421,"status":"passed","message":"","name":"C:/Users/91807/my-app/src/__tests__/unit/cart-store.test.ts"},{"assertionResults":[{"ancestorTitles":["CartDrawer ΓÇö structure"],"fullName":"CartDrawer ΓÇö structure renders the CART heading","status":"passed","title":"renders the CART heading","duration":121.34789999999975,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["CartDrawer ΓÇö structure"],"fullName":"CartDrawer ΓÇö structure has role='dialog' and aria-modal on the aside","status":"passed","title":"has role='dialog' and aria-modal on the aside","duration":260.72410000000036,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["CartDrawer ΓÇö structure"],"fullName":"CartDrawer ΓÇö structure renders the free shipping banner","status":"passed","title":"renders the free shipping banner","duration":13.131599999999708,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["CartDrawer ΓÇö structure"],"fullName":"CartDrawer ΓÇö structure renders the close button with ARIA label","status":"passed","title":"renders the close button with ARIA label","duration":11.537199999999757,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["CartDrawer ΓÇö structure"],"fullName":"CartDrawer ΓÇö structure renders a WhatsApp FAB with ARIA label","status":"passed","title":"renders a WhatsApp FAB with ARIA label","duration":8.558100000000195,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["CartDrawer ΓÇö empty state"],"fullName":"CartDrawer ΓÇö empty state shows empty cart message when no items","status":"passed","title":"shows empty cart message when no items","duration":8.902500000000146,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["CartDrawer ΓÇö empty state"],"fullName":"CartDrawer ΓÇö empty state does not show checkout button when empty","status":"passed","title":"does not show checkout button when empty","duration":6.415499999999156,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["CartDrawer ΓÇö with items"],"fullName":"CartDrawer ΓÇö with items displays the product name in the cart","status":"passed","title":"displays the product name in the cart","duration":14.587299999999232,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["CartDrawer ΓÇö with items"],"fullName":"CartDrawer ΓÇö with items displays the per-item price","status":"passed","title":"displays the per-item price","duration":10.05659999999989,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["CartDrawer ΓÇö with items"],"fullName":"CartDrawer ΓÇö with items shows the checkout button when items are present","status":"passed","title":"shows the checkout button when items are present","duration":10.7479000000003,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["CartDrawer ΓÇö with items"],"fullName":"CartDrawer ΓÇö with items shows the subtotal section","status":"passed","title":"shows the subtotal section","duration":9.98569999999927,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["CartDrawer ΓÇö with items"],"fullName":"CartDrawer ΓÇö with items shows shipping notice","status":"passed","title":"shows shipping notice","duration":15.818199999999706,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["CartDrawer ΓÇö quantity controls"],"fullName":"CartDrawer ΓÇö quantity controls has increase quantity button with ARIA label","status":"passed","title":"has increase quantity button with ARIA label","duration":12.497699999999895,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["CartDrawer ΓÇö quantity controls"],"fullName":"CartDrawer ΓÇö quantity controls has decrease quantity button with ARIA label","status":"passed","title":"has decrease quantity button with ARIA label","duration":13.596300000000156,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["CartDrawer ΓÇö quantity controls"],"fullName":"CartDrawer ΓÇö quantity controls has remove button with ARIA label","status":"passed","title":"has remove button with ARIA label","duration":13.526199999999335,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["CartDrawer ΓÇö quantity controls"],"fullName":"CartDrawer ΓÇö quantity controls increments qty when + is clicked","status":"passed","title":"increments qty when + is clicked","duration":78.63630000000012,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["CartDrawer ΓÇö quantity controls"],"fullName":"CartDrawer ΓÇö quantity controls removes the item when ΓêÆ is clicked at qty=1","status":"passed","title":"removes the item when ΓêÆ is clicked at qty=1","duration":60.34950000000026,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["CartDrawer ΓÇö clear cart"],"fullName":"CartDrawer ΓÇö clear cart clears all items when Clear cart is clicked","status":"passed","title":"clears all items when Clear cart is clicked","duration":46.90859999999975,"failureMessages":[],"meta":{},"tags":[]}],"startTime":1773782961705,"endTime":1773782962423.9087,"status":"passed","message":"","name":"C:/Users/91807/my-app/src/__tests__/unit/CartDrawer.test.tsx"},{"assertionResults":[{"ancestorTitles":["Home page ΓÇö Hero section"],"fullName":"Home page ΓÇö Hero section renders the hero banner with aria-label","status":"passed","title":"renders the hero banner with aria-label","duration":128.33360000000084,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["Home page ΓÇö Hero section"],"fullName":"Home page ΓÇö Hero section renders the 'Handcrafted Luxury' subtitle","status":"passed","title":"renders the 'Handcrafted Luxury' subtitle","duration":61.39339999999993,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["Home page ΓÇö Hero section"],"fullName":"Home page ΓÇö Hero section renders the hero headline 'signature'","status":"passed","title":"renders the hero headline 'signature'","duration":49.52890000000025,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["Home page ΓÇö Hero section"],"fullName":"Home page ΓÇö Hero section renders the 'Scented Collection' text","status":"passed","title":"renders the 'Scented Collection' text","duration":38.29500000000007,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["Home page ΓÇö Hero section"],"fullName":"Home page ΓÇö Hero section renders the 'Shop Now' CTA button","status":"passed","title":"renders the 'Shop Now' CTA button","duration":43.21190000000024,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["Home page ΓÇö Hero section"],"fullName":"Home page ΓÇö Hero section has a hero image with proper alt text","status":"passed","title":"has a hero image with proper alt text","duration":36.797600000000784,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["Home page ΓÇö Product sections"],"fullName":"Home page ΓÇö Product sections renders the 'New Arrivals' section heading","status":"passed","title":"renders the 'New Arrivals' section heading","duration":38.92860000000019,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["Home page ΓÇö Product sections"],"fullName":"Home page ΓÇö Product sections renders the 'View All Products' link","status":"passed","title":"renders the 'View All Products' link","duration":40.69730000000072,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["Home page ΓÇö Product sections"],"fullName":"Home page ΓÇö Product sections renders the 'Bestsellers' section heading","status":"passed","title":"renders the 'Bestsellers' section heading","duration":45.221300000000156,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["Home page ΓÇö Product sections"],"fullName":"Home page ΓÇö Product sections renders product cards (Golden Hour should be visible)","status":"passed","title":"renders product cards (Golden Hour should be visible)","duration":34.647899999999936,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["Home page ΓÇö Value props"],"fullName":"Home page ΓÇö Value props renders value proposition titles","status":"passed","title":"renders value proposition titles","duration":36.458300000000236,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["Home page ΓÇö Value props"],"fullName":"Home page ΓÇö Value props value props section has aria-label","status":"passed","title":"value props section has aria-label","duration":40.32519999999931,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["Home page ΓÇö Clean Burning section"],"fullName":"Home page ΓÇö Clean Burning section renders the Clean Burning headline","status":"passed","title":"renders the Clean Burning headline","duration":29.51509999999962,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["Home page ΓÇö Clean Burning section"],"fullName":"Home page ΓÇö Clean Burning section renders brand story text with Lumi├¿re","status":"passed","title":"renders brand story text with Lumi├¿re","duration":22.35449999999946,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["Home page ΓÇö Lifestyle banner"],"fullName":"Home page ΓÇö Lifestyle banner renders the lifestyle section with aria-label","status":"passed","title":"renders the lifestyle section with aria-label","duration":21.280099999999948,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["Home page ΓÇö Lifestyle banner"],"fullName":"Home page ΓÇö Lifestyle banner renders the Shop Bestsellers button","status":"passed","title":"renders the Shop Bestsellers button","duration":37.635299999999916,"failureMessages":[],"meta":{},"tags":[]}],"startTime":1773782961622,"endTime":1773782962327.6353,"status":"passed","message":"","name":"C:/Users/91807/my-app/src/__tests__/unit/Home.test.tsx"},{"assertionResults":[{"ancestorTitles":["LayoutShell"],"fullName":"LayoutShell renders the skip-to-content link","status":"passed","title":"renders the skip-to-content link","duration":158.71910000000025,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["LayoutShell"],"fullName":"LayoutShell renders the main element with role='main'","status":"passed","title":"renders the main element with role='main'","duration":281.8190999999997,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["LayoutShell"],"fullName":"LayoutShell renders the footer with role='contentinfo'","status":"passed","title":"renders the footer with role='contentinfo'","duration":52.3116,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["LayoutShell"],"fullName":"LayoutShell renders the footer brand LUMI├êRE","status":"passed","title":"renders the footer brand LUMI├êRE","duration":26.23950000000059,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["LayoutShell"],"fullName":"LayoutShell renders footer Quick Links section","status":"passed","title":"renders footer Quick Links section","duration":46.22690000000057,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["LayoutShell"],"fullName":"LayoutShell renders footer Support section","status":"passed","title":"renders footer Support section","duration":35.88470000000052,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["LayoutShell"],"fullName":"LayoutShell renders the newsletter signup form","status":"passed","title":"renders the newsletter signup form","duration":21.58309999999983,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["LayoutShell"],"fullName":"LayoutShell renders copyright with Lumi├¿re branding","status":"passed","title":"renders copyright with Lumi├¿re branding","duration":16.228500000000167,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["LayoutShell"],"fullName":"LayoutShell renders social media icons with ARIA labels","status":"passed","title":"renders social media icons with ARIA labels","duration":16.994400000000496,"failureMessages":[],"meta":{},"tags":[]}],"startTime":1773782961632,"endTime":1773782962288.9944,"status":"passed","message":"","name":"C:/Users/91807/my-app/src/__tests__/unit/LayoutShell.test.tsx"},{"assertionResults":[{"ancestorTitles":["Nav component"],"fullName":"Nav component renders the LUMI├êRE brand wordmark","status":"passed","title":"renders the LUMI├êRE brand wordmark","duration":88.0683999999992,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["Nav component"],"fullName":"Nav component renders the announcement bar with free shipping text","status":"passed","title":"renders the announcement bar with free shipping text","duration":17.853799999999865,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["Nav component"],"fullName":"Nav component renders all navigation links","status":"failed","title":"renders all navigation links","duration":36.74110000000019,"failureMessages":["TestingLibraryElementError: Found multiple elements with the text: Home\n\nHere are the matching elements:\n\nIgnored nodes: comments, script, style\n\u001b[36m<a\u001b[39m\n  \u001b[33mclass\u001b[39m=\u001b[32m\"text-[13px] tracking-[0.08em] uppercase transition-colors duration-200 text-[#c4a093] font-medium\"\u001b[39m\n  \u001b[33mhref\u001b[39m=\u001b[32m\"/\"\u001b[39m\n  \u001b[33mrole\u001b[39m=\u001b[32m\"menuitem\"\u001b[39m\n\u001b[36m>\u001b[39m\n  \u001b[0mHome\u001b[0m\n\u001b[36m</a>\u001b[39m\n\nIgnored nodes: comments, script, style\n\u001b[36m<a\u001b[39m\n  \u001b[33mclass\u001b[39m=\u001b[32m\"block py-2.5 text-[14px] tracking-[0.06em] uppercase transition-colors text-[#c4a093] font-medium\"\u001b[39m\n  \u001b[33mhref\u001b[39m=\u001b[32m\"/\"\u001b[39m\n  \u001b[33mrole\u001b[39m=\u001b[32m\"menuitem\"\u001b[39m\n\u001b[36m>\u001b[39m\n  \u001b[0mHome\u001b[0m\n\u001b[36m</a>\u001b[39m\n\n(If this is intentional, then use the `*AllBy*` variant of the query (like `queryAllByText`, `getAllByText`, or `findAllByText`)).\n\nIgnored nodes: comments, script, style\n\u001b[36m<body>\u001b[39m\n  \u001b[36m<div>\u001b[39m\n    \u001b[36m<header\u001b[39m\n      \u001b[33mclass\u001b[39m=\u001b[32m\"fixed top-0 inset-x-0 z-50 bg-[#faf7f4]/95 backdrop-blur-md border-b border-[#e8e0d8] transition-shadow duration-300\"\u001b[39m\n      \u001b[33mrole\u001b[39m=\u001b[32m\"banner\"\u001b[39m\n    \u001b[36m>\u001b[39m\n      \u001b[36m<div\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"bg-[#c4a093] py-1.5 text-center text-[11px] font-semibold uppercase tracking-[0.2em] text-white\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mFree Shipping on Orders Above\u001b[0m\n        \u001b[0m \u001b[0m\n        \u001b[36m<span\u001b[39m\n          \u001b[33mclass\u001b[39m=\u001b[32m\"font-bold\"\u001b[39m\n        \u001b[36m>\u001b[39m\n          \u001b[0mINR 3000/-\u001b[0m\n        \u001b[36m</span>\u001b[39m\n      \u001b[36m</div>\u001b[39m\n      \u001b[36m<nav\u001b[39m\n        \u001b[33maria-label\u001b[39m=\u001b[32m\"Main navigation\"\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"mx-auto flex max-w-7xl items-center justify-between px-5 py-3 md:px-8\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[36m<button\u001b[39m\n          \u001b[33maria-expanded\u001b[39m=\u001b[32m\"false\"\u001b[39m\n          \u001b[33maria-label\u001b[39m=\u001b[32m\"Open menu\"\u001b[39m\n          \u001b[33mclass\u001b[39m=\u001b[32m\"md:hidden p-1 text-[#2d2926] hover:text-[#c4a093] transition-colors\"\u001b[39m\n          \u001b[33mid\u001b[39m=\u001b[32m\"nav-toggle\"\u001b[39m\n        \u001b[36m>\u001b[39m\n          \u001b[36m<svg\u001b[39m\n            \u001b[33mfill\u001b[39m=\u001b[32m\"none\"\u001b[39m\n            \u001b[33mheight\u001b[39m=\u001b[32m\"22\"\u001b[39m\n            \u001b[33mstroke\u001b[39m=\u001b[32m\"currentColor\"\u001b[39m\n            \u001b[33mstroke-width\u001b[39m=\u001b[32m\"1.8\"\u001b[39m\n            \u001b[33mviewBox\u001b[39m=\u001b[32m\"0 0 24 24\"\u001b[39m\n            \u001b[33mwidth\u001b[39m=\u001b[32m\"22\"\u001b[39m\n          \u001b[36m>\u001b[39m\n            \u001b[36m<path\u001b[39m\n              \u001b[33md\u001b[39m=\u001b[32m\"M4 6h16M4 12h16M4 18h16\"\u001b[39m\n              \u001b[33mstroke-linecap\u001b[39m=\u001b[32m\"round\"\u001b[39m\n            \u001b[36m/>\u001b[39m\n          \u001b[36m</svg>\u001b[39m\n        \u001b[36m</button>\u001b[39m\n        \u001b[36m<ul\u001b[39m\n          \u001b[33mclass\u001b[39m=\u001b[32m\"hidden md:flex items-center gap-7\"\u001b[39m\n          \u001b[33mrole\u001b[39m=\u001b[32m\"menubar\"\u001b[39m\n        \u001b[36m>\u001b[39m\n          \u001b[36m<li\u001b[39m\n            \u001b[33mrole\u001b[39m=\u001b[32m\"none\"\u001b[39m\n          \u001b[36m>\u001b[39m\n            \u001b[36m<a\u001b[39m\n              \u001b[33mclass\u001b[39m=\u001b[32m\"text-[13px] tracking-[0.08em] uppercase transition-colors duration-200 text-[#c4a093] font-medium\"\u001b[39m\n              \u001b[33mhref\u001b[39m=\u001b[32m\"/\"\u001b[39m\n              \u001b[33mrole\u001b[39m=\u001b[32m\"menuitem\"\u001b[39m\n            \u001b[36m>\u001b[39m\n              \u001b[0mHome\u001b[0m\n            \u001b[36m</a>\u001b[39m\n          \u001b[36m</li>\u001b[39m\n          \u001b[36m<li\u001b[39m\n            \u001b[33mrole\u001b[39m=\u001b[32m\"none\"\u001b[39m\n          \u001b[36m>\u001b[39m\n            \u001b[36m<a\u001b[39m\n              \u001b[33mclass\u001b[39m=\u001b[32m\"text-[13px] tracking-[0.08em] uppercase transition-colors duration-200 text-[#6b5e54] hover:text-[#2d2926]\"\u001b[39m\n              \u001b[33mhref\u001b[39m=\u001b[32m\"/collections\"\u001b[39m\n              \u001b[33mrole\u001b[39m=\u001b[32m\"menuitem\"\u001b[39m\n            \u001b[36m>\u001b[39m\n              \u001b[0mShop\u001b[0m\n            \u001b[36m</a>\u001b[39m\n          \u001b[36m</li>\u001b[39m\n          \u001b[36m<li\u001b[39m\n            \u001b[33mrole\u001b[39m=\u001b[32m\"none\"\u001b[39m\n          \u001b[36m>\u001b[39m\n            \u001b[36m<a\u001b[39m\n              \u001b[33mclass\u001b[39m=\u001b[32m\"text-[13px] tracking-[0.08em] uppercase transition-colors duration-200 text-[#6b5e54] hover:text-[#2d2926]\"\u001b[39m\n              \u001b[33mhref\u001b[39m=\u001b[32m\"/about\"\u001b[39m\n              \u001b[33mrole\u001b[39m=\u001b[32m\"menuitem\"\u001b[39m\n            \u001b[36m>\u001b[39m\n              \u001b[0mOur Story\u001b[0m\n            \u001b[36m</a>\u001b[39m\n          \u001b[36m</li>\u001b[39m\n          \u001b[36m<li\u001b[39m\n            \u001b[33mrole\u001b[39m=\u001b[32m\"none\"\u001b[39m\n          \u001b[36m>\u001b[39m\n            \u001b[36m<a\u001b[39m\n              \u001b[33mclass\u001b[39m=\u001b[32m\"text-[13px] tracking-[0.08em] uppercase transition-colors duration-200 text-[#6b5e54] hover:text-[#2d2926]\"\u001b[39m\n              \u001b[33mhref\u001b[39m=\u001b[32m\"/contact\"\u001b[39m\n              \u001b[33mrole\u001b[39m=\u001b[32m\"menuitem\"\u001b[39m\n            \u001b[36m>\u001b[39m\n              \u001b[0mContact\u001b[0m\n            \u001b[36m</a>\u001b[39m\n          \u001b[36m</li>\u001b[39m\n        \u001b[36m</ul>\u001b[39m\n        \u001b[36m<a\u001b[39m\n          \u001b[33maria-label\u001b[39m=\u001b[32m\"Lumi├¿re home\"\u001b[39m\n          \u001b[33mclass\u001b[39m=\u001b[32m\"absolute left-1/2 -translate-x-1/2 text-center\"\u001b[39m\n          \u001b[33mhref\u001b[39m=\u001b[32m\"/\"\u001b[39m\n        \u001b[36m>\u001b[39m\n          \u001b[36m<span\u001b[39m\n            \u001b[33mclass\u001b[39m=\u001b[32m\"font-['Cormorant_Garamond',serif] text-[28px] md:text-[32px] font-semibold tracking-[0.15em] text-[#2d2926] select-none\"\u001b[39m\n          \u001b[36m>\u001b[39m\n            \u001b[0mLUMI├êRE\u001b[0m\n          \u001b[36m</span>\u001b[39m\n        \u001b[36m</a>\u001b[39m\n        \u001b[36m<div\u001b[39m\n          \u001b[33mclass\u001b[39m=\u001b[32m\"flex items-center gap-4\"\u001b[39m\n        \u001b[36m>\u001b[39m\n          \u001b[36m<button\u001b[39m\n            \u001b[33maria-label\u001b[39m=\u001b[32m\"Search\"\u001b[39m\n            \u001b[33mclass\u001b[39m=\u001b[32m\"hidden md:block p-1 text-[#6b5e54] hover:text-[#2d2926] transition-colors\"\u001b[39m\n          \u001b[36m>\u001b[39m\n            \u001b[36m<svg\u001b[39m\n              \u001b[33mfill\u001b[39m=\u001b[32m\"none\"\u001b[39m\n              \u001b[33mheight\u001b[39m=\u001b[32m\"20\"\u001b[39m\n              \u001b[33mstroke\u001b[39m=\u001b[32m\"currentColor\"\u001b[39m\n              \u001b[33mstroke-width\u001b[39m=\u001b[32m\"1.8\"\u001b[39m\n              \u001b[33mviewBox\u001b[39m=\u001b[32m\"0 0 24 24\"\u001b[39m\n              \u001b[33mwidth\u001b[39m=\u001b[32m\"20\"\u001b[39m\n            \u001b[36m>\u001b[39m\n              \u001b[36m<circle\u001b[39m\n                \u001b[33mcx\u001b[39m=\u001b[32m\"11\"\u001b[39m\n                \u001b[33mcy\u001b[39m=\u001b[32m\"11\"\u001b[39m\n                \u001b[33mr\u001b[39m=\u001b[32m\"7\"\u001b[39m\n              \u001b[36m/>\u001b[39m\n              \u001b[36m<path\u001b[39m\n                \u001b[33md\u001b[39m=\u001b[32m\"m21 21-4.35-4.35\"\u001b[39m\n                \u001b[33mstroke-linecap\u001b[39m=\u001b[32m\"round\"\u001b[39m\n              \u001b[36m/>\u001b[39m\n            \u001b[36m</svg>\u001b[39m\n          \u001b[36m</button>\u001b[39m\n          \u001b[36m<button\u001b[39m\n            \u001b[33maria-label\u001b[39m=\u001b[32m\"Open cart, 0 items\"\u001b[39m\n            \u001b[33mclass\u001b[39m=\u001b[32m\"relative p-1 text-[#6b5e54] hover:text-[#2d2926] transition-colors\"\u001b[39m\n            \u001b[33mid\u001b[39m=\u001b[32m\"cart-toggle\"\u001b[39m\n          \u001b[36m>\u001b[39m\n            \u001b[36m<svg\u001b[39m\n              \u001b[33mfill\u001b[39m=\u001b[32m\"none\"\u001b[39m\n              \u001b[33mheight\u001b[39m=\u001b[32m\"20\"\u001b[39m\n              \u001b[33mstroke\u001b[39m=\u001b[32m\"currentColor\"\u001b[39m\n              \u001b[33mstroke-width\u001b[39m=\u001b[32m\"1.8\"\u001b[39m\n              \u001b[33mviewBox\u001b[39m=\u001b[32m\"0 0 24 24\"\u001b[39m\n              \u001b[33mwidth\u001b[39m=\u001b[32m\"20\"\u001b[39m\n            \u001b[36m>\u001b[39m\n              \u001b[36m<path\u001b[39m\n                \u001b[33md\u001b[39m=\u001b[32m\"M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007Z\"\u001b[39m\n                \u001b[33mstroke-linecap\u001b[39m=\u001b[32m\"round\"\u001b[39m\n                \u001b[33mstroke-linejoin\u001b[39m=\u001b[32m\"round\"\u001b[39m\n              \u001b[36m/>\u001b[39m\n            \u001b[36m</svg>\u001b[39m\n          \u001b[36m</button>\u001b[39m\n        \u001b[36m</div>\u001b[39m\n      \u001b[36m</nav>\u001b[39m\n      \u001b[36m<div\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"md:hidden overflow-hidden border-t border-[#e8e0d8] bg-[#faf7f4] transition-all duration-300 ease-in-out max-h-0 opacity-0 border-t-0\"\u001b[39m\n        \u001b[33mrole\u001b[39m=\u001b[32m\"menu\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[36m<ul\u001b[39m\n          \u001b[33mclass\u001b[39m=\u001b[32m\"flex flex-col gap-1 px-6 py-4\"\u001b[39m\n        \u001b[36m>\u001b[39m\n          \u001b[36m<li\u001b[39m\n            \u001b[33mrole\u001b[39m=\u001b[32m\"none\"\u001b[39m\n          \u001b[36m>\u001b[39m\n            \u001b[36m<a\u001b[39m\n              \u001b[33mclass\u001b[39m=\u001b[32m\"block py-2.5 text-[14px] tracking-[0.06em] uppercase transition-colors text-[#c4a093] font-medium\"\u001b[39m\n              \u001b[33mhref\u001b[39m=\u001b[32m\"/\"\u001b[39m\n              \u001b[33mrole\u001b[39m=\u001b[32m\"menuitem\"\u001b[39m\n            \u001b[36m>\u001b[39m\n              \u001b[0mHome\u001b[0m\n            \u001b[36m</a>\u001b[39m\n          \u001b[36m</li>\u001b[39m\n          \u001b[36m<li\u001b[39m\n            \u001b[33mrole\u001b[39m=\u001b[32m\"none\"\u001b[39m\n          \u001b[36m>\u001b[39m\n            \u001b[36m<a\u001b[39m\n              \u001b[33mclass\u001b[39m=\u001b[32m\"block py-2.5 text-[14px] tracking-[0.06em] uppercase transition-colors text-[#6b5e54] hover:text-[#2d2926]\"\u001b[39m\n              \u001b[33mhref\u001b[39m=\u001b[32m\"/collections\"\u001b[39m\n              \u001b[33mrole\u001b[39m=\u001b[32m\"menuitem\"\u001b[39m\n            \u001b[36m>\u001b[39m\n              \u001b[0mShop\u001b[0m\n            \u001b[36m</a>\u001b[39m\n          \u001b[36m</li>\u001b[39m\n          \u001b[36m<li\u001b[39m\n            \u001b[33mrole\u001b[39m=\u001b[32m\"none\"\u001b[39m\n          \u001b[36m>\u001b[39m\n            \u001b[36m<a\u001b[39m\n              \u001b[33mclass\u001b[39m=\u001b[32m\"block py-2.5 text-[14px] tracking-[0.06em] uppercase transition-colors text-[#6b5e54] hover:text-[#2d2926]\"\u001b[39m\n              \u001b[33mhref\u001b[39m=\u001b[32m\"/about\"\u001b[39m\n              \u001b[33mrole\u001b[39m=\u001b[32m\"menuitem\"\u001b[39m\n            \u001b[36m>\u001b[39m\n              \u001b[0mOur Story\u001b[0m\n            \u001b[36m</a>\u001b[39m\n          \u001b[36m</li>\u001b[39m\n          \u001b[36m<li\u001b[39m\n            \u001b[33mrole\u001b[39m=\u001b[32m\"none\"\u001b[39m\n          \u001b[36m>\u001b[39m\n            \u001b[36m<a\u001b[39m\n              \u001b[33mclass\u001b[39m=\u001b[32m\"block py-2.5 text-[14px] tracking-[0.06em] uppercase transition-colors text-[#6b5e54] hover:text-[#2d2926]\"\u001b[39m\n              \u001b[33mhref\u001b[39m=\u001b[32m\"/contact\"\u001b[39m\n              \u001b[33mrole\u001b[39m=\u001b[32m\"menuitem\"\u001b[39m\n            \u001b[36m>\u001b[39m\n              \u001b[0mContact\u001b[0m\n            \u001b[36m</a>\u001b[39m\n          \u001b[36m</li>\u001b[39m\n        \u001b[36m</ul>\u001b[39m\n      \u001b[36m</div>\u001b[39m\n    \u001b[36m</header>\u001b[39m\n  \u001b[36m</div>\u001b[39m\n\u001b[36m</body>\u001b[39m\n    at Object.getElementError (C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\config.js:37:19)\n    at getElementError (C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:20:35)\n    at getMultipleElementsFoundError (C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:23:10)\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:55:13\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:95:19\n    at C:/Users/91807/my-app/src/__tests__/unit/Nav.test.tsx:22:19\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:296:11\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1258:26\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1681:20\n    at new Promise (<anonymous>)"],"meta":{},"tags":[]},{"ancestorTitles":["Nav component"],"fullName":"Nav component has proper ARIA attributes on the nav element","status":"passed","title":"has proper ARIA attributes on the nav element","duration":251.53510000000006,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["Nav component"],"fullName":"Nav component renders the cart toggle button with ARIA label","status":"passed","title":"renders the cart toggle button with ARIA label","duration":21.63130000000001,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["Nav component"],"fullName":"Nav component renders search button with ARIA label (desktop)","status":"passed","title":"renders search button with ARIA label (desktop)","duration":13.231499999999869,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["Nav component"],"fullName":"Nav component renders the mobile hamburger with ARIA label","status":"passed","title":"renders the mobile hamburger with ARIA label","duration":14.818299999999908,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["Nav component"],"fullName":"Nav component has role='banner' on the header element","status":"passed","title":"has role='banner' on the header element","duration":33.69959999999992,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["Nav component"],"fullName":"Nav component links the brand wordmark to the home page","status":"passed","title":"links the brand wordmark to the home page","duration":16.536599999999453,"failureMessages":[],"meta":{},"tags":[]}],"startTime":1773782961576,"endTime":1773782962070.5366,"status":"failed","message":"","name":"C:/Users/91807/my-app/src/__tests__/unit/Nav.test.tsx"},{"assertionResults":[{"ancestorTitles":["Product page ΓÇö valid product (Golden Hour)"],"fullName":"Product page ΓÇö valid product (Golden Hour) renders the product name as h1","status":"failed","title":"renders the product name as h1","duration":78.53570000000036,"failureMessages":["TestingLibraryElementError: Unable to find an element with the text: Golden Hour. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.\n\nIgnored nodes: comments, script, style\n\u001b[36m<body>\u001b[39m\n  \u001b[36m<div>\u001b[39m\n    \u001b[36m<div\u001b[39m\n      \u001b[33mclass\u001b[39m=\u001b[32m\"flex min-h-[60vh] flex-col items-center justify-center gap-4 px-6 text-center\"\u001b[39m\n    \u001b[36m>\u001b[39m\n      \u001b[36m<h1\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"font-['Cormorant_Garamond',serif] text-[36px] font-medium text-[#2d2926]\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mProduct Not Found\u001b[0m\n      \u001b[36m</h1>\u001b[39m\n      \u001b[36m<p\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"text-[14px] text-[#9a8d82]\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mThe candle you're looking for doesn't exist ΓÇö yet.\u001b[0m\n      \u001b[36m</p>\u001b[39m\n      \u001b[36m<a\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"mt-3 border border-[#c4a093] px-6 py-2.5 text-[12px] font-semibold uppercase tracking-[0.15em] text-[#c4a093] transition-all hover:bg-[#c4a093] hover:text-white\"\u001b[39m\n        \u001b[33mhref\u001b[39m=\u001b[32m\"/\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mBack to Home\u001b[0m\n      \u001b[36m</a>\u001b[39m\n    \u001b[36m</div>\u001b[39m\n  \u001b[36m</div>\u001b[39m\n\u001b[36m</body>\u001b[39m\n    at Object.getElementError (C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\config.js:37:19)\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:76:38\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:52:17\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:95:19\n    at C:/Users/91807/my-app/src/__tests__/unit/Product.test.tsx:23:28\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:296:11\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1258:26\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1681:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1678:10)"],"meta":{},"tags":[]},{"ancestorTitles":["Product page ΓÇö valid product (Golden Hour)"],"fullName":"Product page ΓÇö valid product (Golden Hour) renders the tagline","status":"failed","title":"renders the tagline","duration":10.623700000000099,"failureMessages":["TestingLibraryElementError: Unable to find an element with the text: Warm amber meets sun-kissed vanilla. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.\n\nIgnored nodes: comments, script, style\n\u001b[36m<body>\u001b[39m\n  \u001b[36m<div>\u001b[39m\n    \u001b[36m<div\u001b[39m\n      \u001b[33mclass\u001b[39m=\u001b[32m\"flex min-h-[60vh] flex-col items-center justify-center gap-4 px-6 text-center\"\u001b[39m\n    \u001b[36m>\u001b[39m\n      \u001b[36m<h1\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"font-['Cormorant_Garamond',serif] text-[36px] font-medium text-[#2d2926]\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mProduct Not Found\u001b[0m\n      \u001b[36m</h1>\u001b[39m\n      \u001b[36m<p\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"text-[14px] text-[#9a8d82]\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mThe candle you're looking for doesn't exist ΓÇö yet.\u001b[0m\n      \u001b[36m</p>\u001b[39m\n      \u001b[36m<a\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"mt-3 border border-[#c4a093] px-6 py-2.5 text-[12px] font-semibold uppercase tracking-[0.15em] text-[#c4a093] transition-all hover:bg-[#c4a093] hover:text-white\"\u001b[39m\n        \u001b[33mhref\u001b[39m=\u001b[32m\"/\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mBack to Home\u001b[0m\n      \u001b[36m</a>\u001b[39m\n    \u001b[36m</div>\u001b[39m\n  \u001b[36m</div>\u001b[39m\n\u001b[36m</body>\u001b[39m\n    at Object.getElementError (C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\config.js:37:19)\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:76:38\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:52:17\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:95:19\n    at C:/Users/91807/my-app/src/__tests__/unit/Product.test.tsx:29:19\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:296:11\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1258:26\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1681:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1678:10)"],"meta":{},"tags":[]},{"ancestorTitles":["Product page ΓÇö valid product (Golden Hour)"],"fullName":"Product page ΓÇö valid product (Golden Hour) renders the formatted price with Γé╣","status":"failed","title":"renders the formatted price with Γé╣","duration":9.981400000000576,"failureMessages":["TestingLibraryElementError: Unable to find an element with the text: /Γé╣/. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.\n\nIgnored nodes: comments, script, style\n\u001b[36m<body>\u001b[39m\n  \u001b[36m<div>\u001b[39m\n    \u001b[36m<div\u001b[39m\n      \u001b[33mclass\u001b[39m=\u001b[32m\"flex min-h-[60vh] flex-col items-center justify-center gap-4 px-6 text-center\"\u001b[39m\n    \u001b[36m>\u001b[39m\n      \u001b[36m<h1\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"font-['Cormorant_Garamond',serif] text-[36px] font-medium text-[#2d2926]\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mProduct Not Found\u001b[0m\n      \u001b[36m</h1>\u001b[39m\n      \u001b[36m<p\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"text-[14px] text-[#9a8d82]\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mThe candle you're looking for doesn't exist ΓÇö yet.\u001b[0m\n      \u001b[36m</p>\u001b[39m\n      \u001b[36m<a\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"mt-3 border border-[#c4a093] px-6 py-2.5 text-[12px] font-semibold uppercase tracking-[0.15em] text-[#c4a093] transition-all hover:bg-[#c4a093] hover:text-white\"\u001b[39m\n        \u001b[33mhref\u001b[39m=\u001b[32m\"/\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mBack to Home\u001b[0m\n      \u001b[36m</a>\u001b[39m\n    \u001b[36m</div>\u001b[39m\n  \u001b[36m</div>\u001b[39m\n\u001b[36m</body>\u001b[39m\n    at Object.getElementError (C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\config.js:37:19)\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:76:38\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:109:15\n    at C:/Users/91807/my-app/src/__tests__/unit/Product.test.tsx:35:34\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:296:11\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1258:26\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1681:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1678:10)\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1660:20"],"meta":{},"tags":[]},{"ancestorTitles":["Product page ΓÇö valid product (Golden Hour)"],"fullName":"Product page ΓÇö valid product (Golden Hour) renders the product description","status":"failed","title":"renders the product description","duration":7.374300000000403,"failureMessages":["TestingLibraryElementError: Unable to find an element with the text: /mediterranean sunset/i. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.\n\nIgnored nodes: comments, script, style\n\u001b[36m<body>\u001b[39m\n  \u001b[36m<div>\u001b[39m\n    \u001b[36m<div\u001b[39m\n      \u001b[33mclass\u001b[39m=\u001b[32m\"flex min-h-[60vh] flex-col items-center justify-center gap-4 px-6 text-center\"\u001b[39m\n    \u001b[36m>\u001b[39m\n      \u001b[36m<h1\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"font-['Cormorant_Garamond',serif] text-[36px] font-medium text-[#2d2926]\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mProduct Not Found\u001b[0m\n      \u001b[36m</h1>\u001b[39m\n      \u001b[36m<p\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"text-[14px] text-[#9a8d82]\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mThe candle you're looking for doesn't exist ΓÇö yet.\u001b[0m\n      \u001b[36m</p>\u001b[39m\n      \u001b[36m<a\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"mt-3 border border-[#c4a093] px-6 py-2.5 text-[12px] font-semibold uppercase tracking-[0.15em] text-[#c4a093] transition-all hover:bg-[#c4a093] hover:text-white\"\u001b[39m\n        \u001b[33mhref\u001b[39m=\u001b[32m\"/\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mBack to Home\u001b[0m\n      \u001b[36m</a>\u001b[39m\n    \u001b[36m</div>\u001b[39m\n  \u001b[36m</div>\u001b[39m\n\u001b[36m</body>\u001b[39m\n    at Object.getElementError (C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\config.js:37:19)\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:76:38\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:52:17\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:95:19\n    at C:/Users/91807/my-app/src/__tests__/unit/Product.test.tsx:41:19\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:296:11\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1258:26\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1681:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1678:10)"],"meta":{},"tags":[]},{"ancestorTitles":["Product page ΓÇö valid product (Golden Hour)"],"fullName":"Product page ΓÇö valid product (Golden Hour) renders all fragrance notes","status":"failed","title":"renders all fragrance notes","duration":7.913700000000063,"failureMessages":["TestingLibraryElementError: Unable to find an element with the text: Amber. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.\n\nIgnored nodes: comments, script, style\n\u001b[36m<body>\u001b[39m\n  \u001b[36m<div>\u001b[39m\n    \u001b[36m<div\u001b[39m\n      \u001b[33mclass\u001b[39m=\u001b[32m\"flex min-h-[60vh] flex-col items-center justify-center gap-4 px-6 text-center\"\u001b[39m\n    \u001b[36m>\u001b[39m\n      \u001b[36m<h1\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"font-['Cormorant_Garamond',serif] text-[36px] font-medium text-[#2d2926]\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mProduct Not Found\u001b[0m\n      \u001b[36m</h1>\u001b[39m\n      \u001b[36m<p\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"text-[14px] text-[#9a8d82]\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mThe candle you're looking for doesn't exist ΓÇö yet.\u001b[0m\n      \u001b[36m</p>\u001b[39m\n      \u001b[36m<a\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"mt-3 border border-[#c4a093] px-6 py-2.5 text-[12px] font-semibold uppercase tracking-[0.15em] text-[#c4a093] transition-all hover:bg-[#c4a093] hover:text-white\"\u001b[39m\n        \u001b[33mhref\u001b[39m=\u001b[32m\"/\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mBack to Home\u001b[0m\n      \u001b[36m</a>\u001b[39m\n    \u001b[36m</div>\u001b[39m\n  \u001b[36m</div>\u001b[39m\n\u001b[36m</body>\u001b[39m\n    at Object.getElementError (C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\config.js:37:19)\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:76:38\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:52:17\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:95:19\n    at C:/Users/91807/my-app/src/__tests__/unit/Product.test.tsx:47:21\n    at Array.forEach (<anonymous>)\n    at C:/Users/91807/my-app/src/__tests__/unit/Product.test.tsx:46:22\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:296:11\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1258:26\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1681:20"],"meta":{},"tags":[]},{"ancestorTitles":["Product page ΓÇö valid product (Golden Hour)"],"fullName":"Product page ΓÇö valid product (Golden Hour) renders specs grid (burn time, weight, wax)","status":"failed","title":"renders specs grid (burn time, weight, wax)","duration":4.834100000000035,"failureMessages":["TestingLibraryElementError: Unable to find an element with the text: Burn Time. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.\n\nIgnored nodes: comments, script, style\n\u001b[36m<body>\u001b[39m\n  \u001b[36m<div>\u001b[39m\n    \u001b[36m<div\u001b[39m\n      \u001b[33mclass\u001b[39m=\u001b[32m\"flex min-h-[60vh] flex-col items-center justify-center gap-4 px-6 text-center\"\u001b[39m\n    \u001b[36m>\u001b[39m\n      \u001b[36m<h1\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"font-['Cormorant_Garamond',serif] text-[36px] font-medium text-[#2d2926]\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mProduct Not Found\u001b[0m\n      \u001b[36m</h1>\u001b[39m\n      \u001b[36m<p\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"text-[14px] text-[#9a8d82]\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mThe candle you're looking for doesn't exist ΓÇö yet.\u001b[0m\n      \u001b[36m</p>\u001b[39m\n      \u001b[36m<a\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"mt-3 border border-[#c4a093] px-6 py-2.5 text-[12px] font-semibold uppercase tracking-[0.15em] text-[#c4a093] transition-all hover:bg-[#c4a093] hover:text-white\"\u001b[39m\n        \u001b[33mhref\u001b[39m=\u001b[32m\"/\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mBack to Home\u001b[0m\n      \u001b[36m</a>\u001b[39m\n    \u001b[36m</div>\u001b[39m\n  \u001b[36m</div>\u001b[39m\n\u001b[36m</body>\u001b[39m\n    at Object.getElementError (C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\config.js:37:19)\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:76:38\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:52:17\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:95:19\n    at C:/Users/91807/my-app/src/__tests__/unit/Product.test.tsx:53:19\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:296:11\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1258:26\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1681:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1678:10)"],"meta":{},"tags":[]},{"ancestorTitles":["Product page ΓÇö valid product (Golden Hour)"],"fullName":"Product page ΓÇö valid product (Golden Hour) renders the category pill","status":"failed","title":"renders the category pill","duration":5.715299999999843,"failureMessages":["TestingLibraryElementError: Unable to find an element with the text: signature. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.\n\nIgnored nodes: comments, script, style\n\u001b[36m<body>\u001b[39m\n  \u001b[36m<div>\u001b[39m\n    \u001b[36m<div\u001b[39m\n      \u001b[33mclass\u001b[39m=\u001b[32m\"flex min-h-[60vh] flex-col items-center justify-center gap-4 px-6 text-center\"\u001b[39m\n    \u001b[36m>\u001b[39m\n      \u001b[36m<h1\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"font-['Cormorant_Garamond',serif] text-[36px] font-medium text-[#2d2926]\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mProduct Not Found\u001b[0m\n      \u001b[36m</h1>\u001b[39m\n      \u001b[36m<p\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"text-[14px] text-[#9a8d82]\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mThe candle you're looking for doesn't exist ΓÇö yet.\u001b[0m\n      \u001b[36m</p>\u001b[39m\n      \u001b[36m<a\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"mt-3 border border-[#c4a093] px-6 py-2.5 text-[12px] font-semibold uppercase tracking-[0.15em] text-[#c4a093] transition-all hover:bg-[#c4a093] hover:text-white\"\u001b[39m\n        \u001b[33mhref\u001b[39m=\u001b[32m\"/\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mBack to Home\u001b[0m\n      \u001b[36m</a>\u001b[39m\n    \u001b[36m</div>\u001b[39m\n  \u001b[36m</div>\u001b[39m\n\u001b[36m</body>\u001b[39m\n    at Object.getElementError (C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\config.js:37:19)\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:76:38\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:52:17\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:95:19\n    at C:/Users/91807/my-app/src/__tests__/unit/Product.test.tsx:63:19\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:296:11\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1258:26\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1681:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1678:10)"],"meta":{},"tags":[]},{"ancestorTitles":["Product page ΓÇö valid product (Golden Hour)"],"fullName":"Product page ΓÇö valid product (Golden Hour) renders trust badges","status":"failed","title":"renders trust badges","duration":5.008199999999306,"failureMessages":["TestingLibraryElementError: Unable to find an element with the text: /cruelty free/i. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.\n\nIgnored nodes: comments, script, style\n\u001b[36m<body>\u001b[39m\n  \u001b[36m<div>\u001b[39m\n    \u001b[36m<div\u001b[39m\n      \u001b[33mclass\u001b[39m=\u001b[32m\"flex min-h-[60vh] flex-col items-center justify-center gap-4 px-6 text-center\"\u001b[39m\n    \u001b[36m>\u001b[39m\n      \u001b[36m<h1\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"font-['Cormorant_Garamond',serif] text-[36px] font-medium text-[#2d2926]\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mProduct Not Found\u001b[0m\n      \u001b[36m</h1>\u001b[39m\n      \u001b[36m<p\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"text-[14px] text-[#9a8d82]\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mThe candle you're looking for doesn't exist ΓÇö yet.\u001b[0m\n      \u001b[36m</p>\u001b[39m\n      \u001b[36m<a\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"mt-3 border border-[#c4a093] px-6 py-2.5 text-[12px] font-semibold uppercase tracking-[0.15em] text-[#c4a093] transition-all hover:bg-[#c4a093] hover:text-white\"\u001b[39m\n        \u001b[33mhref\u001b[39m=\u001b[32m\"/\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mBack to Home\u001b[0m\n      \u001b[36m</a>\u001b[39m\n    \u001b[36m</div>\u001b[39m\n  \u001b[36m</div>\u001b[39m\n\u001b[36m</body>\u001b[39m\n    at Object.getElementError (C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\config.js:37:19)\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:76:38\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:52:17\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:95:19\n    at C:/Users/91807/my-app/src/__tests__/unit/Product.test.tsx:68:19\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:296:11\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1258:26\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1681:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1678:10)"],"meta":{},"tags":[]},{"ancestorTitles":["Product page ΓÇö valid product (Golden Hour)"],"fullName":"Product page ΓÇö valid product (Golden Hour) renders the Add to Cart button","status":"failed","title":"renders the Add to Cart button","duration":5.65059999999994,"failureMessages":["TestingLibraryElementError: Unable to find an element with the text: Add to Cart. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.\n\nIgnored nodes: comments, script, style\n\u001b[36m<body>\u001b[39m\n  \u001b[36m<div>\u001b[39m\n    \u001b[36m<div\u001b[39m\n      \u001b[33mclass\u001b[39m=\u001b[32m\"flex min-h-[60vh] flex-col items-center justify-center gap-4 px-6 text-center\"\u001b[39m\n    \u001b[36m>\u001b[39m\n      \u001b[36m<h1\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"font-['Cormorant_Garamond',serif] text-[36px] font-medium text-[#2d2926]\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mProduct Not Found\u001b[0m\n      \u001b[36m</h1>\u001b[39m\n      \u001b[36m<p\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"text-[14px] text-[#9a8d82]\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mThe candle you're looking for doesn't exist ΓÇö yet.\u001b[0m\n      \u001b[36m</p>\u001b[39m\n      \u001b[36m<a\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"mt-3 border border-[#c4a093] px-6 py-2.5 text-[12px] font-semibold uppercase tracking-[0.15em] text-[#c4a093] transition-all hover:bg-[#c4a093] hover:text-white\"\u001b[39m\n        \u001b[33mhref\u001b[39m=\u001b[32m\"/\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mBack to Home\u001b[0m\n      \u001b[36m</a>\u001b[39m\n    \u001b[36m</div>\u001b[39m\n  \u001b[36m</div>\u001b[39m\n\u001b[36m</body>\u001b[39m\n    at Object.getElementError (C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\config.js:37:19)\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:76:38\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:52:17\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:95:19\n    at C:/Users/91807/my-app/src/__tests__/unit/Product.test.tsx:75:24\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:296:11\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1258:26\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1681:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1678:10)"],"meta":{},"tags":[]},{"ancestorTitles":["Product page ΓÇö valid product (Golden Hour)"],"fullName":"Product page ΓÇö valid product (Golden Hour) renders breadcrumb navigation","status":"failed","title":"renders breadcrumb navigation","duration":9.488900000000285,"failureMessages":["TestingLibraryElementError: Unable to find a label with the text of: Breadcrumb\n\nIgnored nodes: comments, script, style\n\u001b[36m<body>\u001b[39m\n  \u001b[36m<div>\u001b[39m\n    \u001b[36m<div\u001b[39m\n      \u001b[33mclass\u001b[39m=\u001b[32m\"flex min-h-[60vh] flex-col items-center justify-center gap-4 px-6 text-center\"\u001b[39m\n    \u001b[36m>\u001b[39m\n      \u001b[36m<h1\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"font-['Cormorant_Garamond',serif] text-[36px] font-medium text-[#2d2926]\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mProduct Not Found\u001b[0m\n      \u001b[36m</h1>\u001b[39m\n      \u001b[36m<p\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"text-[14px] text-[#9a8d82]\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mThe candle you're looking for doesn't exist ΓÇö yet.\u001b[0m\n      \u001b[36m</p>\u001b[39m\n      \u001b[36m<a\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"mt-3 border border-[#c4a093] px-6 py-2.5 text-[12px] font-semibold uppercase tracking-[0.15em] text-[#c4a093] transition-all hover:bg-[#c4a093] hover:text-white\"\u001b[39m\n        \u001b[33mhref\u001b[39m=\u001b[32m\"/\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mBack to Home\u001b[0m\n      \u001b[36m</a>\u001b[39m\n    \u001b[36m</div>\u001b[39m\n  \u001b[36m</div>\u001b[39m\n\u001b[36m</body>\u001b[39m\n    at Object.getElementError (C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\config.js:37:19)\n    at getAllByLabelText (C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\queries\\label-text.js:111:38)\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:52:17\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:95:19\n    at C:/Users/91807/my-app/src/__tests__/unit/Product.test.tsx:82:31\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:296:11\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1258:26\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1681:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1678:10)"],"meta":{},"tags":[]},{"ancestorTitles":["Product page ΓÇö valid product (Golden Hour)"],"fullName":"Product page ΓÇö valid product (Golden Hour) renders the 'You May Also Like' section","status":"failed","title":"renders the 'You May Also Like' section","duration":6.5877999999993335,"failureMessages":["TestingLibraryElementError: Unable to find an element with the text: You May Also Like. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.\n\nIgnored nodes: comments, script, style\n\u001b[36m<body>\u001b[39m\n  \u001b[36m<div>\u001b[39m\n    \u001b[36m<div\u001b[39m\n      \u001b[33mclass\u001b[39m=\u001b[32m\"flex min-h-[60vh] flex-col items-center justify-center gap-4 px-6 text-center\"\u001b[39m\n    \u001b[36m>\u001b[39m\n      \u001b[36m<h1\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"font-['Cormorant_Garamond',serif] text-[36px] font-medium text-[#2d2926]\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mProduct Not Found\u001b[0m\n      \u001b[36m</h1>\u001b[39m\n      \u001b[36m<p\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"text-[14px] text-[#9a8d82]\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mThe candle you're looking for doesn't exist ΓÇö yet.\u001b[0m\n      \u001b[36m</p>\u001b[39m\n      \u001b[36m<a\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"mt-3 border border-[#c4a093] px-6 py-2.5 text-[12px] font-semibold uppercase tracking-[0.15em] text-[#c4a093] transition-all hover:bg-[#c4a093] hover:text-white\"\u001b[39m\n        \u001b[33mhref\u001b[39m=\u001b[32m\"/\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mBack to Home\u001b[0m\n      \u001b[36m</a>\u001b[39m\n    \u001b[36m</div>\u001b[39m\n  \u001b[36m</div>\u001b[39m\n\u001b[36m</body>\u001b[39m\n    at Object.getElementError (C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\config.js:37:19)\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:76:38\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:52:17\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:95:19\n    at C:/Users/91807/my-app/src/__tests__/unit/Product.test.tsx:90:19\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:296:11\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1258:26\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1681:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1678:10)"],"meta":{},"tags":[]},{"ancestorTitles":["Product page ΓÇö valid product (Golden Hour)"],"fullName":"Product page ΓÇö valid product (Golden Hour) adds product to cart on button click","status":"failed","title":"adds product to cart on button click","duration":6.9242999999996755,"failureMessages":["TestingLibraryElementError: Unable to find an element with the text: Add to Cart. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.\n\nIgnored nodes: comments, script, style\n\u001b[36m<body>\u001b[39m\n  \u001b[36m<div>\u001b[39m\n    \u001b[36m<div\u001b[39m\n      \u001b[33mclass\u001b[39m=\u001b[32m\"flex min-h-[60vh] flex-col items-center justify-center gap-4 px-6 text-center\"\u001b[39m\n    \u001b[36m>\u001b[39m\n      \u001b[36m<h1\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"font-['Cormorant_Garamond',serif] text-[36px] font-medium text-[#2d2926]\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mProduct Not Found\u001b[0m\n      \u001b[36m</h1>\u001b[39m\n      \u001b[36m<p\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"text-[14px] text-[#9a8d82]\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mThe candle you're looking for doesn't exist ΓÇö yet.\u001b[0m\n      \u001b[36m</p>\u001b[39m\n      \u001b[36m<a\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"mt-3 border border-[#c4a093] px-6 py-2.5 text-[12px] font-semibold uppercase tracking-[0.15em] text-[#c4a093] transition-all hover:bg-[#c4a093] hover:text-white\"\u001b[39m\n        \u001b[33mhref\u001b[39m=\u001b[32m\"/\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mBack to Home\u001b[0m\n      \u001b[36m</a>\u001b[39m\n    \u001b[36m</div>\u001b[39m\n  \u001b[36m</div>\u001b[39m\n\u001b[36m</body>\u001b[39m\n    at Object.getElementError (C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\config.js:37:19)\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:76:38\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:52:17\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:95:19\n    at C:/Users/91807/my-app/src/__tests__/unit/Product.test.tsx:97:29\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:296:11\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1258:26\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1681:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1678:10)"],"meta":{},"tags":[]},{"ancestorTitles":["Product page ΓÇö valid product (Golden Hour)"],"fullName":"Product page ΓÇö valid product (Golden Hour) shows in-stock message with shipping info","status":"failed","title":"shows in-stock message with shipping info","duration":4.574300000000221,"failureMessages":["TestingLibraryElementError: Unable to find an element with the text: /free shipping on orders above Γé╣3,000/i. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.\n\nIgnored nodes: comments, script, style\n\u001b[36m<body>\u001b[39m\n  \u001b[36m<div>\u001b[39m\n    \u001b[36m<div\u001b[39m\n      \u001b[33mclass\u001b[39m=\u001b[32m\"flex min-h-[60vh] flex-col items-center justify-center gap-4 px-6 text-center\"\u001b[39m\n    \u001b[36m>\u001b[39m\n      \u001b[36m<h1\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"font-['Cormorant_Garamond',serif] text-[36px] font-medium text-[#2d2926]\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mProduct Not Found\u001b[0m\n      \u001b[36m</h1>\u001b[39m\n      \u001b[36m<p\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"text-[14px] text-[#9a8d82]\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mThe candle you're looking for doesn't exist ΓÇö yet.\u001b[0m\n      \u001b[36m</p>\u001b[39m\n      \u001b[36m<a\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"mt-3 border border-[#c4a093] px-6 py-2.5 text-[12px] font-semibold uppercase tracking-[0.15em] text-[#c4a093] transition-all hover:bg-[#c4a093] hover:text-white\"\u001b[39m\n        \u001b[33mhref\u001b[39m=\u001b[32m\"/\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mBack to Home\u001b[0m\n      \u001b[36m</a>\u001b[39m\n    \u001b[36m</div>\u001b[39m\n  \u001b[36m</div>\u001b[39m\n\u001b[36m</body>\u001b[39m\n    at Object.getElementError (C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\config.js:37:19)\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:76:38\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:52:17\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:95:19\n    at C:/Users/91807/my-app/src/__tests__/unit/Product.test.tsx:108:14\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:296:11\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1258:26\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1681:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1678:10)"],"meta":{},"tags":[]},{"ancestorTitles":["Product page ΓÇö invalid slug (404)"],"fullName":"Product page ΓÇö invalid slug (404) renders Product Not Found heading","status":"passed","title":"renders Product Not Found heading","duration":6.752599999999802,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["Product page ΓÇö invalid slug (404)"],"fullName":"Product page ΓÇö invalid slug (404) renders a Back to Home link","status":"passed","title":"renders a Back to Home link","duration":5.138300000000527,"failureMessages":[],"meta":{},"tags":[]}],"startTime":1773782961716,"endTime":1773782961892.1382,"status":"failed","message":"","name":"C:/Users/91807/my-app/src/__tests__/unit/Product.test.tsx"},{"assertionResults":[{"ancestorTitles":["ProductCard ΓÇö rendering"],"fullName":"ProductCard ΓÇö rendering renders the product name","status":"passed","title":"renders the product name","duration":108.88320000000022,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["ProductCard ΓÇö rendering"],"fullName":"ProductCard ΓÇö rendering renders the product tagline","status":"passed","title":"renders the product tagline","duration":13.96009999999933,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["ProductCard ΓÇö rendering"],"fullName":"ProductCard ΓÇö rendering renders the formatted INR price","status":"passed","title":"renders the formatted INR price","duration":8.930299999999988,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["ProductCard ΓÇö rendering"],"fullName":"ProductCard ΓÇö rendering renders the product image with correct alt text","status":"passed","title":"renders the product image with correct alt text","duration":9.657900000000154,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["ProductCard ΓÇö rendering"],"fullName":"ProductCard ΓÇö rendering has a unique ID on the article element","status":"passed","title":"has a unique ID on the article element","duration":9.108600000000479,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["ProductCard ΓÇö rendering"],"fullName":"ProductCard ΓÇö rendering links to the correct product detail page","status":"passed","title":"links to the correct product detail page","duration":9.611100000000079,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["ProductCard ΓÇö out of stock"],"fullName":"ProductCard ΓÇö out of stock displays a 'Sold Out' overlay for out-of-stock products","status":"failed","title":"displays a 'Sold Out' overlay for out-of-stock products","duration":21.696899999999914,"failureMessages":["TestingLibraryElementError: Found multiple elements with the text: Sold Out\n\nHere are the matching elements:\n\nIgnored nodes: comments, script, style\n\u001b[36m<span\u001b[39m\n  \u001b[33mclass\u001b[39m=\u001b[32m\"rounded-sm bg-[#2d2926] px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.15em] text-white\"\u001b[39m\n\u001b[36m>\u001b[39m\n  \u001b[0mSold Out\u001b[0m\n\u001b[36m</span>\u001b[39m\n\nIgnored nodes: comments, script, style\n\u001b[36m<button\u001b[39m\n  \u001b[33mclass\u001b[39m=\u001b[32m\"w-full bg-[#c4a093] py-3 text-[11px] font-semibold uppercase tracking-[0.15em] text-white transition-colors hover:bg-[#a8877b] disabled:cursor-not-allowed disabled:bg-[#d9c2b7]\"\u001b[39m\n  \u001b[33mdisabled\u001b[39m=\u001b[32m\"\"\u001b[39m\n  \u001b[33mid\u001b[39m=\u001b[32m\"quick-add-velvet-rose\"\u001b[39m\n\u001b[36m>\u001b[39m\n  \u001b[0mSold Out\u001b[0m\n\u001b[36m</button>\u001b[39m\n\n(If this is intentional, then use the `*AllBy*` variant of the query (like `queryAllByText`, `getAllByText`, or `findAllByText`)).\n\nIgnored nodes: comments, script, style\n\u001b[36m<body>\u001b[39m\n  \u001b[36m<div>\u001b[39m\n    \u001b[36m<article\u001b[39m\n      \u001b[33mclass\u001b[39m=\u001b[32m\"group relative flex flex-col overflow-hidden rounded-lg bg-white border border-[#f0ebe5] transition-all duration-300 hover:shadow-[0_8px_32px_rgba(45,41,38,0.1)] hover:border-[#e8e0d8]\"\u001b[39m\n      \u001b[33mid\u001b[39m=\u001b[32m\"product-card-velvet-rose\"\u001b[39m\n    \u001b[36m>\u001b[39m\n      \u001b[36m<a\u001b[39m\n        \u001b[33maria-label\u001b[39m=\u001b[32m\"View Velvet Rose details\"\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"relative block overflow-hidden bg-[#f3ece4]\"\u001b[39m\n        \u001b[33mhref\u001b[39m=\u001b[32m\"/product/velvet-rose\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[36m<img\u001b[39m\n          \u001b[33malt\u001b[39m=\u001b[32m\"Velvet Rose\"\u001b[39m\n          \u001b[33mclass\u001b[39m=\u001b[32m\"aspect-[4/5] w-full object-cover transition-transform duration-500 group-hover:scale-105\"\u001b[39m\n          \u001b[33mloading\u001b[39m=\u001b[32m\"lazy\"\u001b[39m\n          \u001b[33msrc\u001b[39m=\u001b[32m\"https://images.unsplash.com/photo-1572726839041-8520b0a7c678?w=600&q=80\"\u001b[39m\n        \u001b[36m/>\u001b[39m\n        \u001b[36m<div\u001b[39m\n          \u001b[33mclass\u001b[39m=\u001b[32m\"absolute inset-0 flex items-center justify-center bg-white/60\"\u001b[39m\n        \u001b[36m>\u001b[39m\n          \u001b[36m<span\u001b[39m\n            \u001b[33mclass\u001b[39m=\u001b[32m\"rounded-sm bg-[#2d2926] px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.15em] text-white\"\u001b[39m\n          \u001b[36m>\u001b[39m\n            \u001b[0mSold Out\u001b[0m\n          \u001b[36m</span>\u001b[39m\n        \u001b[36m</div>\u001b[39m\n        \u001b[36m<div\u001b[39m\n          \u001b[33mclass\u001b[39m=\u001b[32m\"absolute inset-x-0 bottom-0 translate-y-full opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100\"\u001b[39m\n        \u001b[36m>\u001b[39m\n          \u001b[36m<button\u001b[39m\n            \u001b[33mclass\u001b[39m=\u001b[32m\"w-full bg-[#c4a093] py-3 text-[11px] font-semibold uppercase tracking-[0.15em] text-white transition-colors hover:bg-[#a8877b] disabled:cursor-not-allowed disabled:bg-[#d9c2b7]\"\u001b[39m\n            \u001b[33mdisabled\u001b[39m=\u001b[32m\"\"\u001b[39m\n            \u001b[33mid\u001b[39m=\u001b[32m\"quick-add-velvet-rose\"\u001b[39m\n          \u001b[36m>\u001b[39m\n            \u001b[0mSold Out\u001b[0m\n          \u001b[36m</button>\u001b[39m\n        \u001b[36m</div>\u001b[39m\n      \u001b[36m</a>\u001b[39m\n      \u001b[36m<div\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"flex flex-1 flex-col gap-1.5 p-4\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[36m<a\u001b[39m\n          \u001b[33mclass\u001b[39m=\u001b[32m\"space-y-0.5\"\u001b[39m\n          \u001b[33mhref\u001b[39m=\u001b[32m\"/product/velvet-rose\"\u001b[39m\n        \u001b[36m>\u001b[39m\n          \u001b[36m<h3\u001b[39m\n            \u001b[33mclass\u001b[39m=\u001b[32m\"font-['Cormorant_Garamond',serif] text-[17px] font-medium text-[#2d2926] transition-colors group-hover:text-[#c4a093]\"\u001b[39m\n          \u001b[36m>\u001b[39m\n            \u001b[0mVelvet Rose\u001b[0m\n          \u001b[36m</h3>\u001b[39m\n          \u001b[36m<p\u001b[39m\n            \u001b[33mclass\u001b[39m=\u001b[32m\"text-[12px] text-[#9a8d82] line-clamp-2 leading-relaxed\"\u001b[39m\n          \u001b[36m>\u001b[39m\n            \u001b[0mLush Damascena rose layered with silk\u001b[0m\n          \u001b[36m</p>\u001b[39m\n        \u001b[36m</a>\u001b[39m\n        \u001b[36m<p\u001b[39m\n          \u001b[33mclass\u001b[39m=\u001b[32m\"mt-auto pt-2 text-[14px] font-medium text-[#2d2926]\"\u001b[39m\n        \u001b[36m>\u001b[39m\n          \u001b[0mΓé╣2,999\u001b[0m\n        \u001b[36m</p>\u001b[39m\n      \u001b[36m</div>\u001b[39m\n    \u001b[36m</article>\u001b[39m\n  \u001b[36m</div>\u001b[39m\n\u001b[36m</body>\u001b[39m\n    at Object.getElementError (C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\config.js:37:19)\n    at getElementError (C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:20:35)\n    at getMultipleElementsFoundError (C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:23:10)\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:55:13\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:95:19\n    at C:/Users/91807/my-app/src/__tests__/unit/ProductCard.test.tsx:64:19\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:296:11\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1258:26\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1681:20\n    at new Promise (<anonymous>)"],"meta":{},"tags":[]},{"ancestorTitles":["ProductCard ΓÇö category badges"],"fullName":"ProductCard ΓÇö category badges shows 'Limited Edition' badge for limited products","status":"passed","title":"shows 'Limited Edition' badge for limited products","duration":6.925699999999779,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["ProductCard ΓÇö category badges"],"fullName":"ProductCard ΓÇö category badges shows 'Seasonal' badge for seasonal products","status":"passed","title":"shows 'Seasonal' badge for seasonal products","duration":8.743799999999283,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["ProductCard ΓÇö quick add"],"fullName":"ProductCard ΓÇö quick add adds item to the cart when quick-add is clicked","status":"passed","title":"adds item to the cart when quick-add is clicked","duration":291.6813999999995,"failureMessages":[],"meta":{},"tags":[]}],"startTime":1773782961710,"endTime":1773782962200.6814,"status":"failed","message":"","name":"C:/Users/91807/my-app/src/__tests__/unit/ProductCard.test.tsx"},{"assertionResults":[{"ancestorTitles":["products data"],"fullName":"products data exports a non-empty product array","status":"passed","title":"exports a non-empty product array","duration":4.585900000000038,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["products data"],"fullName":"products data every product satisfies the Product interface shape","status":"passed","title":"every product satisfies the Product interface shape","duration":8.136599999999817,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["products data"],"fullName":"products data all slugs are unique","status":"passed","title":"all slugs are unique","duration":0.4303999999997359,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["products data"],"fullName":"products data all IDs are unique","status":"passed","title":"all IDs are unique","duration":0.39840000000003783,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["getProductBySlug"],"fullName":"getProductBySlug returns the correct product for a valid slug","status":"passed","title":"returns the correct product for a valid slug","duration":0.6838999999999942,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["getProductBySlug"],"fullName":"getProductBySlug returns undefined for an invalid slug","status":"passed","title":"returns undefined for an invalid slug","duration":0.5221999999998843,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["getProductBySlug"],"fullName":"getProductBySlug returns undefined for an empty string","status":"passed","title":"returns undefined for an empty string","duration":0.3963999999996304,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["getProductBySlug"],"fullName":"getProductBySlug finds every product by its slug","status":"passed","title":"finds every product by its slug","duration":1.3926000000001295,"failureMessages":[],"meta":{},"tags":[]}],"startTime":1773782961089,"endTime":1773782961106.3926,"status":"passed","message":"","name":"C:/Users/91807/my-app/src/__tests__/unit/products.test.ts"},{"assertionResults":[{"ancestorTitles":["Design tokens ΓÇö palette"],"fullName":"Design tokens ΓÇö palette defines the cream background","status":"passed","title":"defines the cream background","duration":4.249399999999696,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["Design tokens ΓÇö palette"],"fullName":"Design tokens ΓÇö palette defines the dusty rose accent","status":"passed","title":"defines the dusty rose accent","duration":0.5621000000001004,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["Design tokens ΓÇö palette"],"fullName":"Design tokens ΓÇö palette defines the warm brown primary text","status":"passed","title":"defines the warm brown primary text","duration":0.8468000000002576,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["Design tokens ΓÇö palette"],"fullName":"Design tokens ΓÇö palette defines the sage green secondary accent","status":"passed","title":"defines the sage green secondary accent","duration":0.436500000000251,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["Design tokens ΓÇö palette"],"fullName":"Design tokens ΓÇö palette has consistent accent hierarchy (dark < accent < light)","status":"passed","title":"has consistent accent hierarchy (dark < accent < light)","duration":0.5174999999999272,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["Design tokens ΓÇö palette"],"fullName":"Design tokens ΓÇö palette defines border colours","status":"passed","title":"defines border colours","duration":0.6475999999997839,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["Design tokens ΓÇö fontFamily"],"fullName":"Design tokens ΓÇö fontFamily heading uses Cormorant Garamond","status":"passed","title":"heading uses Cormorant Garamond","duration":0.9050999999999476,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["Design tokens ΓÇö fontFamily"],"fullName":"Design tokens ΓÇö fontFamily body uses Inter","status":"passed","title":"body uses Inter","duration":0.4511999999999716,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["Design tokens ΓÇö fontSize"],"fullName":"Design tokens ΓÇö fontSize defines all expected sizes","status":"passed","title":"defines all expected sizes","duration":0.6809000000002925,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["Design tokens ΓÇö spacing"],"fullName":"Design tokens ΓÇö spacing page spacing uses clamp for responsiveness","status":"passed","title":"page spacing uses clamp for responsiveness","duration":0.4816000000000713,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["Design tokens ΓÇö spacing"],"fullName":"Design tokens ΓÇö spacing section spacing uses clamp for responsiveness","status":"passed","title":"section spacing uses clamp for responsiveness","duration":0.4499000000000706,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["Design tokens ΓÇö radius, shadow, transition"],"fullName":"Design tokens ΓÇö radius, shadow, transition defines border radii","status":"passed","title":"defines border radii","duration":0.3922000000002299,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["Design tokens ΓÇö radius, shadow, transition"],"fullName":"Design tokens ΓÇö radius, shadow, transition defines box shadows","status":"passed","title":"defines box shadows","duration":0.8652999999999338,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["Design tokens ΓÇö radius, shadow, transition"],"fullName":"Design tokens ΓÇö radius, shadow, transition defines transitions","status":"passed","title":"defines transitions","duration":0.6104000000000269,"failureMessages":[],"meta":{},"tags":[]}],"startTime":1773782961101,"endTime":1773782961114.6104,"status":"passed","message":"","name":"C:/Users/91807/my-app/src/__tests__/unit/tokens.test.ts"},{"assertionResults":[{"ancestorTitles":["UI Store ΓÇö nav"],"fullName":"UI Store ΓÇö nav starts with navOpen = false","status":"passed","title":"starts with navOpen = false","duration":4.567999999999756,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["UI Store ΓÇö nav"],"fullName":"UI Store ΓÇö nav toggleNav flips navOpen","status":"passed","title":"toggleNav flips navOpen","duration":1.076799999999821,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["UI Store ΓÇö nav"],"fullName":"UI Store ΓÇö nav closeNav sets navOpen to false","status":"passed","title":"closeNav sets navOpen to false","duration":0.45280000000002474,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["UI Store ΓÇö cart"],"fullName":"UI Store ΓÇö cart starts with cartOpen = false","status":"passed","title":"starts with cartOpen = false","duration":0.3944000000001324,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["UI Store ΓÇö cart"],"fullName":"UI Store ΓÇö cart toggleCart flips cartOpen","status":"passed","title":"toggleCart flips cartOpen","duration":0.6619999999998072,"failureMessages":[],"meta":{},"tags":[]},{"ancestorTitles":["UI Store ΓÇö cart"],"fullName":"UI Store ΓÇö cart closeCart sets cartOpen to false","status":"passed","title":"closeCart sets cartOpen to false","duration":0.3632999999999811,"failureMessages":[],"meta":{},"tags":[]}],"startTime":1773782961121,"endTime":1773782961129.3633,"status":"passed","message":"","name":"C:/Users/91807/my-app/src/__tests__/unit/ui-store.test.ts"}]}
+﻿{
+  "numTotalTestSuites": 43,
+  "numPassedTestSuites": 37,
+  "numFailedTestSuites": 6,
+  "numPendingTestSuites": 0,
+  "numTotalTests": 118,
+  "numPassedTests": 103,
+  "numFailedTests": 15,
+  "numPendingTests": 0,
+  "numTodoTests": 0,
+  "snapshot": {
+    "added": 0,
+    "failure": false,
+    "filesAdded": 0,
+    "filesRemoved": 0,
+    "filesRemovedList": [],
+    "filesUnmatched": 0,
+    "filesUpdated": 0,
+    "matched": 0,
+    "total": 0,
+    "unchecked": 0,
+    "uncheckedKeysByFile": [],
+    "unmatched": 0,
+    "updated": 0,
+    "didUpdate": false
+  },
+  "startTime": 1773782956901,
+  "success": false,
+  "testResults": [
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["Cart Store ΓÇö addItem"],
+          "fullName": "Cart Store ΓÇö addItem adds a new product with qty 1",
+          "status": "passed",
+          "title": "adds a new product with qty 1",
+          "duration": 5.7760999999995875,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["Cart Store ΓÇö addItem"],
+          "fullName": "Cart Store ΓÇö addItem increments qty when the same product is added again",
+          "status": "passed",
+          "title": "increments qty when the same product is added again",
+          "duration": 1.0788000000002285,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["Cart Store ΓÇö addItem"],
+          "fullName": "Cart Store ΓÇö addItem adds different products as separate lines",
+          "status": "passed",
+          "title": "adds different products as separate lines",
+          "duration": 0.7651999999998225,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["Cart Store ΓÇö removeItem"],
+          "fullName": "Cart Store ΓÇö removeItem decrements qty by one",
+          "status": "passed",
+          "title": "decrements qty by one",
+          "duration": 0.8337999999994281,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["Cart Store ΓÇö removeItem"],
+          "fullName": "Cart Store ΓÇö removeItem removes the line when qty hits zero",
+          "status": "passed",
+          "title": "removes the line when qty hits zero",
+          "duration": 0.7305999999998676,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["Cart Store ΓÇö removeItem"],
+          "fullName": "Cart Store ΓÇö removeItem does nothing for a non-existent product ID",
+          "status": "passed",
+          "title": "does nothing for a non-existent product ID",
+          "duration": 0.6509000000005472,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["Cart Store ΓÇö deleteLine"],
+          "fullName": "Cart Store ΓÇö deleteLine removes the entire line regardless of qty",
+          "status": "passed",
+          "title": "removes the entire line regardless of qty",
+          "duration": 0.7394999999996799,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["Cart Store ΓÇö deleteLine"],
+          "fullName": "Cart Store ΓÇö deleteLine only removes the specified product line",
+          "status": "passed",
+          "title": "only removes the specified product line",
+          "duration": 0.6647000000002663,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["Cart Store ΓÇö clearCart"],
+          "fullName": "Cart Store ΓÇö clearCart empties all items",
+          "status": "passed",
+          "title": "empties all items",
+          "duration": 0.6070999999992637,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["Cart Store ΓÇö totalQty"],
+          "fullName": "Cart Store ΓÇö totalQty returns 0 for an empty cart",
+          "status": "passed",
+          "title": "returns 0 for an empty cart",
+          "duration": 0.5664000000006126,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["Cart Store ΓÇö totalQty"],
+          "fullName": "Cart Store ΓÇö totalQty sums quantities across all lines",
+          "status": "passed",
+          "title": "sums quantities across all lines",
+          "duration": 0.5886000000000422,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["Cart Store ΓÇö totalPrice"],
+          "fullName": "Cart Store ΓÇö totalPrice returns 0 for an empty cart",
+          "status": "passed",
+          "title": "returns 0 for an empty cart",
+          "duration": 0.4421999999995023,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["Cart Store ΓÇö totalPrice"],
+          "fullName": "Cart Store ΓÇö totalPrice calculates total correctly",
+          "status": "passed",
+          "title": "calculates total correctly",
+          "duration": 0.3429999999998472,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        }
+      ],
+      "startTime": 1773782961126,
+      "endTime": 1773782961141.4421,
+      "status": "passed",
+      "message": "",
+      "name": "C:/Users/91807/my-app/src/__tests__/unit/cart-store.test.ts"
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["CartDrawer ΓÇö structure"],
+          "fullName": "CartDrawer ΓÇö structure renders the CART heading",
+          "status": "passed",
+          "title": "renders the CART heading",
+          "duration": 121.34789999999975,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["CartDrawer ΓÇö structure"],
+          "fullName": "CartDrawer ΓÇö structure has role='dialog' and aria-modal on the aside",
+          "status": "passed",
+          "title": "has role='dialog' and aria-modal on the aside",
+          "duration": 260.72410000000036,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["CartDrawer ΓÇö structure"],
+          "fullName": "CartDrawer ΓÇö structure renders the free shipping banner",
+          "status": "passed",
+          "title": "renders the free shipping banner",
+          "duration": 13.131599999999708,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["CartDrawer ΓÇö structure"],
+          "fullName": "CartDrawer ΓÇö structure renders the close button with ARIA label",
+          "status": "passed",
+          "title": "renders the close button with ARIA label",
+          "duration": 11.537199999999757,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["CartDrawer ΓÇö structure"],
+          "fullName": "CartDrawer ΓÇö structure renders a WhatsApp FAB with ARIA label",
+          "status": "passed",
+          "title": "renders a WhatsApp FAB with ARIA label",
+          "duration": 8.558100000000195,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["CartDrawer ΓÇö empty state"],
+          "fullName": "CartDrawer ΓÇö empty state shows empty cart message when no items",
+          "status": "passed",
+          "title": "shows empty cart message when no items",
+          "duration": 8.902500000000146,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["CartDrawer ΓÇö empty state"],
+          "fullName": "CartDrawer ΓÇö empty state does not show checkout button when empty",
+          "status": "passed",
+          "title": "does not show checkout button when empty",
+          "duration": 6.415499999999156,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["CartDrawer ΓÇö with items"],
+          "fullName": "CartDrawer ΓÇö with items displays the product name in the cart",
+          "status": "passed",
+          "title": "displays the product name in the cart",
+          "duration": 14.587299999999232,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["CartDrawer ΓÇö with items"],
+          "fullName": "CartDrawer ΓÇö with items displays the per-item price",
+          "status": "passed",
+          "title": "displays the per-item price",
+          "duration": 10.05659999999989,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["CartDrawer ΓÇö with items"],
+          "fullName": "CartDrawer ΓÇö with items shows the checkout button when items are present",
+          "status": "passed",
+          "title": "shows the checkout button when items are present",
+          "duration": 10.7479000000003,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["CartDrawer ΓÇö with items"],
+          "fullName": "CartDrawer ΓÇö with items shows the subtotal section",
+          "status": "passed",
+          "title": "shows the subtotal section",
+          "duration": 9.98569999999927,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["CartDrawer ΓÇö with items"],
+          "fullName": "CartDrawer ΓÇö with items shows shipping notice",
+          "status": "passed",
+          "title": "shows shipping notice",
+          "duration": 15.818199999999706,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["CartDrawer ΓÇö quantity controls"],
+          "fullName": "CartDrawer ΓÇö quantity controls has increase quantity button with ARIA label",
+          "status": "passed",
+          "title": "has increase quantity button with ARIA label",
+          "duration": 12.497699999999895,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["CartDrawer ΓÇö quantity controls"],
+          "fullName": "CartDrawer ΓÇö quantity controls has decrease quantity button with ARIA label",
+          "status": "passed",
+          "title": "has decrease quantity button with ARIA label",
+          "duration": 13.596300000000156,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["CartDrawer ΓÇö quantity controls"],
+          "fullName": "CartDrawer ΓÇö quantity controls has remove button with ARIA label",
+          "status": "passed",
+          "title": "has remove button with ARIA label",
+          "duration": 13.526199999999335,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["CartDrawer ΓÇö quantity controls"],
+          "fullName": "CartDrawer ΓÇö quantity controls increments qty when + is clicked",
+          "status": "passed",
+          "title": "increments qty when + is clicked",
+          "duration": 78.63630000000012,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["CartDrawer ΓÇö quantity controls"],
+          "fullName": "CartDrawer ΓÇö quantity controls removes the item when ΓêÆ is clicked at qty=1",
+          "status": "passed",
+          "title": "removes the item when ΓêÆ is clicked at qty=1",
+          "duration": 60.34950000000026,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["CartDrawer ΓÇö clear cart"],
+          "fullName": "CartDrawer ΓÇö clear cart clears all items when Clear cart is clicked",
+          "status": "passed",
+          "title": "clears all items when Clear cart is clicked",
+          "duration": 46.90859999999975,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        }
+      ],
+      "startTime": 1773782961705,
+      "endTime": 1773782962423.9087,
+      "status": "passed",
+      "message": "",
+      "name": "C:/Users/91807/my-app/src/__tests__/unit/CartDrawer.test.tsx"
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["Home page ΓÇö Hero section"],
+          "fullName": "Home page ΓÇö Hero section renders the hero banner with aria-label",
+          "status": "passed",
+          "title": "renders the hero banner with aria-label",
+          "duration": 128.33360000000084,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["Home page ΓÇö Hero section"],
+          "fullName": "Home page ΓÇö Hero section renders the 'Handcrafted Luxury' subtitle",
+          "status": "passed",
+          "title": "renders the 'Handcrafted Luxury' subtitle",
+          "duration": 61.39339999999993,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["Home page ΓÇö Hero section"],
+          "fullName": "Home page ΓÇö Hero section renders the hero headline 'signature'",
+          "status": "passed",
+          "title": "renders the hero headline 'signature'",
+          "duration": 49.52890000000025,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["Home page ΓÇö Hero section"],
+          "fullName": "Home page ΓÇö Hero section renders the 'Scented Collection' text",
+          "status": "passed",
+          "title": "renders the 'Scented Collection' text",
+          "duration": 38.29500000000007,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["Home page ΓÇö Hero section"],
+          "fullName": "Home page ΓÇö Hero section renders the 'Shop Now' CTA button",
+          "status": "passed",
+          "title": "renders the 'Shop Now' CTA button",
+          "duration": 43.21190000000024,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["Home page ΓÇö Hero section"],
+          "fullName": "Home page ΓÇö Hero section has a hero image with proper alt text",
+          "status": "passed",
+          "title": "has a hero image with proper alt text",
+          "duration": 36.797600000000784,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["Home page ΓÇö Product sections"],
+          "fullName": "Home page ΓÇö Product sections renders the 'New Arrivals' section heading",
+          "status": "passed",
+          "title": "renders the 'New Arrivals' section heading",
+          "duration": 38.92860000000019,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["Home page ΓÇö Product sections"],
+          "fullName": "Home page ΓÇö Product sections renders the 'View All Products' link",
+          "status": "passed",
+          "title": "renders the 'View All Products' link",
+          "duration": 40.69730000000072,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["Home page ΓÇö Product sections"],
+          "fullName": "Home page ΓÇö Product sections renders the 'Bestsellers' section heading",
+          "status": "passed",
+          "title": "renders the 'Bestsellers' section heading",
+          "duration": 45.221300000000156,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["Home page ΓÇö Product sections"],
+          "fullName": "Home page ΓÇö Product sections renders product cards (Golden Hour should be visible)",
+          "status": "passed",
+          "title": "renders product cards (Golden Hour should be visible)",
+          "duration": 34.647899999999936,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["Home page ΓÇö Value props"],
+          "fullName": "Home page ΓÇö Value props renders value proposition titles",
+          "status": "passed",
+          "title": "renders value proposition titles",
+          "duration": 36.458300000000236,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["Home page ΓÇö Value props"],
+          "fullName": "Home page ΓÇö Value props value props section has aria-label",
+          "status": "passed",
+          "title": "value props section has aria-label",
+          "duration": 40.32519999999931,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["Home page ΓÇö Clean Burning section"],
+          "fullName": "Home page ΓÇö Clean Burning section renders the Clean Burning headline",
+          "status": "passed",
+          "title": "renders the Clean Burning headline",
+          "duration": 29.51509999999962,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["Home page ΓÇö Clean Burning section"],
+          "fullName": "Home page ΓÇö Clean Burning section renders brand story text with Lumi├¿re",
+          "status": "passed",
+          "title": "renders brand story text with Lumi├¿re",
+          "duration": 22.35449999999946,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["Home page ΓÇö Lifestyle banner"],
+          "fullName": "Home page ΓÇö Lifestyle banner renders the lifestyle section with aria-label",
+          "status": "passed",
+          "title": "renders the lifestyle section with aria-label",
+          "duration": 21.280099999999948,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["Home page ΓÇö Lifestyle banner"],
+          "fullName": "Home page ΓÇö Lifestyle banner renders the Shop Bestsellers button",
+          "status": "passed",
+          "title": "renders the Shop Bestsellers button",
+          "duration": 37.635299999999916,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        }
+      ],
+      "startTime": 1773782961622,
+      "endTime": 1773782962327.6353,
+      "status": "passed",
+      "message": "",
+      "name": "C:/Users/91807/my-app/src/__tests__/unit/Home.test.tsx"
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["LayoutShell"],
+          "fullName": "LayoutShell renders the skip-to-content link",
+          "status": "passed",
+          "title": "renders the skip-to-content link",
+          "duration": 158.71910000000025,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["LayoutShell"],
+          "fullName": "LayoutShell renders the main element with role='main'",
+          "status": "passed",
+          "title": "renders the main element with role='main'",
+          "duration": 281.8190999999997,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["LayoutShell"],
+          "fullName": "LayoutShell renders the footer with role='contentinfo'",
+          "status": "passed",
+          "title": "renders the footer with role='contentinfo'",
+          "duration": 52.3116,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["LayoutShell"],
+          "fullName": "LayoutShell renders the footer brand LUMI├êRE",
+          "status": "passed",
+          "title": "renders the footer brand LUMI├êRE",
+          "duration": 26.23950000000059,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["LayoutShell"],
+          "fullName": "LayoutShell renders footer Quick Links section",
+          "status": "passed",
+          "title": "renders footer Quick Links section",
+          "duration": 46.22690000000057,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["LayoutShell"],
+          "fullName": "LayoutShell renders footer Support section",
+          "status": "passed",
+          "title": "renders footer Support section",
+          "duration": 35.88470000000052,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["LayoutShell"],
+          "fullName": "LayoutShell renders the newsletter signup form",
+          "status": "passed",
+          "title": "renders the newsletter signup form",
+          "duration": 21.58309999999983,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["LayoutShell"],
+          "fullName": "LayoutShell renders copyright with Lumi├¿re branding",
+          "status": "passed",
+          "title": "renders copyright with Lumi├¿re branding",
+          "duration": 16.228500000000167,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["LayoutShell"],
+          "fullName": "LayoutShell renders social media icons with ARIA labels",
+          "status": "passed",
+          "title": "renders social media icons with ARIA labels",
+          "duration": 16.994400000000496,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        }
+      ],
+      "startTime": 1773782961632,
+      "endTime": 1773782962288.9944,
+      "status": "passed",
+      "message": "",
+      "name": "C:/Users/91807/my-app/src/__tests__/unit/LayoutShell.test.tsx"
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["Nav component"],
+          "fullName": "Nav component renders the LUMI├êRE brand wordmark",
+          "status": "passed",
+          "title": "renders the LUMI├êRE brand wordmark",
+          "duration": 88.0683999999992,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["Nav component"],
+          "fullName": "Nav component renders the announcement bar with free shipping text",
+          "status": "passed",
+          "title": "renders the announcement bar with free shipping text",
+          "duration": 17.853799999999865,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["Nav component"],
+          "fullName": "Nav component renders all navigation links",
+          "status": "failed",
+          "title": "renders all navigation links",
+          "duration": 36.74110000000019,
+          "failureMessages": [
+            "TestingLibraryElementError: Found multiple elements with the text: Home\n\nHere are the matching elements:\n\nIgnored nodes: comments, script, style\n\u001b[36m<a\u001b[39m\n  \u001b[33mclass\u001b[39m=\u001b[32m\"text-[13px] tracking-[0.08em] uppercase transition-colors duration-200 text-[#c4a093] font-medium\"\u001b[39m\n  \u001b[33mhref\u001b[39m=\u001b[32m\"/\"\u001b[39m\n  \u001b[33mrole\u001b[39m=\u001b[32m\"menuitem\"\u001b[39m\n\u001b[36m>\u001b[39m\n  \u001b[0mHome\u001b[0m\n\u001b[36m</a>\u001b[39m\n\nIgnored nodes: comments, script, style\n\u001b[36m<a\u001b[39m\n  \u001b[33mclass\u001b[39m=\u001b[32m\"block py-2.5 text-[14px] tracking-[0.06em] uppercase transition-colors text-[#c4a093] font-medium\"\u001b[39m\n  \u001b[33mhref\u001b[39m=\u001b[32m\"/\"\u001b[39m\n  \u001b[33mrole\u001b[39m=\u001b[32m\"menuitem\"\u001b[39m\n\u001b[36m>\u001b[39m\n  \u001b[0mHome\u001b[0m\n\u001b[36m</a>\u001b[39m\n\n(If this is intentional, then use the `*AllBy*` variant of the query (like `queryAllByText`, `getAllByText`, or `findAllByText`)).\n\nIgnored nodes: comments, script, style\n\u001b[36m<body>\u001b[39m\n  \u001b[36m<div>\u001b[39m\n    \u001b[36m<header\u001b[39m\n      \u001b[33mclass\u001b[39m=\u001b[32m\"fixed top-0 inset-x-0 z-50 bg-[#faf7f4]/95 backdrop-blur-md border-b border-[#e8e0d8] transition-shadow duration-300\"\u001b[39m\n      \u001b[33mrole\u001b[39m=\u001b[32m\"banner\"\u001b[39m\n    \u001b[36m>\u001b[39m\n      \u001b[36m<div\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"bg-[#c4a093] py-1.5 text-center text-[11px] font-semibold uppercase tracking-[0.2em] text-white\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mFree Shipping on Orders Above\u001b[0m\n        \u001b[0m \u001b[0m\n        \u001b[36m<span\u001b[39m\n          \u001b[33mclass\u001b[39m=\u001b[32m\"font-bold\"\u001b[39m\n        \u001b[36m>\u001b[39m\n          \u001b[0mINR 3000/-\u001b[0m\n        \u001b[36m</span>\u001b[39m\n      \u001b[36m</div>\u001b[39m\n      \u001b[36m<nav\u001b[39m\n        \u001b[33maria-label\u001b[39m=\u001b[32m\"Main navigation\"\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"mx-auto flex max-w-7xl items-center justify-between px-5 py-3 md:px-8\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[36m<button\u001b[39m\n          \u001b[33maria-expanded\u001b[39m=\u001b[32m\"false\"\u001b[39m\n          \u001b[33maria-label\u001b[39m=\u001b[32m\"Open menu\"\u001b[39m\n          \u001b[33mclass\u001b[39m=\u001b[32m\"md:hidden p-1 text-[#2d2926] hover:text-[#c4a093] transition-colors\"\u001b[39m\n          \u001b[33mid\u001b[39m=\u001b[32m\"nav-toggle\"\u001b[39m\n        \u001b[36m>\u001b[39m\n          \u001b[36m<svg\u001b[39m\n            \u001b[33mfill\u001b[39m=\u001b[32m\"none\"\u001b[39m\n            \u001b[33mheight\u001b[39m=\u001b[32m\"22\"\u001b[39m\n            \u001b[33mstroke\u001b[39m=\u001b[32m\"currentColor\"\u001b[39m\n            \u001b[33mstroke-width\u001b[39m=\u001b[32m\"1.8\"\u001b[39m\n            \u001b[33mviewBox\u001b[39m=\u001b[32m\"0 0 24 24\"\u001b[39m\n            \u001b[33mwidth\u001b[39m=\u001b[32m\"22\"\u001b[39m\n          \u001b[36m>\u001b[39m\n            \u001b[36m<path\u001b[39m\n              \u001b[33md\u001b[39m=\u001b[32m\"M4 6h16M4 12h16M4 18h16\"\u001b[39m\n              \u001b[33mstroke-linecap\u001b[39m=\u001b[32m\"round\"\u001b[39m\n            \u001b[36m/>\u001b[39m\n          \u001b[36m</svg>\u001b[39m\n        \u001b[36m</button>\u001b[39m\n        \u001b[36m<ul\u001b[39m\n          \u001b[33mclass\u001b[39m=\u001b[32m\"hidden md:flex items-center gap-7\"\u001b[39m\n          \u001b[33mrole\u001b[39m=\u001b[32m\"menubar\"\u001b[39m\n        \u001b[36m>\u001b[39m\n          \u001b[36m<li\u001b[39m\n            \u001b[33mrole\u001b[39m=\u001b[32m\"none\"\u001b[39m\n          \u001b[36m>\u001b[39m\n            \u001b[36m<a\u001b[39m\n              \u001b[33mclass\u001b[39m=\u001b[32m\"text-[13px] tracking-[0.08em] uppercase transition-colors duration-200 text-[#c4a093] font-medium\"\u001b[39m\n              \u001b[33mhref\u001b[39m=\u001b[32m\"/\"\u001b[39m\n              \u001b[33mrole\u001b[39m=\u001b[32m\"menuitem\"\u001b[39m\n            \u001b[36m>\u001b[39m\n              \u001b[0mHome\u001b[0m\n            \u001b[36m</a>\u001b[39m\n          \u001b[36m</li>\u001b[39m\n          \u001b[36m<li\u001b[39m\n            \u001b[33mrole\u001b[39m=\u001b[32m\"none\"\u001b[39m\n          \u001b[36m>\u001b[39m\n            \u001b[36m<a\u001b[39m\n              \u001b[33mclass\u001b[39m=\u001b[32m\"text-[13px] tracking-[0.08em] uppercase transition-colors duration-200 text-[#6b5e54] hover:text-[#2d2926]\"\u001b[39m\n              \u001b[33mhref\u001b[39m=\u001b[32m\"/collections\"\u001b[39m\n              \u001b[33mrole\u001b[39m=\u001b[32m\"menuitem\"\u001b[39m\n            \u001b[36m>\u001b[39m\n              \u001b[0mShop\u001b[0m\n            \u001b[36m</a>\u001b[39m\n          \u001b[36m</li>\u001b[39m\n          \u001b[36m<li\u001b[39m\n            \u001b[33mrole\u001b[39m=\u001b[32m\"none\"\u001b[39m\n          \u001b[36m>\u001b[39m\n            \u001b[36m<a\u001b[39m\n              \u001b[33mclass\u001b[39m=\u001b[32m\"text-[13px] tracking-[0.08em] uppercase transition-colors duration-200 text-[#6b5e54] hover:text-[#2d2926]\"\u001b[39m\n              \u001b[33mhref\u001b[39m=\u001b[32m\"/about\"\u001b[39m\n              \u001b[33mrole\u001b[39m=\u001b[32m\"menuitem\"\u001b[39m\n            \u001b[36m>\u001b[39m\n              \u001b[0mOur Story\u001b[0m\n            \u001b[36m</a>\u001b[39m\n          \u001b[36m</li>\u001b[39m\n          \u001b[36m<li\u001b[39m\n            \u001b[33mrole\u001b[39m=\u001b[32m\"none\"\u001b[39m\n          \u001b[36m>\u001b[39m\n            \u001b[36m<a\u001b[39m\n              \u001b[33mclass\u001b[39m=\u001b[32m\"text-[13px] tracking-[0.08em] uppercase transition-colors duration-200 text-[#6b5e54] hover:text-[#2d2926]\"\u001b[39m\n              \u001b[33mhref\u001b[39m=\u001b[32m\"/contact\"\u001b[39m\n              \u001b[33mrole\u001b[39m=\u001b[32m\"menuitem\"\u001b[39m\n            \u001b[36m>\u001b[39m\n              \u001b[0mContact\u001b[0m\n            \u001b[36m</a>\u001b[39m\n          \u001b[36m</li>\u001b[39m\n        \u001b[36m</ul>\u001b[39m\n        \u001b[36m<a\u001b[39m\n          \u001b[33maria-label\u001b[39m=\u001b[32m\"Lumi├¿re home\"\u001b[39m\n          \u001b[33mclass\u001b[39m=\u001b[32m\"absolute left-1/2 -translate-x-1/2 text-center\"\u001b[39m\n          \u001b[33mhref\u001b[39m=\u001b[32m\"/\"\u001b[39m\n        \u001b[36m>\u001b[39m\n          \u001b[36m<span\u001b[39m\n            \u001b[33mclass\u001b[39m=\u001b[32m\"font-['Cormorant_Garamond',serif] text-[28px] md:text-[32px] font-semibold tracking-[0.15em] text-[#2d2926] select-none\"\u001b[39m\n          \u001b[36m>\u001b[39m\n            \u001b[0mLUMI├êRE\u001b[0m\n          \u001b[36m</span>\u001b[39m\n        \u001b[36m</a>\u001b[39m\n        \u001b[36m<div\u001b[39m\n          \u001b[33mclass\u001b[39m=\u001b[32m\"flex items-center gap-4\"\u001b[39m\n        \u001b[36m>\u001b[39m\n          \u001b[36m<button\u001b[39m\n            \u001b[33maria-label\u001b[39m=\u001b[32m\"Search\"\u001b[39m\n            \u001b[33mclass\u001b[39m=\u001b[32m\"hidden md:block p-1 text-[#6b5e54] hover:text-[#2d2926] transition-colors\"\u001b[39m\n          \u001b[36m>\u001b[39m\n            \u001b[36m<svg\u001b[39m\n              \u001b[33mfill\u001b[39m=\u001b[32m\"none\"\u001b[39m\n              \u001b[33mheight\u001b[39m=\u001b[32m\"20\"\u001b[39m\n              \u001b[33mstroke\u001b[39m=\u001b[32m\"currentColor\"\u001b[39m\n              \u001b[33mstroke-width\u001b[39m=\u001b[32m\"1.8\"\u001b[39m\n              \u001b[33mviewBox\u001b[39m=\u001b[32m\"0 0 24 24\"\u001b[39m\n              \u001b[33mwidth\u001b[39m=\u001b[32m\"20\"\u001b[39m\n            \u001b[36m>\u001b[39m\n              \u001b[36m<circle\u001b[39m\n                \u001b[33mcx\u001b[39m=\u001b[32m\"11\"\u001b[39m\n                \u001b[33mcy\u001b[39m=\u001b[32m\"11\"\u001b[39m\n                \u001b[33mr\u001b[39m=\u001b[32m\"7\"\u001b[39m\n              \u001b[36m/>\u001b[39m\n              \u001b[36m<path\u001b[39m\n                \u001b[33md\u001b[39m=\u001b[32m\"m21 21-4.35-4.35\"\u001b[39m\n                \u001b[33mstroke-linecap\u001b[39m=\u001b[32m\"round\"\u001b[39m\n              \u001b[36m/>\u001b[39m\n            \u001b[36m</svg>\u001b[39m\n          \u001b[36m</button>\u001b[39m\n          \u001b[36m<button\u001b[39m\n            \u001b[33maria-label\u001b[39m=\u001b[32m\"Open cart, 0 items\"\u001b[39m\n            \u001b[33mclass\u001b[39m=\u001b[32m\"relative p-1 text-[#6b5e54] hover:text-[#2d2926] transition-colors\"\u001b[39m\n            \u001b[33mid\u001b[39m=\u001b[32m\"cart-toggle\"\u001b[39m\n          \u001b[36m>\u001b[39m\n            \u001b[36m<svg\u001b[39m\n              \u001b[33mfill\u001b[39m=\u001b[32m\"none\"\u001b[39m\n              \u001b[33mheight\u001b[39m=\u001b[32m\"20\"\u001b[39m\n              \u001b[33mstroke\u001b[39m=\u001b[32m\"currentColor\"\u001b[39m\n              \u001b[33mstroke-width\u001b[39m=\u001b[32m\"1.8\"\u001b[39m\n              \u001b[33mviewBox\u001b[39m=\u001b[32m\"0 0 24 24\"\u001b[39m\n              \u001b[33mwidth\u001b[39m=\u001b[32m\"20\"\u001b[39m\n            \u001b[36m>\u001b[39m\n              \u001b[36m<path\u001b[39m\n                \u001b[33md\u001b[39m=\u001b[32m\"M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007Z\"\u001b[39m\n                \u001b[33mstroke-linecap\u001b[39m=\u001b[32m\"round\"\u001b[39m\n                \u001b[33mstroke-linejoin\u001b[39m=\u001b[32m\"round\"\u001b[39m\n              \u001b[36m/>\u001b[39m\n            \u001b[36m</svg>\u001b[39m\n          \u001b[36m</button>\u001b[39m\n        \u001b[36m</div>\u001b[39m\n      \u001b[36m</nav>\u001b[39m\n      \u001b[36m<div\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"md:hidden overflow-hidden border-t border-[#e8e0d8] bg-[#faf7f4] transition-all duration-300 ease-in-out max-h-0 opacity-0 border-t-0\"\u001b[39m\n        \u001b[33mrole\u001b[39m=\u001b[32m\"menu\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[36m<ul\u001b[39m\n          \u001b[33mclass\u001b[39m=\u001b[32m\"flex flex-col gap-1 px-6 py-4\"\u001b[39m\n        \u001b[36m>\u001b[39m\n          \u001b[36m<li\u001b[39m\n            \u001b[33mrole\u001b[39m=\u001b[32m\"none\"\u001b[39m\n          \u001b[36m>\u001b[39m\n            \u001b[36m<a\u001b[39m\n              \u001b[33mclass\u001b[39m=\u001b[32m\"block py-2.5 text-[14px] tracking-[0.06em] uppercase transition-colors text-[#c4a093] font-medium\"\u001b[39m\n              \u001b[33mhref\u001b[39m=\u001b[32m\"/\"\u001b[39m\n              \u001b[33mrole\u001b[39m=\u001b[32m\"menuitem\"\u001b[39m\n            \u001b[36m>\u001b[39m\n              \u001b[0mHome\u001b[0m\n            \u001b[36m</a>\u001b[39m\n          \u001b[36m</li>\u001b[39m\n          \u001b[36m<li\u001b[39m\n            \u001b[33mrole\u001b[39m=\u001b[32m\"none\"\u001b[39m\n          \u001b[36m>\u001b[39m\n            \u001b[36m<a\u001b[39m\n              \u001b[33mclass\u001b[39m=\u001b[32m\"block py-2.5 text-[14px] tracking-[0.06em] uppercase transition-colors text-[#6b5e54] hover:text-[#2d2926]\"\u001b[39m\n              \u001b[33mhref\u001b[39m=\u001b[32m\"/collections\"\u001b[39m\n              \u001b[33mrole\u001b[39m=\u001b[32m\"menuitem\"\u001b[39m\n            \u001b[36m>\u001b[39m\n              \u001b[0mShop\u001b[0m\n            \u001b[36m</a>\u001b[39m\n          \u001b[36m</li>\u001b[39m\n          \u001b[36m<li\u001b[39m\n            \u001b[33mrole\u001b[39m=\u001b[32m\"none\"\u001b[39m\n          \u001b[36m>\u001b[39m\n            \u001b[36m<a\u001b[39m\n              \u001b[33mclass\u001b[39m=\u001b[32m\"block py-2.5 text-[14px] tracking-[0.06em] uppercase transition-colors text-[#6b5e54] hover:text-[#2d2926]\"\u001b[39m\n              \u001b[33mhref\u001b[39m=\u001b[32m\"/about\"\u001b[39m\n              \u001b[33mrole\u001b[39m=\u001b[32m\"menuitem\"\u001b[39m\n            \u001b[36m>\u001b[39m\n              \u001b[0mOur Story\u001b[0m\n            \u001b[36m</a>\u001b[39m\n          \u001b[36m</li>\u001b[39m\n          \u001b[36m<li\u001b[39m\n            \u001b[33mrole\u001b[39m=\u001b[32m\"none\"\u001b[39m\n          \u001b[36m>\u001b[39m\n            \u001b[36m<a\u001b[39m\n              \u001b[33mclass\u001b[39m=\u001b[32m\"block py-2.5 text-[14px] tracking-[0.06em] uppercase transition-colors text-[#6b5e54] hover:text-[#2d2926]\"\u001b[39m\n              \u001b[33mhref\u001b[39m=\u001b[32m\"/contact\"\u001b[39m\n              \u001b[33mrole\u001b[39m=\u001b[32m\"menuitem\"\u001b[39m\n            \u001b[36m>\u001b[39m\n              \u001b[0mContact\u001b[0m\n            \u001b[36m</a>\u001b[39m\n          \u001b[36m</li>\u001b[39m\n        \u001b[36m</ul>\u001b[39m\n      \u001b[36m</div>\u001b[39m\n    \u001b[36m</header>\u001b[39m\n  \u001b[36m</div>\u001b[39m\n\u001b[36m</body>\u001b[39m\n    at Object.getElementError (C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\config.js:37:19)\n    at getElementError (C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:20:35)\n    at getMultipleElementsFoundError (C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:23:10)\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:55:13\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:95:19\n    at C:/Users/91807/my-app/src/__tests__/unit/Nav.test.tsx:22:19\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:296:11\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1258:26\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1681:20\n    at new Promise (<anonymous>)"
+          ],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["Nav component"],
+          "fullName": "Nav component has proper ARIA attributes on the nav element",
+          "status": "passed",
+          "title": "has proper ARIA attributes on the nav element",
+          "duration": 251.53510000000006,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["Nav component"],
+          "fullName": "Nav component renders the cart toggle button with ARIA label",
+          "status": "passed",
+          "title": "renders the cart toggle button with ARIA label",
+          "duration": 21.63130000000001,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["Nav component"],
+          "fullName": "Nav component renders search button with ARIA label (desktop)",
+          "status": "passed",
+          "title": "renders search button with ARIA label (desktop)",
+          "duration": 13.231499999999869,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["Nav component"],
+          "fullName": "Nav component renders the mobile hamburger with ARIA label",
+          "status": "passed",
+          "title": "renders the mobile hamburger with ARIA label",
+          "duration": 14.818299999999908,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["Nav component"],
+          "fullName": "Nav component has role='banner' on the header element",
+          "status": "passed",
+          "title": "has role='banner' on the header element",
+          "duration": 33.69959999999992,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["Nav component"],
+          "fullName": "Nav component links the brand wordmark to the home page",
+          "status": "passed",
+          "title": "links the brand wordmark to the home page",
+          "duration": 16.536599999999453,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        }
+      ],
+      "startTime": 1773782961576,
+      "endTime": 1773782962070.5366,
+      "status": "failed",
+      "message": "",
+      "name": "C:/Users/91807/my-app/src/__tests__/unit/Nav.test.tsx"
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["Product page ΓÇö valid product (Golden Hour)"],
+          "fullName": "Product page ΓÇö valid product (Golden Hour) renders the product name as h1",
+          "status": "failed",
+          "title": "renders the product name as h1",
+          "duration": 78.53570000000036,
+          "failureMessages": [
+            "TestingLibraryElementError: Unable to find an element with the text: Golden Hour. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.\n\nIgnored nodes: comments, script, style\n\u001b[36m<body>\u001b[39m\n  \u001b[36m<div>\u001b[39m\n    \u001b[36m<div\u001b[39m\n      \u001b[33mclass\u001b[39m=\u001b[32m\"flex min-h-[60vh] flex-col items-center justify-center gap-4 px-6 text-center\"\u001b[39m\n    \u001b[36m>\u001b[39m\n      \u001b[36m<h1\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"font-['Cormorant_Garamond',serif] text-[36px] font-medium text-[#2d2926]\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mProduct Not Found\u001b[0m\n      \u001b[36m</h1>\u001b[39m\n      \u001b[36m<p\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"text-[14px] text-[#9a8d82]\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mThe candle you're looking for doesn't exist ΓÇö yet.\u001b[0m\n      \u001b[36m</p>\u001b[39m\n      \u001b[36m<a\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"mt-3 border border-[#c4a093] px-6 py-2.5 text-[12px] font-semibold uppercase tracking-[0.15em] text-[#c4a093] transition-all hover:bg-[#c4a093] hover:text-white\"\u001b[39m\n        \u001b[33mhref\u001b[39m=\u001b[32m\"/\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mBack to Home\u001b[0m\n      \u001b[36m</a>\u001b[39m\n    \u001b[36m</div>\u001b[39m\n  \u001b[36m</div>\u001b[39m\n\u001b[36m</body>\u001b[39m\n    at Object.getElementError (C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\config.js:37:19)\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:76:38\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:52:17\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:95:19\n    at C:/Users/91807/my-app/src/__tests__/unit/Product.test.tsx:23:28\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:296:11\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1258:26\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1681:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1678:10)"
+          ],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["Product page ΓÇö valid product (Golden Hour)"],
+          "fullName": "Product page ΓÇö valid product (Golden Hour) renders the tagline",
+          "status": "failed",
+          "title": "renders the tagline",
+          "duration": 10.623700000000099,
+          "failureMessages": [
+            "TestingLibraryElementError: Unable to find an element with the text: Warm amber meets sun-kissed vanilla. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.\n\nIgnored nodes: comments, script, style\n\u001b[36m<body>\u001b[39m\n  \u001b[36m<div>\u001b[39m\n    \u001b[36m<div\u001b[39m\n      \u001b[33mclass\u001b[39m=\u001b[32m\"flex min-h-[60vh] flex-col items-center justify-center gap-4 px-6 text-center\"\u001b[39m\n    \u001b[36m>\u001b[39m\n      \u001b[36m<h1\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"font-['Cormorant_Garamond',serif] text-[36px] font-medium text-[#2d2926]\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mProduct Not Found\u001b[0m\n      \u001b[36m</h1>\u001b[39m\n      \u001b[36m<p\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"text-[14px] text-[#9a8d82]\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mThe candle you're looking for doesn't exist ΓÇö yet.\u001b[0m\n      \u001b[36m</p>\u001b[39m\n      \u001b[36m<a\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"mt-3 border border-[#c4a093] px-6 py-2.5 text-[12px] font-semibold uppercase tracking-[0.15em] text-[#c4a093] transition-all hover:bg-[#c4a093] hover:text-white\"\u001b[39m\n        \u001b[33mhref\u001b[39m=\u001b[32m\"/\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mBack to Home\u001b[0m\n      \u001b[36m</a>\u001b[39m\n    \u001b[36m</div>\u001b[39m\n  \u001b[36m</div>\u001b[39m\n\u001b[36m</body>\u001b[39m\n    at Object.getElementError (C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\config.js:37:19)\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:76:38\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:52:17\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:95:19\n    at C:/Users/91807/my-app/src/__tests__/unit/Product.test.tsx:29:19\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:296:11\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1258:26\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1681:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1678:10)"
+          ],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["Product page ΓÇö valid product (Golden Hour)"],
+          "fullName": "Product page ΓÇö valid product (Golden Hour) renders the formatted price with Γé╣",
+          "status": "failed",
+          "title": "renders the formatted price with Γé╣",
+          "duration": 9.981400000000576,
+          "failureMessages": [
+            "TestingLibraryElementError: Unable to find an element with the text: /Γé╣/. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.\n\nIgnored nodes: comments, script, style\n\u001b[36m<body>\u001b[39m\n  \u001b[36m<div>\u001b[39m\n    \u001b[36m<div\u001b[39m\n      \u001b[33mclass\u001b[39m=\u001b[32m\"flex min-h-[60vh] flex-col items-center justify-center gap-4 px-6 text-center\"\u001b[39m\n    \u001b[36m>\u001b[39m\n      \u001b[36m<h1\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"font-['Cormorant_Garamond',serif] text-[36px] font-medium text-[#2d2926]\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mProduct Not Found\u001b[0m\n      \u001b[36m</h1>\u001b[39m\n      \u001b[36m<p\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"text-[14px] text-[#9a8d82]\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mThe candle you're looking for doesn't exist ΓÇö yet.\u001b[0m\n      \u001b[36m</p>\u001b[39m\n      \u001b[36m<a\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"mt-3 border border-[#c4a093] px-6 py-2.5 text-[12px] font-semibold uppercase tracking-[0.15em] text-[#c4a093] transition-all hover:bg-[#c4a093] hover:text-white\"\u001b[39m\n        \u001b[33mhref\u001b[39m=\u001b[32m\"/\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mBack to Home\u001b[0m\n      \u001b[36m</a>\u001b[39m\n    \u001b[36m</div>\u001b[39m\n  \u001b[36m</div>\u001b[39m\n\u001b[36m</body>\u001b[39m\n    at Object.getElementError (C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\config.js:37:19)\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:76:38\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:109:15\n    at C:/Users/91807/my-app/src/__tests__/unit/Product.test.tsx:35:34\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:296:11\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1258:26\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1681:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1678:10)\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1660:20"
+          ],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["Product page ΓÇö valid product (Golden Hour)"],
+          "fullName": "Product page ΓÇö valid product (Golden Hour) renders the product description",
+          "status": "failed",
+          "title": "renders the product description",
+          "duration": 7.374300000000403,
+          "failureMessages": [
+            "TestingLibraryElementError: Unable to find an element with the text: /mediterranean sunset/i. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.\n\nIgnored nodes: comments, script, style\n\u001b[36m<body>\u001b[39m\n  \u001b[36m<div>\u001b[39m\n    \u001b[36m<div\u001b[39m\n      \u001b[33mclass\u001b[39m=\u001b[32m\"flex min-h-[60vh] flex-col items-center justify-center gap-4 px-6 text-center\"\u001b[39m\n    \u001b[36m>\u001b[39m\n      \u001b[36m<h1\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"font-['Cormorant_Garamond',serif] text-[36px] font-medium text-[#2d2926]\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mProduct Not Found\u001b[0m\n      \u001b[36m</h1>\u001b[39m\n      \u001b[36m<p\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"text-[14px] text-[#9a8d82]\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mThe candle you're looking for doesn't exist ΓÇö yet.\u001b[0m\n      \u001b[36m</p>\u001b[39m\n      \u001b[36m<a\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"mt-3 border border-[#c4a093] px-6 py-2.5 text-[12px] font-semibold uppercase tracking-[0.15em] text-[#c4a093] transition-all hover:bg-[#c4a093] hover:text-white\"\u001b[39m\n        \u001b[33mhref\u001b[39m=\u001b[32m\"/\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mBack to Home\u001b[0m\n      \u001b[36m</a>\u001b[39m\n    \u001b[36m</div>\u001b[39m\n  \u001b[36m</div>\u001b[39m\n\u001b[36m</body>\u001b[39m\n    at Object.getElementError (C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\config.js:37:19)\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:76:38\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:52:17\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:95:19\n    at C:/Users/91807/my-app/src/__tests__/unit/Product.test.tsx:41:19\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:296:11\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1258:26\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1681:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1678:10)"
+          ],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["Product page ΓÇö valid product (Golden Hour)"],
+          "fullName": "Product page ΓÇö valid product (Golden Hour) renders all fragrance notes",
+          "status": "failed",
+          "title": "renders all fragrance notes",
+          "duration": 7.913700000000063,
+          "failureMessages": [
+            "TestingLibraryElementError: Unable to find an element with the text: Amber. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.\n\nIgnored nodes: comments, script, style\n\u001b[36m<body>\u001b[39m\n  \u001b[36m<div>\u001b[39m\n    \u001b[36m<div\u001b[39m\n      \u001b[33mclass\u001b[39m=\u001b[32m\"flex min-h-[60vh] flex-col items-center justify-center gap-4 px-6 text-center\"\u001b[39m\n    \u001b[36m>\u001b[39m\n      \u001b[36m<h1\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"font-['Cormorant_Garamond',serif] text-[36px] font-medium text-[#2d2926]\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mProduct Not Found\u001b[0m\n      \u001b[36m</h1>\u001b[39m\n      \u001b[36m<p\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"text-[14px] text-[#9a8d82]\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mThe candle you're looking for doesn't exist ΓÇö yet.\u001b[0m\n      \u001b[36m</p>\u001b[39m\n      \u001b[36m<a\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"mt-3 border border-[#c4a093] px-6 py-2.5 text-[12px] font-semibold uppercase tracking-[0.15em] text-[#c4a093] transition-all hover:bg-[#c4a093] hover:text-white\"\u001b[39m\n        \u001b[33mhref\u001b[39m=\u001b[32m\"/\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mBack to Home\u001b[0m\n      \u001b[36m</a>\u001b[39m\n    \u001b[36m</div>\u001b[39m\n  \u001b[36m</div>\u001b[39m\n\u001b[36m</body>\u001b[39m\n    at Object.getElementError (C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\config.js:37:19)\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:76:38\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:52:17\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:95:19\n    at C:/Users/91807/my-app/src/__tests__/unit/Product.test.tsx:47:21\n    at Array.forEach (<anonymous>)\n    at C:/Users/91807/my-app/src/__tests__/unit/Product.test.tsx:46:22\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:296:11\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1258:26\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1681:20"
+          ],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["Product page ΓÇö valid product (Golden Hour)"],
+          "fullName": "Product page ΓÇö valid product (Golden Hour) renders specs grid (burn time, weight, wax)",
+          "status": "failed",
+          "title": "renders specs grid (burn time, weight, wax)",
+          "duration": 4.834100000000035,
+          "failureMessages": [
+            "TestingLibraryElementError: Unable to find an element with the text: Burn Time. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.\n\nIgnored nodes: comments, script, style\n\u001b[36m<body>\u001b[39m\n  \u001b[36m<div>\u001b[39m\n    \u001b[36m<div\u001b[39m\n      \u001b[33mclass\u001b[39m=\u001b[32m\"flex min-h-[60vh] flex-col items-center justify-center gap-4 px-6 text-center\"\u001b[39m\n    \u001b[36m>\u001b[39m\n      \u001b[36m<h1\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"font-['Cormorant_Garamond',serif] text-[36px] font-medium text-[#2d2926]\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mProduct Not Found\u001b[0m\n      \u001b[36m</h1>\u001b[39m\n      \u001b[36m<p\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"text-[14px] text-[#9a8d82]\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mThe candle you're looking for doesn't exist ΓÇö yet.\u001b[0m\n      \u001b[36m</p>\u001b[39m\n      \u001b[36m<a\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"mt-3 border border-[#c4a093] px-6 py-2.5 text-[12px] font-semibold uppercase tracking-[0.15em] text-[#c4a093] transition-all hover:bg-[#c4a093] hover:text-white\"\u001b[39m\n        \u001b[33mhref\u001b[39m=\u001b[32m\"/\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mBack to Home\u001b[0m\n      \u001b[36m</a>\u001b[39m\n    \u001b[36m</div>\u001b[39m\n  \u001b[36m</div>\u001b[39m\n\u001b[36m</body>\u001b[39m\n    at Object.getElementError (C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\config.js:37:19)\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:76:38\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:52:17\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:95:19\n    at C:/Users/91807/my-app/src/__tests__/unit/Product.test.tsx:53:19\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:296:11\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1258:26\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1681:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1678:10)"
+          ],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["Product page ΓÇö valid product (Golden Hour)"],
+          "fullName": "Product page ΓÇö valid product (Golden Hour) renders the category pill",
+          "status": "failed",
+          "title": "renders the category pill",
+          "duration": 5.715299999999843,
+          "failureMessages": [
+            "TestingLibraryElementError: Unable to find an element with the text: signature. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.\n\nIgnored nodes: comments, script, style\n\u001b[36m<body>\u001b[39m\n  \u001b[36m<div>\u001b[39m\n    \u001b[36m<div\u001b[39m\n      \u001b[33mclass\u001b[39m=\u001b[32m\"flex min-h-[60vh] flex-col items-center justify-center gap-4 px-6 text-center\"\u001b[39m\n    \u001b[36m>\u001b[39m\n      \u001b[36m<h1\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"font-['Cormorant_Garamond',serif] text-[36px] font-medium text-[#2d2926]\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mProduct Not Found\u001b[0m\n      \u001b[36m</h1>\u001b[39m\n      \u001b[36m<p\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"text-[14px] text-[#9a8d82]\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mThe candle you're looking for doesn't exist ΓÇö yet.\u001b[0m\n      \u001b[36m</p>\u001b[39m\n      \u001b[36m<a\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"mt-3 border border-[#c4a093] px-6 py-2.5 text-[12px] font-semibold uppercase tracking-[0.15em] text-[#c4a093] transition-all hover:bg-[#c4a093] hover:text-white\"\u001b[39m\n        \u001b[33mhref\u001b[39m=\u001b[32m\"/\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mBack to Home\u001b[0m\n      \u001b[36m</a>\u001b[39m\n    \u001b[36m</div>\u001b[39m\n  \u001b[36m</div>\u001b[39m\n\u001b[36m</body>\u001b[39m\n    at Object.getElementError (C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\config.js:37:19)\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:76:38\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:52:17\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:95:19\n    at C:/Users/91807/my-app/src/__tests__/unit/Product.test.tsx:63:19\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:296:11\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1258:26\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1681:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1678:10)"
+          ],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["Product page ΓÇö valid product (Golden Hour)"],
+          "fullName": "Product page ΓÇö valid product (Golden Hour) renders trust badges",
+          "status": "failed",
+          "title": "renders trust badges",
+          "duration": 5.008199999999306,
+          "failureMessages": [
+            "TestingLibraryElementError: Unable to find an element with the text: /cruelty free/i. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.\n\nIgnored nodes: comments, script, style\n\u001b[36m<body>\u001b[39m\n  \u001b[36m<div>\u001b[39m\n    \u001b[36m<div\u001b[39m\n      \u001b[33mclass\u001b[39m=\u001b[32m\"flex min-h-[60vh] flex-col items-center justify-center gap-4 px-6 text-center\"\u001b[39m\n    \u001b[36m>\u001b[39m\n      \u001b[36m<h1\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"font-['Cormorant_Garamond',serif] text-[36px] font-medium text-[#2d2926]\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mProduct Not Found\u001b[0m\n      \u001b[36m</h1>\u001b[39m\n      \u001b[36m<p\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"text-[14px] text-[#9a8d82]\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mThe candle you're looking for doesn't exist ΓÇö yet.\u001b[0m\n      \u001b[36m</p>\u001b[39m\n      \u001b[36m<a\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"mt-3 border border-[#c4a093] px-6 py-2.5 text-[12px] font-semibold uppercase tracking-[0.15em] text-[#c4a093] transition-all hover:bg-[#c4a093] hover:text-white\"\u001b[39m\n        \u001b[33mhref\u001b[39m=\u001b[32m\"/\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mBack to Home\u001b[0m\n      \u001b[36m</a>\u001b[39m\n    \u001b[36m</div>\u001b[39m\n  \u001b[36m</div>\u001b[39m\n\u001b[36m</body>\u001b[39m\n    at Object.getElementError (C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\config.js:37:19)\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:76:38\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:52:17\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:95:19\n    at C:/Users/91807/my-app/src/__tests__/unit/Product.test.tsx:68:19\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:296:11\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1258:26\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1681:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1678:10)"
+          ],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["Product page ΓÇö valid product (Golden Hour)"],
+          "fullName": "Product page ΓÇö valid product (Golden Hour) renders the Add to Cart button",
+          "status": "failed",
+          "title": "renders the Add to Cart button",
+          "duration": 5.65059999999994,
+          "failureMessages": [
+            "TestingLibraryElementError: Unable to find an element with the text: Add to Cart. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.\n\nIgnored nodes: comments, script, style\n\u001b[36m<body>\u001b[39m\n  \u001b[36m<div>\u001b[39m\n    \u001b[36m<div\u001b[39m\n      \u001b[33mclass\u001b[39m=\u001b[32m\"flex min-h-[60vh] flex-col items-center justify-center gap-4 px-6 text-center\"\u001b[39m\n    \u001b[36m>\u001b[39m\n      \u001b[36m<h1\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"font-['Cormorant_Garamond',serif] text-[36px] font-medium text-[#2d2926]\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mProduct Not Found\u001b[0m\n      \u001b[36m</h1>\u001b[39m\n      \u001b[36m<p\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"text-[14px] text-[#9a8d82]\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mThe candle you're looking for doesn't exist ΓÇö yet.\u001b[0m\n      \u001b[36m</p>\u001b[39m\n      \u001b[36m<a\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"mt-3 border border-[#c4a093] px-6 py-2.5 text-[12px] font-semibold uppercase tracking-[0.15em] text-[#c4a093] transition-all hover:bg-[#c4a093] hover:text-white\"\u001b[39m\n        \u001b[33mhref\u001b[39m=\u001b[32m\"/\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mBack to Home\u001b[0m\n      \u001b[36m</a>\u001b[39m\n    \u001b[36m</div>\u001b[39m\n  \u001b[36m</div>\u001b[39m\n\u001b[36m</body>\u001b[39m\n    at Object.getElementError (C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\config.js:37:19)\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:76:38\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:52:17\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:95:19\n    at C:/Users/91807/my-app/src/__tests__/unit/Product.test.tsx:75:24\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:296:11\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1258:26\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1681:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1678:10)"
+          ],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["Product page ΓÇö valid product (Golden Hour)"],
+          "fullName": "Product page ΓÇö valid product (Golden Hour) renders breadcrumb navigation",
+          "status": "failed",
+          "title": "renders breadcrumb navigation",
+          "duration": 9.488900000000285,
+          "failureMessages": [
+            "TestingLibraryElementError: Unable to find a label with the text of: Breadcrumb\n\nIgnored nodes: comments, script, style\n\u001b[36m<body>\u001b[39m\n  \u001b[36m<div>\u001b[39m\n    \u001b[36m<div\u001b[39m\n      \u001b[33mclass\u001b[39m=\u001b[32m\"flex min-h-[60vh] flex-col items-center justify-center gap-4 px-6 text-center\"\u001b[39m\n    \u001b[36m>\u001b[39m\n      \u001b[36m<h1\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"font-['Cormorant_Garamond',serif] text-[36px] font-medium text-[#2d2926]\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mProduct Not Found\u001b[0m\n      \u001b[36m</h1>\u001b[39m\n      \u001b[36m<p\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"text-[14px] text-[#9a8d82]\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mThe candle you're looking for doesn't exist ΓÇö yet.\u001b[0m\n      \u001b[36m</p>\u001b[39m\n      \u001b[36m<a\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"mt-3 border border-[#c4a093] px-6 py-2.5 text-[12px] font-semibold uppercase tracking-[0.15em] text-[#c4a093] transition-all hover:bg-[#c4a093] hover:text-white\"\u001b[39m\n        \u001b[33mhref\u001b[39m=\u001b[32m\"/\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mBack to Home\u001b[0m\n      \u001b[36m</a>\u001b[39m\n    \u001b[36m</div>\u001b[39m\n  \u001b[36m</div>\u001b[39m\n\u001b[36m</body>\u001b[39m\n    at Object.getElementError (C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\config.js:37:19)\n    at getAllByLabelText (C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\queries\\label-text.js:111:38)\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:52:17\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:95:19\n    at C:/Users/91807/my-app/src/__tests__/unit/Product.test.tsx:82:31\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:296:11\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1258:26\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1681:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1678:10)"
+          ],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["Product page ΓÇö valid product (Golden Hour)"],
+          "fullName": "Product page ΓÇö valid product (Golden Hour) renders the 'You May Also Like' section",
+          "status": "failed",
+          "title": "renders the 'You May Also Like' section",
+          "duration": 6.5877999999993335,
+          "failureMessages": [
+            "TestingLibraryElementError: Unable to find an element with the text: You May Also Like. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.\n\nIgnored nodes: comments, script, style\n\u001b[36m<body>\u001b[39m\n  \u001b[36m<div>\u001b[39m\n    \u001b[36m<div\u001b[39m\n      \u001b[33mclass\u001b[39m=\u001b[32m\"flex min-h-[60vh] flex-col items-center justify-center gap-4 px-6 text-center\"\u001b[39m\n    \u001b[36m>\u001b[39m\n      \u001b[36m<h1\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"font-['Cormorant_Garamond',serif] text-[36px] font-medium text-[#2d2926]\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mProduct Not Found\u001b[0m\n      \u001b[36m</h1>\u001b[39m\n      \u001b[36m<p\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"text-[14px] text-[#9a8d82]\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mThe candle you're looking for doesn't exist ΓÇö yet.\u001b[0m\n      \u001b[36m</p>\u001b[39m\n      \u001b[36m<a\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"mt-3 border border-[#c4a093] px-6 py-2.5 text-[12px] font-semibold uppercase tracking-[0.15em] text-[#c4a093] transition-all hover:bg-[#c4a093] hover:text-white\"\u001b[39m\n        \u001b[33mhref\u001b[39m=\u001b[32m\"/\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mBack to Home\u001b[0m\n      \u001b[36m</a>\u001b[39m\n    \u001b[36m</div>\u001b[39m\n  \u001b[36m</div>\u001b[39m\n\u001b[36m</body>\u001b[39m\n    at Object.getElementError (C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\config.js:37:19)\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:76:38\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:52:17\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:95:19\n    at C:/Users/91807/my-app/src/__tests__/unit/Product.test.tsx:90:19\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:296:11\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1258:26\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1681:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1678:10)"
+          ],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["Product page ΓÇö valid product (Golden Hour)"],
+          "fullName": "Product page ΓÇö valid product (Golden Hour) adds product to cart on button click",
+          "status": "failed",
+          "title": "adds product to cart on button click",
+          "duration": 6.9242999999996755,
+          "failureMessages": [
+            "TestingLibraryElementError: Unable to find an element with the text: Add to Cart. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.\n\nIgnored nodes: comments, script, style\n\u001b[36m<body>\u001b[39m\n  \u001b[36m<div>\u001b[39m\n    \u001b[36m<div\u001b[39m\n      \u001b[33mclass\u001b[39m=\u001b[32m\"flex min-h-[60vh] flex-col items-center justify-center gap-4 px-6 text-center\"\u001b[39m\n    \u001b[36m>\u001b[39m\n      \u001b[36m<h1\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"font-['Cormorant_Garamond',serif] text-[36px] font-medium text-[#2d2926]\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mProduct Not Found\u001b[0m\n      \u001b[36m</h1>\u001b[39m\n      \u001b[36m<p\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"text-[14px] text-[#9a8d82]\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mThe candle you're looking for doesn't exist ΓÇö yet.\u001b[0m\n      \u001b[36m</p>\u001b[39m\n      \u001b[36m<a\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"mt-3 border border-[#c4a093] px-6 py-2.5 text-[12px] font-semibold uppercase tracking-[0.15em] text-[#c4a093] transition-all hover:bg-[#c4a093] hover:text-white\"\u001b[39m\n        \u001b[33mhref\u001b[39m=\u001b[32m\"/\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mBack to Home\u001b[0m\n      \u001b[36m</a>\u001b[39m\n    \u001b[36m</div>\u001b[39m\n  \u001b[36m</div>\u001b[39m\n\u001b[36m</body>\u001b[39m\n    at Object.getElementError (C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\config.js:37:19)\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:76:38\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:52:17\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:95:19\n    at C:/Users/91807/my-app/src/__tests__/unit/Product.test.tsx:97:29\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:296:11\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1258:26\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1681:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1678:10)"
+          ],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["Product page ΓÇö valid product (Golden Hour)"],
+          "fullName": "Product page ΓÇö valid product (Golden Hour) shows in-stock message with shipping info",
+          "status": "failed",
+          "title": "shows in-stock message with shipping info",
+          "duration": 4.574300000000221,
+          "failureMessages": [
+            "TestingLibraryElementError: Unable to find an element with the text: /free shipping on orders above Γé╣3,000/i. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.\n\nIgnored nodes: comments, script, style\n\u001b[36m<body>\u001b[39m\n  \u001b[36m<div>\u001b[39m\n    \u001b[36m<div\u001b[39m\n      \u001b[33mclass\u001b[39m=\u001b[32m\"flex min-h-[60vh] flex-col items-center justify-center gap-4 px-6 text-center\"\u001b[39m\n    \u001b[36m>\u001b[39m\n      \u001b[36m<h1\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"font-['Cormorant_Garamond',serif] text-[36px] font-medium text-[#2d2926]\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mProduct Not Found\u001b[0m\n      \u001b[36m</h1>\u001b[39m\n      \u001b[36m<p\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"text-[14px] text-[#9a8d82]\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mThe candle you're looking for doesn't exist ΓÇö yet.\u001b[0m\n      \u001b[36m</p>\u001b[39m\n      \u001b[36m<a\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"mt-3 border border-[#c4a093] px-6 py-2.5 text-[12px] font-semibold uppercase tracking-[0.15em] text-[#c4a093] transition-all hover:bg-[#c4a093] hover:text-white\"\u001b[39m\n        \u001b[33mhref\u001b[39m=\u001b[32m\"/\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[0mBack to Home\u001b[0m\n      \u001b[36m</a>\u001b[39m\n    \u001b[36m</div>\u001b[39m\n  \u001b[36m</div>\u001b[39m\n\u001b[36m</body>\u001b[39m\n    at Object.getElementError (C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\config.js:37:19)\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:76:38\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:52:17\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:95:19\n    at C:/Users/91807/my-app/src/__tests__/unit/Product.test.tsx:108:14\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:296:11\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1258:26\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1681:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1678:10)"
+          ],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["Product page ΓÇö invalid slug (404)"],
+          "fullName": "Product page ΓÇö invalid slug (404) renders Product Not Found heading",
+          "status": "passed",
+          "title": "renders Product Not Found heading",
+          "duration": 6.752599999999802,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["Product page ΓÇö invalid slug (404)"],
+          "fullName": "Product page ΓÇö invalid slug (404) renders a Back to Home link",
+          "status": "passed",
+          "title": "renders a Back to Home link",
+          "duration": 5.138300000000527,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        }
+      ],
+      "startTime": 1773782961716,
+      "endTime": 1773782961892.1382,
+      "status": "failed",
+      "message": "",
+      "name": "C:/Users/91807/my-app/src/__tests__/unit/Product.test.tsx"
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["ProductCard ΓÇö rendering"],
+          "fullName": "ProductCard ΓÇö rendering renders the product name",
+          "status": "passed",
+          "title": "renders the product name",
+          "duration": 108.88320000000022,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["ProductCard ΓÇö rendering"],
+          "fullName": "ProductCard ΓÇö rendering renders the product tagline",
+          "status": "passed",
+          "title": "renders the product tagline",
+          "duration": 13.96009999999933,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["ProductCard ΓÇö rendering"],
+          "fullName": "ProductCard ΓÇö rendering renders the formatted INR price",
+          "status": "passed",
+          "title": "renders the formatted INR price",
+          "duration": 8.930299999999988,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["ProductCard ΓÇö rendering"],
+          "fullName": "ProductCard ΓÇö rendering renders the product image with correct alt text",
+          "status": "passed",
+          "title": "renders the product image with correct alt text",
+          "duration": 9.657900000000154,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["ProductCard ΓÇö rendering"],
+          "fullName": "ProductCard ΓÇö rendering has a unique ID on the article element",
+          "status": "passed",
+          "title": "has a unique ID on the article element",
+          "duration": 9.108600000000479,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["ProductCard ΓÇö rendering"],
+          "fullName": "ProductCard ΓÇö rendering links to the correct product detail page",
+          "status": "passed",
+          "title": "links to the correct product detail page",
+          "duration": 9.611100000000079,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["ProductCard ΓÇö out of stock"],
+          "fullName": "ProductCard ΓÇö out of stock displays a 'Sold Out' overlay for out-of-stock products",
+          "status": "failed",
+          "title": "displays a 'Sold Out' overlay for out-of-stock products",
+          "duration": 21.696899999999914,
+          "failureMessages": [
+            "TestingLibraryElementError: Found multiple elements with the text: Sold Out\n\nHere are the matching elements:\n\nIgnored nodes: comments, script, style\n\u001b[36m<span\u001b[39m\n  \u001b[33mclass\u001b[39m=\u001b[32m\"rounded-sm bg-[#2d2926] px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.15em] text-white\"\u001b[39m\n\u001b[36m>\u001b[39m\n  \u001b[0mSold Out\u001b[0m\n\u001b[36m</span>\u001b[39m\n\nIgnored nodes: comments, script, style\n\u001b[36m<button\u001b[39m\n  \u001b[33mclass\u001b[39m=\u001b[32m\"w-full bg-[#c4a093] py-3 text-[11px] font-semibold uppercase tracking-[0.15em] text-white transition-colors hover:bg-[#a8877b] disabled:cursor-not-allowed disabled:bg-[#d9c2b7]\"\u001b[39m\n  \u001b[33mdisabled\u001b[39m=\u001b[32m\"\"\u001b[39m\n  \u001b[33mid\u001b[39m=\u001b[32m\"quick-add-velvet-rose\"\u001b[39m\n\u001b[36m>\u001b[39m\n  \u001b[0mSold Out\u001b[0m\n\u001b[36m</button>\u001b[39m\n\n(If this is intentional, then use the `*AllBy*` variant of the query (like `queryAllByText`, `getAllByText`, or `findAllByText`)).\n\nIgnored nodes: comments, script, style\n\u001b[36m<body>\u001b[39m\n  \u001b[36m<div>\u001b[39m\n    \u001b[36m<article\u001b[39m\n      \u001b[33mclass\u001b[39m=\u001b[32m\"group relative flex flex-col overflow-hidden rounded-lg bg-white border border-[#f0ebe5] transition-all duration-300 hover:shadow-[0_8px_32px_rgba(45,41,38,0.1)] hover:border-[#e8e0d8]\"\u001b[39m\n      \u001b[33mid\u001b[39m=\u001b[32m\"product-card-velvet-rose\"\u001b[39m\n    \u001b[36m>\u001b[39m\n      \u001b[36m<a\u001b[39m\n        \u001b[33maria-label\u001b[39m=\u001b[32m\"View Velvet Rose details\"\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"relative block overflow-hidden bg-[#f3ece4]\"\u001b[39m\n        \u001b[33mhref\u001b[39m=\u001b[32m\"/product/velvet-rose\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[36m<img\u001b[39m\n          \u001b[33malt\u001b[39m=\u001b[32m\"Velvet Rose\"\u001b[39m\n          \u001b[33mclass\u001b[39m=\u001b[32m\"aspect-[4/5] w-full object-cover transition-transform duration-500 group-hover:scale-105\"\u001b[39m\n          \u001b[33mloading\u001b[39m=\u001b[32m\"lazy\"\u001b[39m\n          \u001b[33msrc\u001b[39m=\u001b[32m\"https://images.unsplash.com/photo-1572726839041-8520b0a7c678?w=600&q=80\"\u001b[39m\n        \u001b[36m/>\u001b[39m\n        \u001b[36m<div\u001b[39m\n          \u001b[33mclass\u001b[39m=\u001b[32m\"absolute inset-0 flex items-center justify-center bg-white/60\"\u001b[39m\n        \u001b[36m>\u001b[39m\n          \u001b[36m<span\u001b[39m\n            \u001b[33mclass\u001b[39m=\u001b[32m\"rounded-sm bg-[#2d2926] px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.15em] text-white\"\u001b[39m\n          \u001b[36m>\u001b[39m\n            \u001b[0mSold Out\u001b[0m\n          \u001b[36m</span>\u001b[39m\n        \u001b[36m</div>\u001b[39m\n        \u001b[36m<div\u001b[39m\n          \u001b[33mclass\u001b[39m=\u001b[32m\"absolute inset-x-0 bottom-0 translate-y-full opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100\"\u001b[39m\n        \u001b[36m>\u001b[39m\n          \u001b[36m<button\u001b[39m\n            \u001b[33mclass\u001b[39m=\u001b[32m\"w-full bg-[#c4a093] py-3 text-[11px] font-semibold uppercase tracking-[0.15em] text-white transition-colors hover:bg-[#a8877b] disabled:cursor-not-allowed disabled:bg-[#d9c2b7]\"\u001b[39m\n            \u001b[33mdisabled\u001b[39m=\u001b[32m\"\"\u001b[39m\n            \u001b[33mid\u001b[39m=\u001b[32m\"quick-add-velvet-rose\"\u001b[39m\n          \u001b[36m>\u001b[39m\n            \u001b[0mSold Out\u001b[0m\n          \u001b[36m</button>\u001b[39m\n        \u001b[36m</div>\u001b[39m\n      \u001b[36m</a>\u001b[39m\n      \u001b[36m<div\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"flex flex-1 flex-col gap-1.5 p-4\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[36m<a\u001b[39m\n          \u001b[33mclass\u001b[39m=\u001b[32m\"space-y-0.5\"\u001b[39m\n          \u001b[33mhref\u001b[39m=\u001b[32m\"/product/velvet-rose\"\u001b[39m\n        \u001b[36m>\u001b[39m\n          \u001b[36m<h3\u001b[39m\n            \u001b[33mclass\u001b[39m=\u001b[32m\"font-['Cormorant_Garamond',serif] text-[17px] font-medium text-[#2d2926] transition-colors group-hover:text-[#c4a093]\"\u001b[39m\n          \u001b[36m>\u001b[39m\n            \u001b[0mVelvet Rose\u001b[0m\n          \u001b[36m</h3>\u001b[39m\n          \u001b[36m<p\u001b[39m\n            \u001b[33mclass\u001b[39m=\u001b[32m\"text-[12px] text-[#9a8d82] line-clamp-2 leading-relaxed\"\u001b[39m\n          \u001b[36m>\u001b[39m\n            \u001b[0mLush Damascena rose layered with silk\u001b[0m\n          \u001b[36m</p>\u001b[39m\n        \u001b[36m</a>\u001b[39m\n        \u001b[36m<p\u001b[39m\n          \u001b[33mclass\u001b[39m=\u001b[32m\"mt-auto pt-2 text-[14px] font-medium text-[#2d2926]\"\u001b[39m\n        \u001b[36m>\u001b[39m\n          \u001b[0mΓé╣2,999\u001b[0m\n        \u001b[36m</p>\u001b[39m\n      \u001b[36m</div>\u001b[39m\n    \u001b[36m</article>\u001b[39m\n  \u001b[36m</div>\u001b[39m\n\u001b[36m</body>\u001b[39m\n    at Object.getElementError (C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\config.js:37:19)\n    at getElementError (C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:20:35)\n    at getMultipleElementsFoundError (C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:23:10)\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:55:13\n    at C:\\Users\\91807\\my-app\\node_modules\\@testing-library\\dom\\dist\\query-helpers.js:95:19\n    at C:/Users/91807/my-app/src/__tests__/unit/ProductCard.test.tsx:64:19\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:296:11\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1258:26\n    at file:///C:/Users/91807/my-app/node_modules/@vitest/runner/dist/index.js:1681:20\n    at new Promise (<anonymous>)"
+          ],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["ProductCard ΓÇö category badges"],
+          "fullName": "ProductCard ΓÇö category badges shows 'Limited Edition' badge for limited products",
+          "status": "passed",
+          "title": "shows 'Limited Edition' badge for limited products",
+          "duration": 6.925699999999779,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["ProductCard ΓÇö category badges"],
+          "fullName": "ProductCard ΓÇö category badges shows 'Seasonal' badge for seasonal products",
+          "status": "passed",
+          "title": "shows 'Seasonal' badge for seasonal products",
+          "duration": 8.743799999999283,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["ProductCard ΓÇö quick add"],
+          "fullName": "ProductCard ΓÇö quick add adds item to the cart when quick-add is clicked",
+          "status": "passed",
+          "title": "adds item to the cart when quick-add is clicked",
+          "duration": 291.6813999999995,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        }
+      ],
+      "startTime": 1773782961710,
+      "endTime": 1773782962200.6814,
+      "status": "failed",
+      "message": "",
+      "name": "C:/Users/91807/my-app/src/__tests__/unit/ProductCard.test.tsx"
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["products data"],
+          "fullName": "products data exports a non-empty product array",
+          "status": "passed",
+          "title": "exports a non-empty product array",
+          "duration": 4.585900000000038,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["products data"],
+          "fullName": "products data every product satisfies the Product interface shape",
+          "status": "passed",
+          "title": "every product satisfies the Product interface shape",
+          "duration": 8.136599999999817,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["products data"],
+          "fullName": "products data all slugs are unique",
+          "status": "passed",
+          "title": "all slugs are unique",
+          "duration": 0.4303999999997359,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["products data"],
+          "fullName": "products data all IDs are unique",
+          "status": "passed",
+          "title": "all IDs are unique",
+          "duration": 0.39840000000003783,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["getProductBySlug"],
+          "fullName": "getProductBySlug returns the correct product for a valid slug",
+          "status": "passed",
+          "title": "returns the correct product for a valid slug",
+          "duration": 0.6838999999999942,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["getProductBySlug"],
+          "fullName": "getProductBySlug returns undefined for an invalid slug",
+          "status": "passed",
+          "title": "returns undefined for an invalid slug",
+          "duration": 0.5221999999998843,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["getProductBySlug"],
+          "fullName": "getProductBySlug returns undefined for an empty string",
+          "status": "passed",
+          "title": "returns undefined for an empty string",
+          "duration": 0.3963999999996304,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["getProductBySlug"],
+          "fullName": "getProductBySlug finds every product by its slug",
+          "status": "passed",
+          "title": "finds every product by its slug",
+          "duration": 1.3926000000001295,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        }
+      ],
+      "startTime": 1773782961089,
+      "endTime": 1773782961106.3926,
+      "status": "passed",
+      "message": "",
+      "name": "C:/Users/91807/my-app/src/__tests__/unit/products.test.ts"
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["Design tokens ΓÇö palette"],
+          "fullName": "Design tokens ΓÇö palette defines the cream background",
+          "status": "passed",
+          "title": "defines the cream background",
+          "duration": 4.249399999999696,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["Design tokens ΓÇö palette"],
+          "fullName": "Design tokens ΓÇö palette defines the dusty rose accent",
+          "status": "passed",
+          "title": "defines the dusty rose accent",
+          "duration": 0.5621000000001004,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["Design tokens ΓÇö palette"],
+          "fullName": "Design tokens ΓÇö palette defines the warm brown primary text",
+          "status": "passed",
+          "title": "defines the warm brown primary text",
+          "duration": 0.8468000000002576,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["Design tokens ΓÇö palette"],
+          "fullName": "Design tokens ΓÇö palette defines the sage green secondary accent",
+          "status": "passed",
+          "title": "defines the sage green secondary accent",
+          "duration": 0.436500000000251,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["Design tokens ΓÇö palette"],
+          "fullName": "Design tokens ΓÇö palette has consistent accent hierarchy (dark < accent < light)",
+          "status": "passed",
+          "title": "has consistent accent hierarchy (dark < accent < light)",
+          "duration": 0.5174999999999272,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["Design tokens ΓÇö palette"],
+          "fullName": "Design tokens ΓÇö palette defines border colours",
+          "status": "passed",
+          "title": "defines border colours",
+          "duration": 0.6475999999997839,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["Design tokens ΓÇö fontFamily"],
+          "fullName": "Design tokens ΓÇö fontFamily heading uses Cormorant Garamond",
+          "status": "passed",
+          "title": "heading uses Cormorant Garamond",
+          "duration": 0.9050999999999476,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["Design tokens ΓÇö fontFamily"],
+          "fullName": "Design tokens ΓÇö fontFamily body uses Inter",
+          "status": "passed",
+          "title": "body uses Inter",
+          "duration": 0.4511999999999716,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["Design tokens ΓÇö fontSize"],
+          "fullName": "Design tokens ΓÇö fontSize defines all expected sizes",
+          "status": "passed",
+          "title": "defines all expected sizes",
+          "duration": 0.6809000000002925,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["Design tokens ΓÇö spacing"],
+          "fullName": "Design tokens ΓÇö spacing page spacing uses clamp for responsiveness",
+          "status": "passed",
+          "title": "page spacing uses clamp for responsiveness",
+          "duration": 0.4816000000000713,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["Design tokens ΓÇö spacing"],
+          "fullName": "Design tokens ΓÇö spacing section spacing uses clamp for responsiveness",
+          "status": "passed",
+          "title": "section spacing uses clamp for responsiveness",
+          "duration": 0.4499000000000706,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["Design tokens ΓÇö radius, shadow, transition"],
+          "fullName": "Design tokens ΓÇö radius, shadow, transition defines border radii",
+          "status": "passed",
+          "title": "defines border radii",
+          "duration": 0.3922000000002299,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["Design tokens ΓÇö radius, shadow, transition"],
+          "fullName": "Design tokens ΓÇö radius, shadow, transition defines box shadows",
+          "status": "passed",
+          "title": "defines box shadows",
+          "duration": 0.8652999999999338,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["Design tokens ΓÇö radius, shadow, transition"],
+          "fullName": "Design tokens ΓÇö radius, shadow, transition defines transitions",
+          "status": "passed",
+          "title": "defines transitions",
+          "duration": 0.6104000000000269,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        }
+      ],
+      "startTime": 1773782961101,
+      "endTime": 1773782961114.6104,
+      "status": "passed",
+      "message": "",
+      "name": "C:/Users/91807/my-app/src/__tests__/unit/tokens.test.ts"
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["UI Store ΓÇö nav"],
+          "fullName": "UI Store ΓÇö nav starts with navOpen = false",
+          "status": "passed",
+          "title": "starts with navOpen = false",
+          "duration": 4.567999999999756,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["UI Store ΓÇö nav"],
+          "fullName": "UI Store ΓÇö nav toggleNav flips navOpen",
+          "status": "passed",
+          "title": "toggleNav flips navOpen",
+          "duration": 1.076799999999821,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["UI Store ΓÇö nav"],
+          "fullName": "UI Store ΓÇö nav closeNav sets navOpen to false",
+          "status": "passed",
+          "title": "closeNav sets navOpen to false",
+          "duration": 0.45280000000002474,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["UI Store ΓÇö cart"],
+          "fullName": "UI Store ΓÇö cart starts with cartOpen = false",
+          "status": "passed",
+          "title": "starts with cartOpen = false",
+          "duration": 0.3944000000001324,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["UI Store ΓÇö cart"],
+          "fullName": "UI Store ΓÇö cart toggleCart flips cartOpen",
+          "status": "passed",
+          "title": "toggleCart flips cartOpen",
+          "duration": 0.6619999999998072,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["UI Store ΓÇö cart"],
+          "fullName": "UI Store ΓÇö cart closeCart sets cartOpen to false",
+          "status": "passed",
+          "title": "closeCart sets cartOpen to false",
+          "duration": 0.3632999999999811,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        }
+      ],
+      "startTime": 1773782961121,
+      "endTime": 1773782961129.3633,
+      "status": "passed",
+      "message": "",
+      "name": "C:/Users/91807/my-app/src/__tests__/unit/ui-store.test.ts"
+    }
+  ]
+}

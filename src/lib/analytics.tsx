@@ -87,8 +87,7 @@ export const analytics = {
       results_count: resultCount,
     }),
 
-  signUp: (method: string) =>
-    trackEvent("sign_up", { method }),
+  signUp: (method: string) => trackEvent("sign_up", { method }),
 
   newsletter: (email: string) =>
     trackEvent("newsletter_signup", { method: "footer_form" }),

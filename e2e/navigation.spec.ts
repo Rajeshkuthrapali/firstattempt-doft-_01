@@ -8,15 +8,10 @@ import { test, expect } from "@playwright/test";
 test.describe("Navigation & Routing", () => {
   test("clicking a product card navigates to PDP", async ({ page }) => {
     await page.goto("/");
-    await page
-      .getByLabel("View Golden Hour details")
-      .first()
-      .click();
+    await page.getByLabel("View Golden Hour details").first().click();
 
     await expect(page).toHaveURL(/\/product\/golden-hour/);
-    await expect(
-      page.getByText("Golden Hour").first(),
-    ).toBeVisible();
+    await expect(page.getByText("Golden Hour").first()).toBeVisible();
   });
 
   test("PDP breadcrumb links work", async ({ page }) => {
@@ -49,16 +44,16 @@ test.describe("Navigation & Routing", () => {
     await expect(page.getByText("You May Also Like")).toBeVisible();
 
     // Should show other products (not Golden Hour)
-    await expect(
-      page.getByText("Midnight Oud").first(),
-    ).toBeVisible();
+    await expect(page.getByText("Midnight Oud").first()).toBeVisible();
   });
 });
 
 test.describe("Navigation — Mobile", () => {
   test.use({ viewport: { width: 375, height: 812 } });
 
-  test("hamburger menu opens, shows nav links, and closes on link click", async ({ page }) => {
+  test("hamburger menu opens, shows nav links, and closes on link click", async ({
+    page,
+  }) => {
     await page.goto("/");
 
     // Nav links should be hidden on mobile

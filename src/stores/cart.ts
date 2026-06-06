@@ -53,9 +53,7 @@ export const useCartStore = create<CartState>((set, get) => ({
   removeItem: (productId) =>
     set((state) => {
       const updated = state.items
-        .map((i) =>
-          i.product.id === productId ? { ...i, qty: i.qty - 1 } : i,
-        )
+        .map((i) => (i.product.id === productId ? { ...i, qty: i.qty - 1 } : i))
         .filter((i) => i.qty > 0);
       return { items: updated };
     }),

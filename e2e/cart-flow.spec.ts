@@ -16,9 +16,7 @@ test.describe("Cart & Checkout Flow", () => {
     await page.click("#product-add-to-cart");
 
     // Cart badge should show 1
-    await expect(
-      page.locator("#cart-toggle span").first(),
-    ).toContainText("1");
+    await expect(page.locator("#cart-toggle span").first()).toContainText("1");
 
     // Open cart drawer
     await page.click("#cart-toggle");
@@ -57,9 +55,7 @@ test.describe("Cart & Checkout Flow", () => {
     await decBtn.click();
 
     // Verify cart badge shows 1
-    await expect(
-      page.locator("#cart-toggle span").first(),
-    ).toContainText("1");
+    await expect(page.locator("#cart-toggle span").first()).toContainText("1");
   });
 
   test("remove item from cart using delete button", async ({ page }) => {
@@ -83,10 +79,7 @@ test.describe("Cart & Checkout Flow", () => {
     await page.click("#product-add-to-cart");
 
     // Navigate to Midnight Oud via SPA (avoid full reload which resets store)
-    await page
-      .getByLabel("View Midnight Oud details")
-      .first()
-      .click();
+    await page.getByLabel("View Midnight Oud details").first().click();
     await expect(page).toHaveURL(/\/product\/midnight-oud/);
     await page.click("#product-add-to-cart");
 

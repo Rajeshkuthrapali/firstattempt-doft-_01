@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import type { Product } from "../data/products";
 import { useCartStore } from "../stores/cart";
+import { useUiStore } from "../stores/ui";
 
 interface ProductCardProps {
   product: Product;
@@ -13,6 +14,7 @@ interface ProductCardProps {
  */
 export default function ProductCard({ product }: ProductCardProps) {
   const addItem = useCartStore((s) => s.addItem);
+  const openQuickView = useUiStore((s) => s.openQuickView);
 
   /** Format price as ₹X,XXX */
   const formattedPrice = new Intl.NumberFormat("en-IN", {
@@ -23,7 +25,6 @@ export default function ProductCard({ product }: ProductCardProps) {
 
   return (
     <article
-      id={`product-card-${product.slug}`}
       className="group relative flex flex-col overflow-hidden rounded-lg bg-white border border-[#f0ebe5] transition-all duration-300 hover:shadow-[0_8px_32px_rgba(45,41,38,0.1)] hover:border-[#e8e0d8]"
     >
       {/* ── Image ─────────────────────────────── */}
@@ -58,8 +59,19 @@ export default function ProductCard({ product }: ProductCardProps) {
           </div>
         )}
 
-        {/* Quick-add overlay */}
-        <div className="absolute inset-x-0 bottom-0 translate-y-full opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+        {/* Quick-add + Quick-view overlay */}
+        <div className="absolute inset-x-0 bottom-0 translate-y-full opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 flex flex-col">
+          <button
+            id={`quick-view-${product.slug}`}
+            onClick={(e) => {
+              e.preventDefault();
+              openQuickView(product.id);
+            }}
+            className="w-full bg-white/90 py-2 text-[10px] font-semibold uppercase tracking-[0.15em] text-[#2d2926] transition-colors hover:bg-white border-t border-[#e8e0d8]"
+            aria-label={`Quick view ${product.name}`}
+          >
+            Quick View
+          </button>
           <button
             id={`quick-add-${product.slug}`}
             disabled={!product.inStock}

@@ -6,9 +6,7 @@ import { test, expect } from "@playwright/test";
  */
 
 test.describe("Accessibility", () => {
-  test("skip-to-content link exists with correct target", async ({
-    page,
-  }) => {
+  test("skip-to-content link exists with correct target", async ({ page }) => {
     await page.goto("/");
 
     const skipLink = page.getByText("Skip to main content");
@@ -30,7 +28,9 @@ test.describe("Accessibility", () => {
     await expect(main).toHaveAttribute("role", "main");
   });
 
-  test("page has semantic landmark roles (banner, contentinfo)", async ({ page }) => {
+  test("page has semantic landmark roles (banner, contentinfo)", async ({
+    page,
+  }) => {
     await page.goto("/");
     await expect(page.getByRole("banner")).toBeVisible();
     await page.getByRole("contentinfo").scrollIntoViewIfNeeded();
@@ -76,9 +76,7 @@ test.describe("Accessibility", () => {
     }
   });
 
-  test("cart toggle buttons have descriptive aria-labels", async ({
-    page,
-  }) => {
+  test("cart toggle buttons have descriptive aria-labels", async ({ page }) => {
     await page.goto("/product/golden-hour");
     await page.click("#product-add-to-cart");
     await page.click("#cart-toggle");
@@ -89,9 +87,7 @@ test.describe("Accessibility", () => {
     await expect(
       page.getByLabel("Decrease Golden Hour quantity"),
     ).toBeVisible();
-    await expect(
-      page.getByLabel("Remove Golden Hour from cart"),
-    ).toBeVisible();
+    await expect(page.getByLabel("Remove Golden Hour from cart")).toBeVisible();
     await expect(page.getByLabel("Close cart")).toBeVisible();
   });
 

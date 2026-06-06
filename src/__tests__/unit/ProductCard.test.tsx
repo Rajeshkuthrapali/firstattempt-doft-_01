@@ -37,23 +37,16 @@ describe("ProductCard — rendering", () => {
     expect(img).toHaveAttribute("src", inStockProduct.image);
   });
 
-  it("has a unique ID on the article element", () => {
+  it("renders the product card as an article element", () => {
     renderWithRouter(<ProductCard product={inStockProduct} />);
-    const article = document.getElementById(
-      `product-card-${inStockProduct.slug}`,
-    );
+    const article = screen.getByRole("article");
     expect(article).toBeInTheDocument();
   });
 
   it("links to the correct product detail page", () => {
     renderWithRouter(<ProductCard product={inStockProduct} />);
-    const link = screen.getByLabelText(
-      `View ${inStockProduct.name} details`,
-    );
-    expect(link).toHaveAttribute(
-      "href",
-      `/product/${inStockProduct.slug}`,
-    );
+    const link = screen.getByLabelText(`View ${inStockProduct.name} details`);
+    expect(link).toHaveAttribute("href", `/product/${inStockProduct.slug}`);
   });
 });
 
@@ -95,9 +88,7 @@ describe("ProductCard — quick add", () => {
 
   it("quick-add button is disabled for out-of-stock products", () => {
     renderWithRouter(<ProductCard product={outOfStockProduct} />);
-    const btn = document.getElementById(
-      `quick-add-${outOfStockProduct.slug}`,
-    );
+    const btn = document.getElementById(`quick-add-${outOfStockProduct.slug}`);
     expect(btn).toBeDisabled();
   });
 });

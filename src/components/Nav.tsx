@@ -1,10 +1,12 @@
 import { Link, useLocation } from "react-router-dom";
 import { useUiStore } from "../stores/ui";
 import { useCartStore } from "../stores/cart";
+import { useAuthStore } from "../stores/auth";
 
 const navLinks = [
   { to: "/", label: "Home" },
   { to: "/collections", label: "Shop" },
+  { to: "/search", label: "Search" },
   { to: "/about", label: "Our Story" },
   { to: "/contact", label: "Contact" },
 ] as const;
@@ -17,9 +19,10 @@ const navLinks = [
  */
 export default function Nav() {
   const { pathname } = useLocation();
-  const { navOpen, toggleNav, closeNav } = useUiStore();
-  const toggleCart = useUiStore((s) => s.toggleCart);
+  const { navOpen, toggleNav, closeNav, toggleSearch, toggleCart } =
+    useUiStore();
   const totalQty = useCartStore((s) => s.totalQty());
+  const user = useAuthStore((s) => s.user);
 
   return (
     <header
@@ -42,14 +45,28 @@ export default function Nav() {
           onClick={toggleNav}
           className="md:hidden p-1 text-[#2d2926] hover:text-[#c4a093] transition-colors"
           aria-label={navOpen ? "Close menu" : "Open menu"}
-          aria-expanded={navOpen}
+          {...{ "aria-expanded": navOpen }}
         >
           {navOpen ? (
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8}>
+            <svg
+              width="22"
+              height="22"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={1.8}
+            >
               <path strokeLinecap="round" d="M6 6l12 12M6 18L18 6" />
             </svg>
           ) : (
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8}>
+            <svg
+              width="22"
+              height="22"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={1.8}
+            >
               <path strokeLinecap="round" d="M4 6h16M4 12h16M4 18h16" />
             </svg>
           )}
@@ -58,10 +75,9 @@ export default function Nav() {
         {/* ── Desktop links (left) ───────────── */}
         <ul className="hidden md:flex items-center gap-7" role="menubar">
           {navLinks.map(({ to, label }) => (
-            <li key={to} role="none">
+            <li key={to} role="menuitem">
               <Link
                 to={to}
-                role="menuitem"
                 className={`text-[13px] tracking-[0.08em] uppercase transition-colors duration-200 ${
                   pathname === to
                     ? "text-[#c4a093] font-medium"
@@ -90,14 +106,41 @@ export default function Nav() {
         <div className="flex items-center gap-4">
           {/* Search */}
           <button
+            onClick={toggleSearch}
             className="hidden md:block p-1 text-[#6b5e54] hover:text-[#2d2926] transition-colors"
-            aria-label="Search"
+            aria-label="Open search"
           >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8}>
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={1.8}
+            >
               <circle cx="11" cy="11" r="7" />
               <path strokeLinecap="round" d="m21 21-4.35-4.35" />
             </svg>
           </button>
+
+          {/* Account */}
+          <Link
+            to={user ? "/account" : "/auth"}
+            className="hidden md:block p-1 text-[#6b5e54] hover:text-[#2d2926] transition-colors"
+            aria-label={user ? `Account: ${user.name}` : "Sign in"}
+          >
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={1.8}
+            >
+              <circle cx="12" cy="8" r="4" />
+              <path strokeLinecap="round" d="M4 20c0-4 3.58-7 8-7s8 3 8 7" />
+            </svg>
+          </Link>
 
           {/* Cart */}
           <button
@@ -106,7 +149,14 @@ export default function Nav() {
             className="relative p-1 text-[#6b5e54] hover:text-[#2d2926] transition-colors"
             aria-label={`Open cart, ${totalQty} items`}
           >
-            <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+            <svg
+              width="20"
+              height="20"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={1.8}
+            >
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -128,14 +178,12 @@ export default function Nav() {
         className={`md:hidden overflow-hidden border-t border-[#e8e0d8] bg-[#faf7f4] transition-all duration-300 ease-in-out ${
           navOpen ? "max-h-72 opacity-100" : "max-h-0 opacity-0 border-t-0"
         }`}
-        role="menu"
       >
-        <ul className="flex flex-col gap-1 px-6 py-4">
+        <ul role="menu" className="flex flex-col gap-1 px-6 py-4">
           {navLinks.map(({ to, label }) => (
-            <li key={to} role="none">
+            <li key={to} role="menuitem">
               <Link
                 to={to}
-                role="menuitem"
                 onClick={closeNav}
                 className={`block py-2.5 text-[14px] tracking-[0.06em] uppercase transition-colors ${
                   pathname === to

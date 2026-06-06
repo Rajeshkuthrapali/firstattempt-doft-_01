@@ -50,8 +50,19 @@ export default function Home() {
               className="animate-fade-in delay-500 mt-8 inline-flex w-fit items-center gap-2 border border-white/60 bg-white/10 px-8 py-3 text-[12px] font-semibold uppercase tracking-[0.2em] text-white backdrop-blur-sm transition-all duration-300 hover:bg-white hover:text-[#2d2926]"
             >
               Shop Now
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
+                />
               </svg>
             </a>
           </div>
@@ -59,7 +70,10 @@ export default function Home() {
       </section>
 
       {/* ── New Arrivals Grid ────────────────────── */}
-      <section id="collection" className="mx-auto max-w-7xl px-6 py-16 md:py-24">
+      <section
+        id="collection"
+        className="mx-auto max-w-7xl px-6 py-16 md:py-24"
+      >
         <div className="mb-10 text-center">
           <p className="text-[11px] uppercase tracking-[0.3em] text-[#c4a093]">
             New Arrivals
@@ -74,8 +88,7 @@ export default function Home() {
           {signatureProducts.map((product, i) => (
             <div
               key={product.id}
-              className="animate-fade-in-up"
-              style={{ animationDelay: `${i * 100}ms` }}
+              className={`animate-fade-in-up delay-${Math.min(i * 100, 500)}`}
             >
               <ProductCard product={product} />
             </div>
@@ -132,8 +145,7 @@ export default function Home() {
           {allProducts.slice(0, 3).map((product, i) => (
             <div
               key={product.id}
-              className="animate-fade-in-up"
-              style={{ animationDelay: `${i * 100}ms` }}
+              className={`animate-fade-in-up delay-${Math.min(i * 100, 500)}`}
             >
               <ProductCard product={product} />
             </div>
@@ -142,14 +154,32 @@ export default function Home() {
       </section>
 
       {/* ── Value Props Strip ────────────────────── */}
-      <section className="bg-[#f3ece4] border-y border-[#e8e0d8]" aria-label="Brand values">
+      <section
+        className="bg-[#f3ece4] border-y border-[#e8e0d8]"
+        aria-label="Brand values"
+      >
         <div className="mx-auto grid max-w-5xl grid-cols-1 gap-8 px-6 py-14 sm:grid-cols-3 text-center">
           {[
             {
               icon: (
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#c4a093" strokeWidth={1.2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M15.362 5.214A8.252 8.252 0 0 1 12 21 8.25 8.25 0 0 1 6.038 7.047 8.287 8.287 0 0 0 9 9.601a8.983 8.983 0 0 1 3.361-6.867 8.21 8.21 0 0 0 3 2.48Z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 18a3.75 3.75 0 0 0 .495-7.468 5.99 5.99 0 0 0-1.925 3.547 5.975 5.975 0 0 1-2.133-1.001A3.75 3.75 0 0 0 12 18Z" />
+                <svg
+                  width="32"
+                  height="32"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#c4a093"
+                  strokeWidth={1.2}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M15.362 5.214A8.252 8.252 0 0 1 12 21 8.25 8.25 0 0 1 6.038 7.047 8.287 8.287 0 0 0 9 9.601a8.983 8.983 0 0 1 3.361-6.867 8.21 8.21 0 0 0 3 2.48Z"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M12 18a3.75 3.75 0 0 0 .495-7.468 5.99 5.99 0 0 0-1.925 3.547 5.975 5.975 0 0 1-2.133-1.001A3.75 3.75 0 0 0 12 18Z"
+                  />
                 </svg>
               ),
               title: "Hand-Poured",
@@ -157,8 +187,19 @@ export default function Home() {
             },
             {
               icon: (
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#8b9e7e" strokeWidth={1.2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M12.75 3.03v.568c0 2.849.274 5.695.82 8.493l.004.013a5.036 5.036 0 0 1-2.224 4.766c-1.065.691-2.285 1.052-3.534 1.123a47.5 47.5 0 0 0 0 2.014M12 21a8.966 8.966 0 0 0 5.657-2m-5.657 2a8.966 8.966 0 0 1-5.657-2M12 21v-7.5" />
+                <svg
+                  width="32"
+                  height="32"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#8b9e7e"
+                  strokeWidth={1.2}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M12.75 3.03v.568c0 2.849.274 5.695.82 8.493l.004.013a5.036 5.036 0 0 1-2.224 4.766c-1.065.691-2.285 1.052-3.534 1.123a47.5 47.5 0 0 0 0 2.014M12 21a8.966 8.966 0 0 0 5.657-2m-5.657 2a8.966 8.966 0 0 1-5.657-2M12 21v-7.5"
+                  />
                 </svg>
               ),
               title: "100% Natural Soy",
@@ -166,8 +207,19 @@ export default function Home() {
             },
             {
               icon: (
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#c4a093" strokeWidth={1.2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 11.25v8.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5v-8.25M12 4.875A2.625 2.625 0 1 0 9.375 7.5H12m0-2.625V7.5m0-2.625A2.625 2.625 0 1 1 14.625 7.5H12m0 0V21m-8.625-9.75h18" />
+                <svg
+                  width="32"
+                  height="32"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#c4a093"
+                  strokeWidth={1.2}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M21 11.25v8.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5v-8.25M12 4.875A2.625 2.625 0 1 0 9.375 7.5H12m0-2.625V7.5m0-2.625A2.625 2.625 0 1 1 14.625 7.5H12m0 0V21m-8.625-9.75h18"
+                  />
                 </svg>
               ),
               title: "Gift-Ready",

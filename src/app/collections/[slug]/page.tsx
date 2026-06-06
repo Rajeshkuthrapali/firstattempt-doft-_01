@@ -10,25 +10,29 @@ interface CollectionPageProps {
   searchParams: Promise<{ sort?: string }>;
 }
 
-export async function generateMetadata(
-  { params }: CollectionPageProps,
-): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: CollectionPageProps): Promise<Metadata> {
   const { slug } = await params;
   const collection = await prisma.collection.findUnique({ where: { slug } });
   if (!collection) return { title: "Collection Not Found" };
 
   return {
     title: collection.title,
-    description: collection.description || `Shop the ${collection.title} collection at DOFT Candles.`,
+    description:
+      collection.description ||
+      `Shop the ${collection.title} collection at DOFT Candles.`,
     openGraph: {
       title: `${collection.title} | DOFT`,
-      description: collection.description || `Shop the ${collection.title} collection.`,
+      description:
+        collection.description || `Shop the ${collection.title} collection.`,
       type: "website",
     },
     twitter: {
       card: "summary",
       title: `${collection.title} | DOFT`,
-      description: collection.description || `Shop the ${collection.title} collection.`,
+      description:
+        collection.description || `Shop the ${collection.title} collection.`,
     },
   };
 }
@@ -58,15 +62,17 @@ export default async function CollectionPage({
 
   if (!collection) notFound();
 
-  let products = collection.products.map((cp) => cp.product);
+  let products = collection.products.map((cp: any) => cp.product);
 
   if (sort === "price-asc") {
     products = products.sort(
-      (a, b) => (a.variants[0]?.price ?? 0) - (b.variants[0]?.price ?? 0),
+      (a: any, b: any) =>
+        (a.variants[0]?.price ?? 0) - (b.variants[0]?.price ?? 0),
     );
   } else if (sort === "price-desc") {
     products = products.sort(
-      (a, b) => (b.variants[0]?.price ?? 0) - (a.variants[0]?.price ?? 0),
+      (a: any, b: any) =>
+        (b.variants[0]?.price ?? 0) - (a.variants[0]?.price ?? 0),
     );
   }
 
@@ -94,7 +100,10 @@ export default async function CollectionPage({
           __html: JSON.stringify(
             breadcrumbJsonLd([
               { name: "Home", url: baseUrl },
-              { name: collection.title, url: `${baseUrl}/collections/${collection.slug}` },
+              {
+                name: collection.title,
+                url: `${baseUrl}/collections/${collection.slug}`,
+              },
             ]),
           ),
         }}
@@ -121,7 +130,7 @@ export default async function CollectionPage({
           </p>
         ) : (
           <div className="stagger-children grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-            {products.map((product) => (
+            {products.map((product: any) => (
               <ProductCard
                 key={product.id}
                 product={product}

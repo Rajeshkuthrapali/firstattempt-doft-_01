@@ -2,29 +2,36 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import "./index.css";
-import App from "./App.tsx";
-import { initGA4 } from "./lib/analytics.ts";
-import { initSentry, getErrorBoundary } from "./lib/sentry.ts";
+import App from "./App";
+import { initGA4 } from "./lib/analytics";
+import { initRUM } from "./lib/rum";
+import { initSentry, getErrorBoundary } from "./lib/sentry";
+import { reportWebVitals, sendToAnalytics } from "./lib/vitals";
 
-// Initialise observability (no-ops if env vars are not set)
+// Initialise synchronous observability first
 initGA4();
-void initSentry();
+initRUM();
+reportWebVitals(sendToAnalytics);
 
-const ErrorBoundary = getErrorBoundary();
-const AppTree = (
-  <StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </StrictMode>
-);
+// Await Sentry before mounting so getErrorBoundary() resolves correctly
+initSentry().then(() => {
+  const ErrorBoundary = getErrorBoundary();
 
-createRoot(document.getElementById("root")!).render(
-  ErrorBoundary ? (
-    <ErrorBoundary fallback={<p>Something went wrong. Please refresh.</p>}>
-      {AppTree}
-    </ErrorBoundary>
-  ) : (
-    AppTree
-  ),
-);
+  const AppTree = (
+    <StrictMode>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </StrictMode>
+  );
+
+  createRoot(document.getElementById("root")!).render(
+    ErrorBoundary ? (
+      <ErrorBoundary fallback={<p>Something went wrong. Please refresh.</p>}>
+        {AppTree}
+      </ErrorBoundary>
+    ) : (
+      AppTree
+    ),
+  );
+});

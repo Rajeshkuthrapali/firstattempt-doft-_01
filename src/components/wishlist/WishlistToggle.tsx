@@ -2,9 +2,15 @@
 import { useState } from "react";
 import { Heart } from "lucide-react";
 
-interface WishlistToggleProps { productId: string; initialWishlisted?: boolean; }
+interface WishlistToggleProps {
+  productId: string;
+  initialWishlisted?: boolean;
+}
 
-export function WishlistToggle({ productId, initialWishlisted = false }: WishlistToggleProps) {
+export function WishlistToggle({
+  productId,
+  initialWishlisted = false,
+}: WishlistToggleProps) {
   const [wishlisted, setWishlisted] = useState(initialWishlisted);
   const [loading, setLoading] = useState(false);
 
@@ -31,9 +37,16 @@ export function WishlistToggle({ productId, initialWishlisted = false }: Wishlis
   }
 
   return (
-    <button onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggle(); }} disabled={loading}
+    <button
+      onClick={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        toggle();
+      }}
+      disabled={loading}
       className={`rounded-full p-2 shadow-sm backdrop-blur-sm transition-all hover:scale-110 ${wishlisted ? "bg-white text-accent" : "bg-white/80 text-text-muted hover:text-accent"} disabled:opacity-50`}
-      aria-label={wishlisted ? "Remove from wishlist" : "Add to wishlist"}>
+      aria-label={wishlisted ? "Remove from wishlist" : "Add to wishlist"}
+    >
       <Heart size={16} fill={wishlisted ? "currentColor" : "none"} />
     </button>
   );

@@ -9,9 +9,9 @@ interface ProductPageProps {
   params: Promise<{ slug: string }>;
 }
 
-export async function generateMetadata(
-  { params }: ProductPageProps,
-): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: ProductPageProps): Promise<Metadata> {
   const { slug } = await params;
   const product = await prisma.product.findUnique({ where: { slug } });
   if (!product) return { title: "Product Not Found" };
@@ -64,7 +64,10 @@ export default async function ProductPage({ params }: ProductPageProps) {
             breadcrumbJsonLd([
               { name: "Home", url: baseUrl },
               { name: "Products", url: `${baseUrl}/collections/bestsellers` },
-              { name: product.title, url: `${baseUrl}/products/${product.slug}` },
+              {
+                name: product.title,
+                url: `${baseUrl}/products/${product.slug}`,
+              },
             ]),
           ),
         }}
@@ -74,9 +77,17 @@ export default async function ProductPage({ params }: ProductPageProps) {
         {/* Breadcrumb */}
         <nav className="mb-8 text-sm text-text-muted" aria-label="Breadcrumb">
           <ol className="flex items-center gap-2">
-            <li><a href="/" className="hover:text-primary">Home</a></li>
+            <li>
+              <a href="/" className="hover:text-primary">
+                Home
+              </a>
+            </li>
             <li className="text-border">/</li>
-            <li><a href="/collections/bestsellers" className="hover:text-primary">Shop</a></li>
+            <li>
+              <a href="/collections/bestsellers" className="hover:text-primary">
+                Shop
+              </a>
+            </li>
             <li className="text-border">/</li>
             <li className="text-text">{product.title}</li>
           </ol>

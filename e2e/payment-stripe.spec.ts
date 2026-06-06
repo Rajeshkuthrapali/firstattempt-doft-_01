@@ -98,16 +98,13 @@ test.describe("Stripe Payment Flow", () => {
 
     const stripeSignature = `t=${timestamp},v1=${sig}`;
 
-    const res = await request.post(
-      `${API_BASE}/payments/webhooks/stripe`,
-      {
-        data: eventPayload,
-        headers: {
-          "Content-Type": "application/json",
-          "Stripe-Signature": stripeSignature,
-        },
+    const res = await request.post(`${API_BASE}/payments/webhooks/stripe`, {
+      data: eventPayload,
+      headers: {
+        "Content-Type": "application/json",
+        "Stripe-Signature": stripeSignature,
       },
-    );
+    });
 
     // May fail with 501 if Stripe not configured
     if (res.status() === 501) {
@@ -118,9 +115,7 @@ test.describe("Stripe Payment Flow", () => {
     expect(res.ok()).toBeTruthy();
   });
 
-  test("Stripe webhook: payment_intent.payment_failed", async ({
-    request,
-  }) => {
+  test("Stripe webhook: payment_intent.payment_failed", async ({ request }) => {
     // Create another order for failure test
     const orderRes = await request.post(`${API_BASE}/orders`, {
       data: {
@@ -174,16 +169,13 @@ test.describe("Stripe Payment Flow", () => {
 
     const stripeSignature = `t=${timestamp},v1=${sig}`;
 
-    const res = await request.post(
-      `${API_BASE}/payments/webhooks/stripe`,
-      {
-        data: eventPayload,
-        headers: {
-          "Content-Type": "application/json",
-          "Stripe-Signature": stripeSignature,
-        },
+    const res = await request.post(`${API_BASE}/payments/webhooks/stripe`, {
+      data: eventPayload,
+      headers: {
+        "Content-Type": "application/json",
+        "Stripe-Signature": stripeSignature,
       },
-    );
+    });
 
     if (res.status() === 501) {
       test.skip(true, "Stripe is not configured");

@@ -17,11 +17,7 @@ beforeEach(() => {
  * Uses `renderWithRoute` so that `useParams()` resolves correctly.
  */
 function renderPDP(slug: string) {
-  return renderWithRoute(
-    "/product/:slug",
-    <Product />,
-    `/product/${slug}`,
-  );
+  return renderWithRoute("/product/:slug", <Product />, `/product/${slug}`);
 }
 
 describe("Product page — valid product (Golden Hour)", () => {

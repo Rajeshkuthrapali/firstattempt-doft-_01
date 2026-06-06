@@ -58,7 +58,7 @@ export default async function HomePage() {
           </p>
         </div>
         <div className="stagger-children grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-          {bestsellers.map((product) => (
+          {bestsellers.map((product: any) => (
             <ProductCard
               key={product.id}
               product={product}

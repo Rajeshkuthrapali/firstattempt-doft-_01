@@ -167,3 +167,101 @@ export interface CheckoutItem {
   price: number;
   quantity: number;
 }
+
+// ── P1 Analytics Events ───────────────────────────────────────────────────────
+
+/**
+ * Generic GA4 event helper — use for any event not covered by a typed wrapper.
+ * @param name - GA4 event name
+ * @param params - Event parameters
+ */
+export function trackEvent(
+  name: string,
+  params: Record<string, unknown>,
+): void {
+  if (typeof window === "undefined" || !window.gtag) return;
+  window.gtag("event", name, params);
+}
+
+/** User added a product to their wishlist. */
+export function trackWishlistAdd(
+  itemId: string,
+  itemName: string,
+  price: number,
+): void {
+  trackEvent("add_to_wishlist", {
+    currency: "INR",
+    value: price,
+    items: [{ item_id: itemId, item_name: itemName, price }],
+  });
+}
+
+/** User removed a product from their wishlist. */
+export function trackWishlistRemove(itemId: string, itemName: string): void {
+  trackEvent("remove_from_wishlist", { item_id: itemId, item_name: itemName });
+}
+
+/** New account successfully created. */
+export function trackAccountCreated(
+  method: "email" | "google" | "facebook",
+): void {
+  trackEvent("account_created", { method });
+}
+
+/** User typed a search query (fire on debounce / submit). */
+export function trackSearchQuery(query: string, resultCount: number): void {
+  trackEvent("search", { search_term: query, result_count: resultCount });
+}
+
+/** Abandoned-cart recovery banner clicked (user returned to cart). */
+export function trackAbandonedCartRecovery(): void {
+  trackEvent("abandoned_cart_recovery", { source: "banner" });
+}
+
+/** Gift wrapping option selected during checkout. */
+export function trackGiftOptionSelected(
+  wrapping: "standard" | "premium" | "none",
+  hasMessage: boolean,
+): void {
+  trackEvent("gift_option_selected", {
+    wrapping_type: wrapping,
+    has_message: hasMessage,
+  });
+}
+
+/** User opened a quick-view modal for a product. */
+export function trackQuickView(itemId: string, itemName: string): void {
+  trackEvent("quick_view", { item_id: itemId, item_name: itemName });
+}
+
+// ── P6 Revenue Attribution ────────────────────────────────────────────────────
+
+/** Attributes a purchase to an active A/B experiment variant. */
+export function trackExperimentRevenue(
+  experimentId: string,
+  variantId: string,
+  revenue: number,
+  transactionId: string,
+): void {
+  trackEvent("experiment_revenue", {
+    experiment_id: experimentId,
+    variant_id: variantId,
+    currency: "INR",
+    value: revenue,
+    transaction_id: transactionId,
+  });
+}
+
+/** Tracks loyalty points used as payment during checkout. */
+export function trackLoyaltyRedemption(
+  pointsUsed: number,
+  discountValue: number,
+  transactionId: string,
+): void {
+  trackEvent("loyalty_redemption", {
+    points_used: pointsUsed,
+    discount_value: discountValue,
+    currency: "INR",
+    transaction_id: transactionId,
+  });
+}
