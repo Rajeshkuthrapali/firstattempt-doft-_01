@@ -21,7 +21,7 @@ export default function Nav() {
   const { pathname } = useLocation();
   const { navOpen, toggleNav, closeNav, toggleSearch, toggleCart } =
     useUiStore();
-  const totalQty = useCartStore((s) => s.totalQty());
+  const totalQty = useCartStore((s) => s.totalItems());
   const user = useAuthStore((s) => s.user);
 
   return (

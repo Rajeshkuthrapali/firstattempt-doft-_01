@@ -1,4 +1,4 @@
-import { JwtPayload } from "../path-to-your-payload"; // Fix the path
+import { JwtPayload } from "../middleware/auth";
 
 declare global {
   namespace Express {

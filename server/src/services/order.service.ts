@@ -1,5 +1,46 @@
+import { DomainError } from "../lib/domain-error.js";
 import { prisma } from "../lib/prisma.js";
+import { securityLogger } from "./security-logger.js";
 import type { CreateOrderInput, OrderResponse } from "../types/order.types.js";
+
+// ---------------------------------------------------------------------------
+// State machine — Order status transitions
+// ---------------------------------------------------------------------------
+
+/** Valid order status transitions. Only these state changes are allowed. */
+const ORDER_TRANSITIONS: Record<string, string[]> = {
+  PENDING: ["CONFIRMED", "CANCELLED"],
+  CONFIRMED: ["PROCESSING", "CANCELLED"],
+  PROCESSING: ["SHIPPED"],
+  SHIPPED: ["DELIVERED"],
+  DELIVERED: ["REFUNDED"],
+  CANCELLED: [], // terminal
+  REFUNDED: [], // terminal
+};
+
+/**
+ * Validates that a transition from `currentStatus` to `newStatus` is allowed.
+ * Throws an OrderError (409) if the transition is not in the allowed set.
+ */
+export function validateOrderTransition(
+  currentStatus: string,
+  newStatus: string,
+  context?: Record<string, unknown>,
+): void {
+  const allowed = ORDER_TRANSITIONS[currentStatus];
+  if (!allowed || !allowed.includes(newStatus)) {
+    securityLogger.warn("order_invalid_transition", {
+      from: currentStatus,
+      to: newStatus,
+      ...context,
+    });
+    throw new OrderError(
+      `Invalid order status transition: ${currentStatus} → ${newStatus}. ` +
+        `Allowed transitions from ${currentStatus}: ${allowed?.join(", ") || "none"}`,
+      409,
+    );
+  }
+}
 
 /**
  * Creates a new order with line items, applies promo code if valid,
@@ -68,16 +109,16 @@ export async function createOrder(
       throw new OrderError("Promo code has expired or is inactive", 400);
     }
 
-    if (promo.usageLimit !== null && promo.timesUsed >= promo.usageLimit) {
-      throw new OrderError("Promo code usage limit reached", 400);
-    }
-
     if (promo.minOrderCents !== null && subtotalCents < promo.minOrderCents) {
       throw new OrderError(
         `Minimum order of ₹${(promo.minOrderCents / 100).toFixed(2)} required for this promo`,
         400,
       );
     }
+
+    // NOTE: usageLimit check is done INSIDE the transaction below (after
+    // incrementing timesUsed) to prevent a race condition where two concurrent
+    // requests both pass the check before either one increments.
 
     discountCents =
       promo.type === "PERCENTAGE"
@@ -97,22 +138,25 @@ export async function createOrder(
 
   const totalCents = subtotalCents - discountCents + shippingCents;
 
-  // 6. Persist in a transaction: create order + decrement stock + bump promo usage
+  // 6. Persist in a transaction: create order + bump promo usage
   const order = await prisma.$transaction(async (tx) => {
-    // Decrement stock
-    for (const line of input.items) {
-      await tx.variant.update({
-        where: { id: line.variantId },
-        data: { stock: { decrement: line.quantity } },
-      });
-    }
-
-    // Bump promo usage
+    // Bump promo usage atomically and check limit
     if (promoId) {
-      await tx.promoCode.update({
+      const updatedPromo = await tx.promoCode.update({
         where: { id: promoId },
         data: { timesUsed: { increment: 1 } },
       });
+
+      // Check usage limit inside the transaction to prevent race conditions
+      if (
+        updatedPromo.usageLimit !== null &&
+        updatedPromo.timesUsed > updatedPromo.usageLimit
+      ) {
+        throw new OrderError(
+          "Promo code usage limit reached",
+          400,
+        );
+      }
     }
 
     // Create order with items
@@ -243,12 +287,12 @@ function mapOrderToResponse(order: {
 /**
  * Domain error with associated HTTP status code.
  */
-export class OrderError extends Error {
+export class OrderError extends DomainError {
   constructor(
     message: string,
-    public readonly statusCode: number,
+    statusCode: number,
   ) {
-    super(message);
+    super(message, statusCode);
     this.name = "OrderError";
   }
 }

@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
-import type { Product } from "../data/products";
+import type { ProductSummary } from "../types/catalog";
 import { useCartStore } from "../stores/cart";
 import { useUiStore } from "../stores/ui";
 
 interface ProductCardProps {
-  product: Product;
+  product: ProductSummary;
 }
 
 /**
@@ -16,12 +16,30 @@ export default function ProductCard({ product }: ProductCardProps) {
   const addItem = useCartStore((s) => s.addItem);
   const openQuickView = useUiStore((s) => s.openQuickView);
 
+  const priceInRupees = product.priceCents / 100;
+
   /** Format price as ₹X,XXX */
   const formattedPrice = new Intl.NumberFormat("en-IN", {
     style: "currency",
     currency: "INR",
     maximumFractionDigits: 0,
-  }).format(product.price);
+  }).format(priceInRupees);
+
+  function handleAddToCart() {
+    addItem({
+      productId: product.id,
+      variantId: product.id,
+      title: product.title,
+      variantTitle: "Single",
+      price: priceInRupees,
+      image: product.image,
+      slug: product.slug,
+      maxStock: product.inStock ? 100 : 0,
+    });
+  }
+
+  const isLimited = product.collectionSlugs.includes("limited");
+  const isSeasonal = product.collectionSlugs.includes("seasonal");
 
   return (
     <article
@@ -31,22 +49,22 @@ export default function ProductCard({ product }: ProductCardProps) {
       <Link
         to={`/product/${product.slug}`}
         className="relative block overflow-hidden bg-[#f3ece4]"
-        aria-label={`View ${product.name} details`}
+        aria-label={`View ${product.title} details`}
       >
         <img
           src={product.image}
-          alt={product.name}
+          alt={product.title}
           loading="lazy"
           className="aspect-[4/5] w-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
 
-        {/* Category badge */}
-        {product.category === "limited" && (
+        {/* Collection badge */}
+        {isLimited && (
           <span className="absolute top-3 left-3 rounded-sm bg-[#c4a093] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.1em] text-white">
             Limited Edition
           </span>
         )}
-        {product.category === "seasonal" && (
+        {isSeasonal && (
           <span className="absolute top-3 left-3 rounded-sm bg-[#8b9e7e] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.1em] text-white">
             Seasonal
           </span>
@@ -65,10 +83,10 @@ export default function ProductCard({ product }: ProductCardProps) {
             id={`quick-view-${product.slug}`}
             onClick={(e) => {
               e.preventDefault();
-              openQuickView(product.id);
+              openQuickView(product);
             }}
             className="w-full bg-white/90 py-2 text-[10px] font-semibold uppercase tracking-[0.15em] text-[#2d2926] transition-colors hover:bg-white border-t border-[#e8e0d8]"
-            aria-label={`Quick view ${product.name}`}
+            aria-label={`Quick view ${product.title}`}
           >
             Quick View
           </button>
@@ -77,7 +95,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             disabled={!product.inStock}
             onClick={(e) => {
               e.preventDefault();
-              addItem(product);
+              handleAddToCart();
             }}
             className="w-full bg-[#c4a093] py-3 text-[11px] font-semibold uppercase tracking-[0.15em] text-white transition-colors hover:bg-[#a8877b] disabled:cursor-not-allowed disabled:bg-[#d9c2b7]"
           >
@@ -90,7 +108,7 @@ export default function ProductCard({ product }: ProductCardProps) {
       <div className="flex flex-1 flex-col gap-1.5 p-4">
         <Link to={`/product/${product.slug}`} className="space-y-0.5">
           <h3 className="font-['Cormorant_Garamond',serif] text-[17px] font-medium text-[#2d2926] transition-colors group-hover:text-[#c4a093]">
-            {product.name}
+            {product.title}
           </h3>
           <p className="text-[12px] text-[#9a8d82] line-clamp-2 leading-relaxed">
             {product.tagline}

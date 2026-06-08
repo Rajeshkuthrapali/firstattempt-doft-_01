@@ -1,12 +1,21 @@
 "use client";
 import { useState } from "react";
 import { ShoppingBag, Check } from "lucide-react";
-import { useCartStore } from "@/lib/store/cart";
-import type { Product, Variant } from "@prisma/client";
+import { useCartStore } from "@/stores/cart";
 
 interface AddToCartButtonProps {
-  product: Product;
-  variant: Variant;
+  product: {
+    id: string;
+    title: string;
+    images: string;
+    slug: string;
+  };
+  variant: {
+    id: string;
+    title: string;
+    price: number;
+    stock: number;
+  };
 }
 
 export function AddToCartButton({ product, variant }: AddToCartButtonProps) {

@@ -1,8 +1,7 @@
 "use client";
 import { X, Minus, Plus, Trash2 } from "lucide-react";
-import { useCartStore } from "@/lib/store/cart";
-import Image from "next/image";
-import Link from "next/link";
+import { useCartStore } from "@/stores/cart";
+import { Link } from "react-router-dom";
 
 export function CartSidebar() {
   const {
@@ -44,18 +43,16 @@ export function CartSidebar() {
                   className="flex gap-4 border-b border-border-light pb-4"
                 >
                   <div className="relative h-20 w-20 shrink-0 overflow-hidden bg-bg-secondary">
-                    <Image
+                    <img
                       src={item.image}
                       alt={item.title}
-                      fill
-                      sizes="80px"
-                      className="object-cover"
+                      className="h-full w-full object-cover"
                     />
                   </div>
                   <div className="flex flex-1 flex-col justify-between">
                     <div>
                       <Link
-                        href={`/products/${item.slug}`}
+                        to={`/products/${item.slug}`}
                         className="text-sm font-medium hover:text-primary"
                         onClick={closeCart}
                       >
@@ -117,7 +114,7 @@ export function CartSidebar() {
               <span className="text-primary">${totalPrice().toFixed(2)}</span>
             </div>
             <Link
-              href="/checkout"
+              to="/checkout"
               onClick={closeCart}
               className="block w-full bg-primary py-3.5 text-center text-sm font-bold uppercase tracking-widest text-white transition-all hover:bg-accent"
             >

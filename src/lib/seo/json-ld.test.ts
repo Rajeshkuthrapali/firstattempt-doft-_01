@@ -5,7 +5,27 @@ import {
   organizationJsonLd,
   collectionJsonLd,
 } from "@/lib/seo/json-ld";
-import type { Product, Variant } from "@prisma/client";
+
+interface Product {
+  id: string;
+  title: string;
+  slug: string;
+  description: string;
+  scentFamily: string;
+  images: string;
+  status: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+interface Variant {
+  id: string;
+  productId: string;
+  sku: string;
+  title: string;
+  price: number;
+  stock: number;
+}
 
 const mockProduct: Product = {
   id: "prod-1",

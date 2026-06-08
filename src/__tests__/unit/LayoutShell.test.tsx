@@ -1,7 +1,13 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import { screen } from "@testing-library/react";
 import { renderWithRouter } from "../helpers";
 import LayoutShell from "../../components/LayoutShell";
+
+// GSAP / ScrollTrigger is not available in jsdom — mock the animations module
+vi.mock("../../lib/animations", () => ({
+  pageEnter: vi.fn(),
+  initScrollAnimations: vi.fn(),
+}));
 
 describe("LayoutShell", () => {
   it("renders the skip-to-content link", () => {

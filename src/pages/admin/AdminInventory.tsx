@@ -1,12 +1,14 @@
-import { useState } from "react";
-import { products } from "../../data/products";
+import { useEffect, useState } from "react";
+import { api } from "../../lib/api/client";
+import { useApi } from "../../lib/hooks/useApi";
 import { formatPrice } from "../../lib/format";
+import type { ProductSummary, PaginatedResponse } from "../../types/catalog";
 
 interface InventoryRow {
   id: string;
-  name: string;
+  title: string;
   category: string;
-  price: number;
+  priceCents: number;
   stock: number;
 }
 
@@ -18,16 +20,38 @@ const LOW_STOCK_THRESHOLD = 5;
  * In production, changes call PATCH /api/admin/inventory.
  */
 export default function AdminInventory() {
-  const [inventory, setInventory] = useState<InventoryRow[]>(
-    products.map((p, i) => ({
-      id: p.id,
-      name: p.name,
-      category: p.category,
-      price: p.price,
-      // Deterministic placeholder stock: alternates realistic values based on index
-      stock: p.inStock ? [42, 18, 7, 35, 3, 24][i % 6] : 0,
-    })),
+  const productsApi = useApi<ProductSummary[]>(
+    () => api.get<PaginatedResponse<ProductSummary>>("/api/products"),
+    [],
   );
+
+  useEffect(() => {
+    productsApi.execute();
+  }, [productsApi.execute]);
+
+  function getCategoryFromSlugs(collectionSlugs: string[]): string {
+    if (collectionSlugs.includes("limited")) return "limited";
+    if (collectionSlugs.includes("seasonal")) return "seasonal";
+    return "signature";
+  }
+
+  const [inventory, setInventory] = useState<InventoryRow[]>([]);
+
+  // Build inventory from API data once loaded
+  useEffect(() => {
+    if (productsApi.data) {
+      setInventory(
+        productsApi.data.map((p, i) => ({
+          id: p.id,
+          title: p.title,
+          category: getCategoryFromSlugs(p.collectionSlugs),
+          priceCents: p.priceCents,
+          // Deterministic placeholder stock: alternates realistic values based on index
+          stock: p.inStock ? [42, 18, 7, 35, 3, 24][i % 6] : 0,
+        })),
+      );
+    }
+  }, [productsApi.data]);
 
   function updateStock(id: string, stock: number) {
     setInventory((prev) => prev.map((r) => (r.id === id ? { ...r, stock } : r)));
@@ -37,7 +61,7 @@ export default function AdminInventory() {
 
   function exportCSV() {
     const headers = ["Product ID,Name,Category,Price,Stock\n"];
-    const rows = inventory.map(r => `${r.id},"${r.name.replace(/"/g, '""')}",${r.category},${r.price},${r.stock}\n`);
+    const rows = inventory.map(r => `${r.id},"${r.title.replace(/"/g, '""')}",${r.category},${r.priceCents},${r.stock}\n`);
     const blob = new Blob(headers.concat(rows), { type: "text/csv;charset=utf-8;" });
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
@@ -46,6 +70,14 @@ export default function AdminInventory() {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+  }
+
+  if (productsApi.loading) {
+    return (
+      <div>
+        <p className="text-sm text-[#9a8d82] py-4">Loading inventory...</p>
+      </div>
+    );
   }
 
   return (
@@ -88,9 +120,9 @@ export default function AdminInventory() {
                   key={row.id}
                   className={`transition-colors ${isLow ? "bg-amber-50/40" : "hover:bg-[#faf7f4]"}`}
                 >
-                  <td className="px-4 py-3 font-medium text-[#2d2926]">{row.name}</td>
+                  <td className="px-4 py-3 font-medium text-[#2d2926]">{row.title}</td>
                   <td className="px-4 py-3 text-[#6b5e54] capitalize">{row.category}</td>
-                  <td className="px-4 py-3 text-[#6b5e54]">{formatPrice(row.price)}</td>
+                  <td className="px-4 py-3 text-[#6b5e54]">{formatPrice(row.priceCents / 100)}</td>
                   <td className="px-4 py-3">
                     <input
                       type="number"
@@ -100,7 +132,7 @@ export default function AdminInventory() {
                       className={`w-20 rounded border px-2 py-1 text-sm outline-none focus:border-[#c4a093] ${
                         isLow ? "border-amber-300" : "border-[#e8e0d8]"
                       }`}
-                      aria-label={`Stock count for ${row.name}`}
+                      aria-label={`Stock count for ${row.title}`}
                     />
                   </td>
                   <td className="px-4 py-3">

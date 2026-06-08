@@ -1,7 +1,41 @@
 import { prisma } from "../lib/prisma.js";
 import { stripeClient } from "../lib/stripe.js";
 import { env } from "../config/env.js";
+import { validateOrderTransition } from "./order.service.js";
+import { securityLogger } from "./security-logger.js";
 import type Stripe from "stripe";
+
+// ---------------------------------------------------------------------------
+// State machine — Payment status transitions
+// ---------------------------------------------------------------------------
+
+const PAYMENT_TRANSITIONS: Record<string, string[]> = {
+  CREATED: ["AUTHORIZED", "FAILED"],
+  AUTHORIZED: ["CAPTURED", "FAILED"],
+  CAPTURED: ["REFUNDED"],
+  FAILED: [],      // terminal
+  REFUNDED: [],    // terminal
+};
+
+function validatePaymentTransition(
+  currentStatus: string,
+  newStatus: string,
+  context?: Record<string, unknown>,
+): void {
+  const allowed = PAYMENT_TRANSITIONS[currentStatus];
+  if (!allowed || !allowed.includes(newStatus)) {
+    securityLogger.warn("payment_invalid_transition", {
+      from: currentStatus,
+      to: newStatus,
+      ...context,
+    });
+    throw new StripeServiceError(
+      `Invalid payment status transition: ${currentStatus} → ${newStatus}. ` +
+        `Allowed transitions from ${currentStatus}: ${allowed?.join(", ") || "none"}`,
+      409,
+    );
+  }
+}
 
 /**
  * Creates a Stripe PaymentIntent for a given internal order.
@@ -94,9 +128,25 @@ export function constructStripeEvent(
  * Handles Stripe webhook events: `payment_intent.succeeded` and
  * `payment_intent.payment_failed`.
  *
+ * Includes idempotency check, amount verification, state machine guards,
+ * and stock management.
+ *
  * @param event - Verified Stripe event
  */
 export async function handleStripeWebhook(event: Stripe.Event): Promise<void> {
+  const idempotencyKey = `stripe/${event.id}`;
+
+  // Idempotency: check if this event was already processed
+  const alreadyProcessed = await prisma.webhookEvent.findUnique({
+    where: { idempotencyKey },
+  });
+  if (alreadyProcessed) {
+    console.log(
+      `[Webhook] Stripe ${event.type} ${event.id} already processed at ${alreadyProcessed.processedAt}`,
+    );
+    return;
+  }
+
   switch (event.type) {
     case "payment_intent.succeeded": {
       const pi = event.data.object as Stripe.PaymentIntent;
@@ -104,6 +154,51 @@ export async function handleStripeWebhook(event: Stripe.Event): Promise<void> {
       if (!orderId) break;
 
       await prisma.$transaction(async (tx) => {
+        // Fetch payment and order for validation
+        const payment = await tx.payment.findUnique({
+          where: { orderId },
+        });
+        if (!payment) {
+          securityLogger.warn("webhook_order_not_found", {
+            gateway: "STRIPE",
+            orderId,
+            event: event.type,
+          });
+          return;
+        }
+
+        // State machine guard: validate payment transition
+        validatePaymentTransition(payment.status, "CAPTURED", { orderId, paymentId: payment.id, event: event.type });
+
+        const order = await tx.order.findUnique({
+          where: { id: orderId },
+        });
+        if (!order) {
+          securityLogger.warn("webhook_order_not_found", {
+            gateway: "STRIPE",
+            orderId,
+            paymentId: payment.id,
+            event: event.type,
+          });
+          return;
+        }
+
+        // Amount verification: compare Stripe amount against order total
+        if (pi.amount !== order.totalCents) {
+          securityLogger.critical("webhook_amount_mismatch", {
+            gateway: "STRIPE",
+            orderId: order.id,
+            expectedCents: order.totalCents,
+            receivedCents: pi.amount,
+            event: event.type,
+          });
+          return;
+        }
+
+        // State machine guard: validate order transition
+        validateOrderTransition(order.status, "CONFIRMED", { orderId: order.id, event: event.type });
+
+        // Update payment
         await tx.payment.update({
           where: { orderId },
           data: {
@@ -113,9 +208,30 @@ export async function handleStripeWebhook(event: Stripe.Event): Promise<void> {
           },
         });
 
+        // Update order
         await tx.order.update({
           where: { id: orderId },
           data: { status: "CONFIRMED" },
+        });
+
+        // Decrement stock (payment captured — stock is committed)
+        const orderItems = await tx.orderItem.findMany({
+          where: { orderId },
+        });
+        for (const item of orderItems) {
+          await tx.variant.update({
+            where: { id: item.variantId },
+            data: { stock: { decrement: item.quantity } },
+          });
+        }
+
+        // Record idempotency
+        await tx.webhookEvent.create({
+          data: {
+            idempotencyKey,
+            gateway: "STRIPE",
+            eventType: event.type,
+          },
         });
       });
       break;
@@ -127,6 +243,20 @@ export async function handleStripeWebhook(event: Stripe.Event): Promise<void> {
       if (!orderId) break;
 
       await prisma.$transaction(async (tx) => {
+        const payment = await tx.payment.findUnique({
+          where: { orderId },
+        });
+        if (payment) {
+          validatePaymentTransition(payment.status, "FAILED", { orderId, paymentId: payment.id, event: event.type });
+        }
+
+        const order = await tx.order.findUnique({
+          where: { id: orderId },
+        });
+        if (order) {
+          validateOrderTransition(order.status, "CANCELLED", { orderId: order.id, event: event.type });
+        }
+
         await tx.payment.update({
           where: { orderId },
           data: {
@@ -135,21 +265,113 @@ export async function handleStripeWebhook(event: Stripe.Event): Promise<void> {
           },
         });
 
-        // Restore stock
-        const orderItems = await tx.orderItem.findMany({
-          where: { orderId },
-        });
+        // NOTE: No stock restoration — stock is decremented only on CAPTURED
 
-        for (const item of orderItems) {
-          await tx.variant.update({
-            where: { id: item.variantId },
-            data: { stock: { increment: item.quantity } },
+        if (order) {
+          await tx.order.update({
+            where: { id: orderId },
+            data: { status: "CANCELLED" },
           });
         }
 
-        await tx.order.update({
-          where: { id: orderId },
-          data: { status: "CANCELLED" },
+        // Record idempotency
+        await tx.webhookEvent.create({
+          data: {
+            idempotencyKey,
+            gateway: "STRIPE",
+            eventType: event.type,
+          },
+        });
+      });
+      break;
+    }
+
+    case "charge.refunded": {
+      const charge = event.data.object as Stripe.Charge;
+      const paymentIntentId =
+        typeof charge.payment_intent === "string"
+          ? charge.payment_intent
+          : charge.payment_intent?.id;
+      if (!paymentIntentId) break;
+
+      const refundId = charge.refunds?.data?.[0]?.id;
+      if (!refundId) {
+        console.warn(
+          `[Webhook] No refund ID found in charge.refunded event ${event.id}`,
+        );
+        break;
+      }
+
+      await prisma.$transaction(async (tx) => {
+        const payment = await tx.payment.findFirst({
+          where: { gatewayOrderId: paymentIntentId },
+        });
+        if (!payment) {
+          securityLogger.warn("webhook_order_not_found", {
+            gateway: "STRIPE",
+            paymentIntentId,
+            event: event.type,
+          });
+          return;
+        }
+
+        // State machine guard
+        validatePaymentTransition(payment.status, "REFUNDED", { paymentId: payment.id, event: event.type });
+
+        const order = await tx.order.findUnique({
+          where: { id: payment.orderId },
+        });
+        if (order) {
+          validateOrderTransition(order.status, "REFUNDED", { orderId: order.id, event: event.type });
+        }
+
+        // Verify refund amount does not exceed original payment
+        const refundAmount = charge.refunds?.data?.[0]?.amount ?? 0;
+        if (refundAmount > payment.amountCents) {
+          securityLogger.critical("webhook_amount_mismatch", {
+            gateway: "STRIPE",
+            paymentId: payment.id,
+            orderId: payment.orderId,
+            refundAmount,
+            originalAmount: payment.amountCents,
+            event: event.type,
+          });
+          return;
+        }
+
+        await tx.payment.update({
+          where: { id: payment.id },
+          data: {
+            refundId,
+            status: "REFUNDED",
+          },
+        });
+
+        if (order) {
+          await tx.order.update({
+            where: { id: payment.orderId },
+            data: { status: "REFUNDED" },
+          });
+
+          // Restore stock
+          const orderItems = await tx.orderItem.findMany({
+            where: { orderId: payment.orderId },
+          });
+          for (const item of orderItems) {
+            await tx.variant.update({
+              where: { id: item.variantId },
+              data: { stock: { increment: item.quantity } },
+            });
+          }
+        }
+
+        // Record idempotency
+        await tx.webhookEvent.create({
+          data: {
+            idempotencyKey,
+            gateway: "STRIPE",
+            eventType: event.type,
+          },
         });
       });
       break;
@@ -158,6 +380,39 @@ export async function handleStripeWebhook(event: Stripe.Event): Promise<void> {
     default:
       console.log(`[Stripe Webhook] Unhandled event: ${event.type}`);
   }
+}
+
+/**
+ * Initiate a refund for a Stripe payment via the admin API.
+ * Calls Stripe's refund API and persists the refund ID.
+ *
+ * NOTE: This only stores the refundId — the `charge.refunded` webhook handler
+ * is responsible for updating payment/order status and restoring stock.
+ * This prevents a race condition where the admin endpoint and webhook both
+ * try to apply the REFUNDED transition.
+ *
+ * @param paymentIntentId - Stripe PaymentIntent ID
+ * @returns Object containing the refund ID
+ */
+export async function refundStripePayment(
+  paymentIntentId: string,
+): Promise<{ refundId: string }> {
+  if (!stripeClient) {
+    throw new StripeServiceError("Stripe is not configured on this server", 501);
+  }
+
+  const refund = await stripeClient.refunds.create({
+    payment_intent: paymentIntentId,
+  });
+
+  // Persist the refundId without changing payment status — the
+  // charge.refunded webhook will handle state transitions atomically.
+  await prisma.payment.updateMany({
+    where: { gatewayOrderId: paymentIntentId },
+    data: { refundId: refund.id },
+  });
+
+  return { refundId: refund.id };
 }
 
 /**

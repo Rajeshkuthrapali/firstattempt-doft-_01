@@ -1,9 +1,15 @@
+/// <reference types="vitest/config" />
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import tailwindcss from "@tailwindcss/vite"; // Add this import
+import tailwindcss from "@tailwindcss/vite";
+import path from "path";
 
-// https://vite.dev/config/
 export default defineConfig({
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "src"),
+    },
+  },
   plugins: [
     react(),
     tailwindcss(),
@@ -12,23 +18,19 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          vendor: ["react", "react-dom", "react-router-dom"],
+          vendor: ["react", "react-dom", "react-router-dom", "gsap"],
           admin: [
             "./src/pages/admin/AdminOverview",
             "./src/pages/admin/AdminProducts",
             "./src/pages/admin/AdminOrders",
             "./src/pages/admin/AdminInventory",
-            "./src/pages/admin/AdminLogs",
-            "./src/pages/admin/AdminExperiments",
-          ],
-          cms: [
-            "./src/pages/Campaign",
-            "./src/components/cms/HeroBlock",
-            "./src/components/cms/GridBlock",
-            "./src/components/cms/SignUpBlock",
           ],
         },
       },
     },
+  },
+  test: {
+    environment: "jsdom",
+    setupFiles: ["./src/__tests__/setup.ts"],
   },
 });

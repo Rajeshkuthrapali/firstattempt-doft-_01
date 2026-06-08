@@ -1,4 +1,20 @@
-import type { Product, Variant } from "@prisma/client";
+interface JsonLdProduct {
+  id: string;
+  title: string;
+  slug: string;
+  description: string;
+  scentFamily: string;
+  images: string;
+}
+
+interface JsonLdVariant {
+  id: string;
+  productId: string;
+  sku: string;
+  title: string;
+  price: number;
+  stock: number;
+}
 
 const BASE_URL = process.env.NEXTAUTH_URL ?? "https://doftcandles.com";
 
@@ -7,8 +23,8 @@ const BASE_URL = process.env.NEXTAUTH_URL ?? "https://doftcandles.com";
  * Follows Schema.org Product specification for rich snippets.
  */
 export function productJsonLd(
-  product: Product,
-  variants: Variant[],
+  product: JsonLdProduct,
+  variants: JsonLdVariant[],
 ): Record<string, unknown> {
   const images: string[] = JSON.parse(product.images);
   const minPrice = Math.min(...variants.map((v) => v.price));

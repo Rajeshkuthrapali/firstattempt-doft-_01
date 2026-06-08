@@ -1,7 +1,46 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import { screen } from "@testing-library/react";
 import { renderWithRouter } from "../helpers";
 import Home from "../../pages/Home";
+
+vi.mock("../../lib/api/client", () => ({
+  api: {
+    get: vi.fn().mockResolvedValue({
+      success: true,
+      data: [
+        {
+          id: "candle-golden-hour",
+          title: "Golden Hour",
+          slug: "golden-hour",
+          tagline: "Warm amber meets sun-kissed vanilla",
+          priceCents: 249900,
+          compareAtPriceCents: null,
+          image: "/images/golden-hour.jpg",
+          inStock: true,
+          fragranceFamily: "Warm & Spicy",
+          scentNotes: ["Saffron", "Amber"],
+          giftEligible: true,
+          collectionSlugs: ["signature"],
+        },
+        {
+          id: "candle-midnight-oud",
+          title: "Midnight Oud",
+          slug: "midnight-oud",
+          tagline: "Deep oud softened with rose petals",
+          priceCents: 349900,
+          compareAtPriceCents: null,
+          image: "/images/midnight-oud.jpg",
+          inStock: true,
+          fragranceFamily: "Woody",
+          scentNotes: ["Oud", "Rose"],
+          giftEligible: true,
+          collectionSlugs: ["signature"],
+        },
+      ],
+      meta: { page: 1, limit: 10, total: 2, totalPages: 1 },
+    }),
+  },
+}));
 
 describe("Home page — Hero section", () => {
   it("renders the hero banner with aria-label", () => {
@@ -59,10 +98,10 @@ describe("Home page — Product sections", () => {
     expect(screen.getByText("Bestsellers")).toBeInTheDocument();
   });
 
-  it("renders product cards (Golden Hour should be visible)", () => {
+  it("renders product cards (Golden Hour should be visible)", async () => {
     renderWithRouter(<Home />);
-    // Golden Hour is a signature product so it appears in the grid
-    const names = screen.getAllByText("Golden Hour");
+    // Golden Hour may appear in multiple sections (featured + bestsellers)
+    const names = await screen.findAllByText("Golden Hour");
     expect(names.length).toBeGreaterThanOrEqual(1);
   });
 });

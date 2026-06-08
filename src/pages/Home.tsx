@@ -1,15 +1,30 @@
-import { products } from "../data/products";
+import { useEffect } from "react";
+import { api } from "../lib/api/client";
+import { useApi } from "../lib/hooks/useApi";
 import ProductCard from "../components/ProductCard";
+import type { ProductSummary, PaginatedResponse } from "../types/catalog";
 
 /**
  * Home page for the Lumière candle store.
  * Matches the reference: full-width hero with calligraphic headline,
- * "New Arrivals" grid, bestsellers section, value props strip, and
+ * product grid, bestsellers section, value props strip, and
  * a "Clean Burning" brand story section.
+ *
+ * GSAP scroll animations are applied via data-animate attributes
+ * (handled by LayoutShell's initScrollAnimations).
  */
 export default function Home() {
-  const signatureProducts = products.filter((p) => p.category === "signature");
-  const allProducts = products;
+  const featuredApi = useApi<ProductSummary[]>(
+    () => api.get<PaginatedResponse<ProductSummary>>("/api/products/featured"),
+    [],
+  );
+
+  useEffect(() => {
+    featuredApi.execute();
+  }, [featuredApi.execute]);
+
+  const signatureProducts = (featuredApi.data ?? []).slice(0, 4);
+  const bestsellerProducts = (featuredApi.data ?? []).slice(0, 3);
 
   return (
     <>
@@ -73,6 +88,7 @@ export default function Home() {
       <section
         id="collection"
         className="mx-auto max-w-7xl px-6 py-16 md:py-24"
+        data-animate="fade-up"
       >
         <div className="mb-10 text-center">
           <p className="text-[11px] uppercase tracking-[0.3em] text-[#c4a093]">
@@ -84,18 +100,23 @@ export default function Home() {
           <div className="mx-auto mt-3 h-px w-12 bg-[#c4a093]" />
         </div>
 
-        <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 md:gap-5">
-          {signatureProducts.map((product, i) => (
-            <div
-              key={product.id}
-              className={`animate-fade-in-up delay-${Math.min(i * 100, 500)}`}
-            >
-              <ProductCard product={product} />
-            </div>
-          ))}
-        </div>
+        {featuredApi.loading ? (
+          <div className="py-12 text-center text-sm text-[#9a8d82]">Loading...</div>
+        ) : featuredApi.error ? (
+          <div className="py-12 text-center text-sm text-[#9a8d82]">
+            Unable to load products.
+          </div>
+        ) : (
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 md:gap-5">
+            {signatureProducts.map((product) => (
+              <div key={product.id} data-animate="scale-in">
+                <ProductCard product={product} />
+              </div>
+            ))}
+          </div>
+        )}
 
-        <div className="mt-10 text-center">
+        <div className="mt-10 text-center" data-animate="fade-up">
           <a
             href="#"
             className="inline-block border border-[#c4a093] px-8 py-3 text-[12px] font-semibold uppercase tracking-[0.15em] text-[#c4a093] transition-all duration-300 hover:bg-[#c4a093] hover:text-white"
@@ -109,6 +130,7 @@ export default function Home() {
       <section
         className="relative h-[50vh] min-h-[350px] overflow-hidden"
         aria-label="Lifestyle imagery and brand quote"
+        data-animate="scale-in"
       >
         <img
           src="/product-detail.png"
@@ -130,7 +152,7 @@ export default function Home() {
       </section>
 
       {/* ── Bestsellers Section ──────────────────── */}
-      <section className="mx-auto max-w-7xl px-6 py-16 md:py-24">
+      <section className="mx-auto max-w-7xl px-6 py-16 md:py-24" data-animate="fade-up">
         <div className="mb-10 text-center">
           <p className="text-[11px] uppercase tracking-[0.3em] text-[#c4a093]">
             Most Loved
@@ -141,16 +163,21 @@ export default function Home() {
           <div className="mx-auto mt-3 h-px w-12 bg-[#c4a093]" />
         </div>
 
-        <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:gap-5">
-          {allProducts.slice(0, 3).map((product, i) => (
-            <div
-              key={product.id}
-              className={`animate-fade-in-up delay-${Math.min(i * 100, 500)}`}
-            >
-              <ProductCard product={product} />
+        {bestsellerProducts.length > 0 ? (
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:gap-5">
+            {bestsellerProducts.map((product) => (
+              <div key={product.id} data-animate="fade-up">
+                <ProductCard product={product} />
+              </div>
+            ))}
+          </div>
+        ) : (
+          !featuredApi.loading && (
+            <div className="py-8 text-center text-sm text-[#9a8d82]">
+              No products to show yet.
             </div>
-          ))}
-        </div>
+          )
+        )}
       </section>
 
       {/* ── Value Props Strip ────────────────────── */}
@@ -158,7 +185,10 @@ export default function Home() {
         className="bg-[#f3ece4] border-y border-[#e8e0d8]"
         aria-label="Brand values"
       >
-        <div className="mx-auto grid max-w-5xl grid-cols-1 gap-8 px-6 py-14 sm:grid-cols-3 text-center">
+        <div
+          className="mx-auto grid max-w-5xl grid-cols-1 gap-8 px-6 py-14 sm:grid-cols-3 text-center"
+          data-animate="stagger"
+        >
           {[
             {
               icon: (
@@ -226,7 +256,7 @@ export default function Home() {
               desc: "Premium packaging — perfect for gifting someone special.",
             },
           ].map(({ icon, title, desc }) => (
-            <div key={title} className="flex flex-col items-center gap-3">
+            <div key={title} className="flex flex-col items-center gap-3" data-animate-child>
               {icon}
               <h3 className="font-['Cormorant_Garamond',serif] text-[18px] font-semibold text-[#2d2926]">
                 {title}
@@ -240,7 +270,10 @@ export default function Home() {
       </section>
 
       {/* ── Clean Burning Section ────────────────── */}
-      <section className="mx-auto max-w-4xl px-6 py-20 text-center">
+      <section
+        className="mx-auto max-w-4xl px-6 py-20 text-center"
+        data-animate="fade-up"
+      >
         <h2 className="font-['Cormorant_Garamond',serif] text-[28px] md:text-[36px] font-medium text-[#2d2926] leading-snug">
           Clean Burning so you can light
           <br />

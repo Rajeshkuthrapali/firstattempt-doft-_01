@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "react-router-dom";
 import { NewsletterForm } from "@/components/newsletter/NewsletterForm";
 
 const FOOTER_LINKS = {
@@ -40,7 +40,7 @@ export function Footer() {
                 {links.map((link) => (
                   <li key={link.label}>
                     <Link
-                      href={link.href}
+                      to={link.href}
                       className="text-sm text-[#bbb] transition-colors hover:text-white"
                     >
                       {link.label}

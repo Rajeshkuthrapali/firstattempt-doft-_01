@@ -1,17 +1,21 @@
+import { useEffect } from "react";
 import { useSearchStore } from "../stores/search";
 import { useCartStore } from "../stores/cart";
 import { Link } from "react-router-dom";
 import { formatPrice } from "../lib/format";
 import { trackSearchQuery } from "../lib/analytics";
-import { products } from "../data/products";
 
 /**
  * Search results page with autocomplete hits.
  * Also shows a "Curated Favourites" section of recommended products.
  */
 export default function Search() {
-  const { query, hits, setQuery } = useSearchStore();
+  const { query, hits, products, setQuery, fetchProducts } = useSearchStore();
   const addItem = useCartStore((s) => s.addItem);
+
+  useEffect(() => {
+    fetchProducts();
+  }, [fetchProducts]);
 
   const curated = products.filter((p) => p.inStock).slice(0, 3);
 
@@ -22,6 +26,19 @@ export default function Search() {
       const results = hits; // already computed in store
       trackSearchQuery(q, results.length);
     }
+  }
+
+  function handleAddToCart(product: (typeof products)[0]) {
+    addItem({
+      productId: product.id,
+      variantId: product.id,
+      title: product.title,
+      variantTitle: "Single",
+      price: product.priceCents / 100,
+      image: product.image,
+      slug: product.slug,
+      maxStock: product.inStock ? 100 : 0,
+    });
   }
 
   return (
@@ -72,7 +89,7 @@ export default function Search() {
           {hits.length === 0 ? (
             <p className="text-sm text-[#9a8d82]">
               No results for "<strong>{query}</strong>". Try a scent note or
-              category.
+              collection.
             </p>
           ) : (
             <>
@@ -91,7 +108,7 @@ export default function Search() {
                     <Link to={`/product/${product.slug}`} className="block">
                       <img
                         src={product.image}
-                        alt={product.name}
+                        alt={product.title}
                         className="h-48 w-full object-cover group-hover:scale-105 transition-transform duration-500"
                       />
                       <div className="p-4">
@@ -99,19 +116,19 @@ export default function Search() {
                           Matched on {matchedOn}
                         </p>
                         <h3 className="text-sm font-semibold text-[#2d2926]">
-                          {product.name}
+                          {product.title}
                         </h3>
                         <p className="text-xs text-[#9a8d82] mt-0.5">
                           {product.tagline}
                         </p>
                         <p className="mt-2 text-sm font-semibold text-[#2d2926]">
-                          {formatPrice(product.price)}
+                          {formatPrice(product.priceCents / 100)}
                         </p>
                       </div>
                     </Link>
                     <div className="px-4 pb-4">
                       <button
-                        onClick={() => addItem(product)}
+                        onClick={() => handleAddToCart(product)}
                         className="w-full bg-[#2d2926] text-white py-2 text-[11px] uppercase tracking-widest hover:bg-[#c4a093] transition-colors rounded-sm"
                       >
                         Add to Cart
@@ -141,16 +158,16 @@ export default function Search() {
                   <div className="overflow-hidden rounded">
                     <img
                       src={p.image}
-                      alt={p.name}
+                      alt={p.title}
                       className="h-56 w-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                   </div>
                   <div className="mt-3">
                     <h3 className="text-sm font-semibold text-[#2d2926]">
-                      {p.name}
+                      {p.title}
                     </h3>
                     <p className="text-xs text-[#9a8d82]">
-                      {formatPrice(p.price)}
+                      {formatPrice(p.priceCents / 100)}
                     </p>
                   </div>
                 </Link>

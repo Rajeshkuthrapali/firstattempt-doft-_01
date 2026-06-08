@@ -1,35 +1,38 @@
 "use client";
 
-import Script from "next/script";
+/**
+ * GA4 analytics utilities.
+ * In production, integrate with a real analytics provider.
+ * All functions are stubbed — they log to console in dev and are no-ops otherwise.
+ */
 
-const GA_ID = process.env.NEXT_PUBLIC_GA4_ID;
+const IS_DEV = import.meta.env.DEV;
+
+const GA_ID = import.meta.env.VITE_GA4_ID;
 
 /**
- * Google Analytics 4 component.
- * Only loads in production when GA4 ID is set.
+ * Initialize GA4 by inserting the gtag script.
+ * Only loads in production when GA4_ID is set.
  */
-export function GoogleAnalytics() {
-  if (!GA_ID) return null;
+export function initGA4() {
+  if (!GA_ID || typeof window === "undefined") return;
+  if (document.getElementById("ga4-script")) return;
 
-  return (
-    <>
-      <Script
-        src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
-        strategy="afterInteractive"
-      />
-      <Script id="ga4-init" strategy="afterInteractive">
-        {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', '${GA_ID}', {
-            page_title: document.title,
-            send_page_view: true,
-          });
-        `}
-      </Script>
-    </>
-  );
+  const script = document.createElement("script");
+  script.id = "ga4-script";
+  script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
+  script.async = true;
+  document.head.appendChild(script);
+
+  const inline = document.createElement("script");
+  inline.id = "ga4-init";
+  inline.textContent = `
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', '${GA_ID}', { send_page_view: true });
+  `;
+  document.head.appendChild(inline);
 }
 
 /**
@@ -38,8 +41,12 @@ export function GoogleAnalytics() {
  */
 export function trackEvent(
   eventName: string,
-  params?: Record<string, string | number | boolean>,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  params?: Record<string, any>,
 ) {
+  if (IS_DEV) {
+    console.log(`[GA4] trackEvent: ${eventName}`, params);
+  }
   if (typeof window !== "undefined" && "gtag" in window) {
     (window as unknown as { gtag: (...args: unknown[]) => void }).gtag(
       "event",
@@ -89,6 +96,47 @@ export const analytics = {
 
   signUp: (method: string) => trackEvent("sign_up", { method }),
 
-  newsletter: (email: string) =>
+  newsletter: (_email: string) =>
     trackEvent("newsletter_signup", { method: "footer_form" }),
 };
+
+// ── Additional exports used by various components ──────────────────────
+
+export function trackAddToCart(productId: string, name: string, price: number) {
+  analytics.addToCart(productId, name, price, 1);
+}
+
+export function trackQuickView(productId: string, name: string) {
+  trackEvent("quick_view", { items_id: productId, items_name: name });
+}
+
+export function trackAccountCreated(method: string) {
+  analytics.signUp(method);
+}
+
+export function trackGiftOptionSelected(wrapping: string, hasMessage: boolean) {
+  trackEvent("gift_option_selected", { wrapping, has_message: hasMessage });
+}
+
+export function trackBeginCheckout(
+  items: Array<{ id: string; name: string; price: number; quantity: number }>,
+  total: number,
+) {
+  trackEvent("begin_checkout", {
+    currency: "USD",
+    value: total,
+    items: items.map((i) => ({ item_id: i.id, item_name: i.name, price: i.price, quantity: i.quantity })),
+  });
+}
+
+export function trackWishlistAdd(productId: string, name: string, price: number) {
+  trackEvent("add_to_wishlist", { items_id: productId, items_name: name, value: price });
+}
+
+export function trackWishlistRemove(productId: string, name: string) {
+  trackEvent("remove_from_wishlist", { items_id: productId, items_name: name });
+}
+
+export function trackSearchQuery(query: string, resultCount: number) {
+  analytics.search(query, resultCount);
+}

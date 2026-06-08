@@ -7,13 +7,6 @@ const adminLinks = [
   { to: "/admin/products", label: "Products" },
   { to: "/admin/orders", label: "Orders" },
   { to: "/admin/inventory", label: "Inventory" },
-  { to: "/admin/logs", label: "Logs" },
-  { to: "/admin/experiments", label: "Experiments" },
-  { to: "/admin/feed", label: "Live Feed" },
-  { to: "/admin/loyalty", label: "Loyalty" },
-  { to: "/admin/cohorts", label: "Cohorts" },
-  { to: "/admin/intelligence", label: "Intelligence" },
-  { to: "/admin/launch", label: "Launch" },
 ];
 
 /**

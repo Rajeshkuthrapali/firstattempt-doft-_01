@@ -1,11 +1,22 @@
-import Image from "next/image";
-import Link from "next/link";
-import type { Product, Variant } from "@prisma/client";
+import { Link } from "react-router-dom";
 import { WishlistToggle } from "@/components/wishlist/WishlistToggle";
 
 interface ProductCardProps {
-  product: Product;
-  variant: Variant;
+  product: {
+    id: string;
+    title: string;
+    slug: string;
+    images: string;
+    scentFamily: string;
+    price: number;
+    stock?: number;
+  };
+  variant: {
+    id: string;
+    title: string;
+    price: number;
+    stock: number;
+  };
 }
 
 export function ProductCard({ product, variant }: ProductCardProps) {
@@ -18,22 +29,18 @@ export function ProductCard({ product, variant }: ProductCardProps) {
       <div className="absolute right-3 top-3 z-10 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
         <WishlistToggle productId={product.id} />
       </div>
-      <Link href={`/products/${product.slug}`} className="flex flex-col">
+      <Link to={`/products/${product.slug}`} className="flex flex-col">
         <div className="relative aspect-square overflow-hidden bg-bg-secondary">
-          <Image
+          <img
             src={primaryImage}
             alt={product.title}
-            fill
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-            className="object-cover transition-all duration-700 group-hover:scale-105 group-hover:opacity-0"
+            className="h-full w-full object-cover transition-all duration-700 group-hover:scale-105 group-hover:opacity-0"
             loading="lazy"
           />
-          <Image
+          <img
             src={hoverImage}
             alt={`${product.title} alternate`}
-            fill
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-            className="object-cover opacity-0 transition-all duration-700 group-hover:scale-105 group-hover:opacity-100"
+            className="absolute inset-0 h-full w-full object-cover opacity-0 transition-all duration-700 group-hover:scale-105 group-hover:opacity-100"
             loading="lazy"
           />
           <span className="absolute bottom-3 left-3 bg-primary/90 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-white backdrop-blur-sm">

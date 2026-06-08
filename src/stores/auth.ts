@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { api, setAccessToken } from "../lib/api/client";
 import { trackEvent } from "../lib/analytics";
 
 /** A saved address in the address book. */
@@ -69,14 +70,10 @@ interface AuthState {
   clearError: () => void;
 }
 
-const API =
-  (import.meta.env.VITE_API_BASE_URL as string | undefined) ??
-  "http://localhost:4000/api";
-
 /**
  * Zustand auth + account store.
  * Persists session (user, addresses, orders) to localStorage.
- * All network calls are best-effort and gracefully degrade.
+ * Uses the centralized API client for network calls.
  */
 export const useAuthStore = create<AuthState>()(
   persist(
@@ -90,38 +87,40 @@ export const useAuthStore = create<AuthState>()(
       login: async (email, password) => {
         set({ isLoading: true, error: null });
         try {
-          const res = await fetch(`${API}/auth/login`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email, password }),
-          });
-          if (!res.ok)
-            throw new Error((await res.json()).message ?? "Login failed");
-          const { user } = await res.json();
-          set({ user, isLoading: false });
+          const res = await api.post<{
+            success: boolean;
+            user: UserProfile;
+            tokens: { accessToken: string; refreshToken: string; expiresIn: number };
+          }>("/api/auth/login", { email, password });
+          setAccessToken(res.tokens.accessToken);
+          localStorage.setItem("refreshToken", res.tokens.refreshToken);
+          set({ user: res.user, isLoading: false });
           trackEvent("login", { method: "email" });
         } catch (err) {
-          set({ error: (err as Error).message, isLoading: false });
+          set({
+            error: (err as Error).message ?? "Login failed",
+            isLoading: false,
+          });
         }
       },
 
       register: async (name, email, password) => {
         set({ isLoading: true, error: null });
         try {
-          const res = await fetch(`${API}/auth/register`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ name, email, password }),
-          });
-          if (!res.ok)
-            throw new Error(
-              (await res.json()).message ?? "Registration failed",
-            );
-          const { user } = await res.json();
-          set({ user, isLoading: false });
+          const res = await api.post<{
+            success: boolean;
+            user: UserProfile;
+            tokens: { accessToken: string; refreshToken: string; expiresIn: number };
+          }>("/api/auth/register", { name, email, password });
+          setAccessToken(res.tokens.accessToken);
+          localStorage.setItem("refreshToken", res.tokens.refreshToken);
+          set({ user: res.user, isLoading: false });
           trackEvent("sign_up", { method: "email" });
         } catch (err) {
-          set({ error: (err as Error).message, isLoading: false });
+          set({
+            error: (err as Error).message ?? "Registration failed",
+            isLoading: false,
+          });
         }
       },
 
@@ -142,6 +141,12 @@ export const useAuthStore = create<AuthState>()(
       },
 
       logout: () => {
+        const refreshToken = localStorage.getItem("refreshToken");
+        if (refreshToken) {
+          api.post("/api/auth/logout", { refreshToken }).catch(() => {});
+        }
+        setAccessToken(null);
+        localStorage.removeItem("refreshToken");
         set({ user: null, orders: [], addresses: [] });
         trackEvent("logout", {});
       },

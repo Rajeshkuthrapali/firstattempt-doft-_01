@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import type { ProductSummary } from "../types/catalog";
 
 /** Global UI state (navigation drawer, modals, search overlay, etc.) */
 interface UiState {
@@ -17,9 +18,9 @@ interface UiState {
   toggleSearch: () => void;
   closeSearch: () => void;
 
-  /** Quick-view modal — stores the product ID being previewed, or null when closed */
-  quickViewProductId: string | null;
-  openQuickView: (productId: string) => void;
+  /** Quick-view modal — stores the product being previewed, or null when closed */
+  quickViewProduct: ProductSummary | null;
+  openQuickView: (product: ProductSummary) => void;
   closeQuickView: () => void;
 }
 
@@ -40,7 +41,7 @@ export const useUiStore = create<UiState>((set) => ({
   toggleSearch: () => set((s) => ({ searchOpen: !s.searchOpen })),
   closeSearch: () => set({ searchOpen: false }),
 
-  quickViewProductId: null,
-  openQuickView: (productId) => set({ quickViewProductId: productId }),
-  closeQuickView: () => set({ quickViewProductId: null }),
+  quickViewProduct: null,
+  openQuickView: (product) => set({ quickViewProduct: product }),
+  closeQuickView: () => set({ quickViewProduct: null }),
 }));

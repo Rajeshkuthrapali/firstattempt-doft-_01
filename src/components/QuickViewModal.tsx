@@ -2,7 +2,6 @@ import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { useUiStore } from "../stores/ui";
 import { useCartStore } from "../stores/cart";
-import { products } from "../data/products";
 import { trackAddToCart, trackQuickView } from "../lib/analytics";
 
 /**
@@ -11,19 +10,19 @@ import { trackAddToCart, trackQuickView } from "../lib/analytics";
  * Accessible: focus-trapped, Escape closes, aria-modal, role=dialog.
  */
 export default function QuickViewModal() {
-  const { quickViewProductId, closeQuickView } = useUiStore();
+  const { quickViewProduct, closeQuickView } = useUiStore();
   const addItem = useCartStore((s) => s.addItem);
   const closeRef = useRef<HTMLButtonElement>(null);
 
-  const product = products.find((p) => p.id === quickViewProductId);
+  const product = quickViewProduct;
 
   // Focus the close button when modal opens
   useEffect(() => {
-    if (quickViewProductId) {
+    if (product) {
       closeRef.current?.focus();
-      if (product) trackQuickView(product.id, product.name);
+      trackQuickView(product.id, product.title);
     }
-  }, [quickViewProductId, product]);
+  }, [product]);
 
   // Close on Escape
   useEffect(() => {
@@ -34,18 +33,31 @@ export default function QuickViewModal() {
     return () => document.removeEventListener("keydown", onKey);
   }, [closeQuickView]);
 
-  if (!quickViewProductId || !product) return null;
+  if (!product) return null;
+
+  const priceInRupees = product.priceCents / 100;
 
   const formattedPrice = new Intl.NumberFormat("en-IN", {
     style: "currency",
     currency: "INR",
     maximumFractionDigits: 0,
-  }).format(product.price);
+  }).format(priceInRupees);
+
+  const isLimited = product.collectionSlugs.includes("limited");
 
   function handleAddToCart() {
     if (!product) return;
-    addItem(product);
-    trackAddToCart(product.id, product.name, product.price);
+    addItem({
+      productId: product.id,
+      variantId: product.id,
+      title: product.title,
+      variantTitle: "Single",
+      price: priceInRupees,
+      image: product.image,
+      slug: product.slug,
+      maxStock: product.inStock ? 100 : 0,
+    });
+    trackAddToCart(product.id, product.title, priceInRupees);
     closeQuickView();
   }
 
@@ -54,7 +66,7 @@ export default function QuickViewModal() {
       className="fixed inset-0 z-[60] flex items-center justify-center p-4"
       role="dialog"
       aria-modal="true"
-      aria-label={`Quick view: ${product.name}`}
+      aria-label={`Quick view: ${product.title}`}
     >
       {/* Backdrop */}
       <div
@@ -82,7 +94,7 @@ export default function QuickViewModal() {
           <div className="relative overflow-hidden rounded-l-lg bg-[#f3ece4]">
             <img
               src={product.image}
-              alt={product.name}
+              alt={product.title}
               className="h-full w-full object-cover aspect-square"
             />
             {!product.inStock && (
@@ -92,7 +104,7 @@ export default function QuickViewModal() {
                 </span>
               </div>
             )}
-            {product.category === "limited" && (
+            {isLimited && (
               <span className="absolute top-3 left-3 rounded-sm bg-[#c4a093] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.1em] text-white">
                 Limited Edition
               </span>
@@ -102,11 +114,8 @@ export default function QuickViewModal() {
           {/* Content */}
           <div className="flex flex-col gap-4 p-6">
             <div>
-              <p className="text-[10px] uppercase tracking-[0.2em] text-[#c4a093] mb-1">
-                {product.category}
-              </p>
               <h2 className="font-['Cormorant_Garamond',serif] text-2xl font-medium text-[#2d2926]">
-                {product.name}
+                {product.title}
               </h2>
               <p className="mt-1 text-sm text-[#6b5e54] leading-relaxed">
                 {product.tagline}
@@ -115,36 +124,24 @@ export default function QuickViewModal() {
 
             <p className="text-xl font-semibold text-[#2d2926]">{formattedPrice}</p>
 
-            <p className="text-sm text-[#6b5e54] leading-relaxed">{product.description}</p>
-
             {/* Scent notes */}
-            <div>
-              <p className="text-[10px] uppercase tracking-[0.2em] text-[#9a8d82] mb-2">
-                Scent Notes
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {product.notes.map((note) => (
-                  <span
-                    key={note}
-                    className="rounded-full border border-[#e8e0d8] px-3 py-1 text-[11px] text-[#6b5e54]"
-                  >
-                    {note}
-                  </span>
-                ))}
+            {product.scentNotes.length > 0 && (
+              <div>
+                <p className="text-[10px] uppercase tracking-[0.2em] text-[#9a8d82] mb-2">
+                  Scent Notes
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {product.scentNotes.map((note) => (
+                    <span
+                      key={note}
+                      className="rounded-full border border-[#e8e0d8] px-3 py-1 text-[11px] text-[#6b5e54]"
+                    >
+                      {note}
+                    </span>
+                  ))}
+                </div>
               </div>
-            </div>
-
-            {/* Details */}
-            <div className="grid grid-cols-2 gap-3">
-              <div className="rounded bg-[#f3ece4] p-3 text-center">
-                <p className="text-[10px] uppercase tracking-[0.15em] text-[#9a8d82]">Burn Time</p>
-                <p className="mt-1 text-sm font-medium text-[#2d2926]">{product.burnTime}h</p>
-              </div>
-              <div className="rounded bg-[#f3ece4] p-3 text-center">
-                <p className="text-[10px] uppercase tracking-[0.15em] text-[#9a8d82]">Weight</p>
-                <p className="mt-1 text-sm font-medium text-[#2d2926]">{product.weight}g</p>
-              </div>
-            </div>
+            )}
 
             {/* Actions */}
             <div className="flex flex-col gap-2 mt-auto">

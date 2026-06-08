@@ -1,3 +1,4 @@
+import crypto from "node:crypto";
 import { z } from "zod";
 import dotenv from "dotenv";
 
@@ -20,6 +21,9 @@ const envSchema = z.object({
   JWT_SECRET: z.string().min(32),
   JWT_EXPIRES_IN: z.string().default("7d"),
 
+  // CSRF
+  CSRF_SECRET: z.string().min(32).default(() => crypto.randomBytes(32).toString("hex")),
+
   // Razorpay
   RAZORPAY_KEY_ID: z.string().min(1),
   RAZORPAY_KEY_SECRET: z.string().min(1),
@@ -29,6 +33,15 @@ const envSchema = z.object({
   STRIPE_SECRET_KEY: z.string().optional(),
   STRIPE_WEBHOOK_SECRET: z.string().optional(),
   STRIPE_PUBLISHABLE_KEY: z.string().optional(),
+
+  // Marketing (server-side API keys)
+  KLAVIYO_API_KEY: z.string().optional(),
+  HUBSPOT_API_KEY: z.string().optional(),
+
+  // Email (server-side API keys)
+  RESEND_API_KEY: z.string().optional(),
+  SENDGRID_API_KEY: z.string().optional(),
+  EMAIL_FROM: z.string().default("hello@lumiere.co"),
 
   // Frontend
   FRONTEND_URL: z.string().url().default("http://localhost:5173"),

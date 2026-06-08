@@ -3,7 +3,8 @@ import { useAuthStore } from "../../stores/auth";
 import { useWishlistStore } from "../../stores/wishlist";
 import { useSearchStore } from "../../stores/search";
 import { useCheckoutStore } from "../../stores/checkout";
-import { products } from "../../data/products";
+import { products } from "../../../backup/06-mock-data/products";
+import { toProductSummary } from "../helpers";
 
 // ── Auth Store ─────────────────────────────────────────────────────────────
 
@@ -153,7 +154,7 @@ describe("useAuthStore", () => {
 describe("useWishlistStore", () => {
   beforeEach(() => useWishlistStore.setState({ ids: [] }));
 
-  const p = products[0];
+  const p = toProductSummary(products[0]);
 
   it("toggle adds a product", () => {
     const result = useWishlistStore.getState().toggle(p);
@@ -183,9 +184,27 @@ describe("useWishlistStore", () => {
 
 // ── Search Store ────────────────────────────────────────────────────────────
 
+/** Map legacy Product shape to ProductSummary-like shape for store tests */
+function toSummary(p: (typeof products)[0]) {
+  return {
+    id: p.id,
+    title: p.name,
+    slug: p.slug,
+    tagline: p.tagline,
+    priceCents: p.price * 100,
+    compareAtPriceCents: null,
+    image: p.image,
+    inStock: p.inStock,
+    fragranceFamily: p.scentFamily,
+    scentNotes: p.notes,
+    giftEligible: p.giftEligible,
+    collectionSlugs: [p.category],
+  };
+}
+
 describe("useSearchStore", () => {
   beforeEach(() =>
-    useSearchStore.setState({ query: "", hits: [], isOpen: false }),
+    useSearchStore.setState({ query: "", hits: [], isOpen: false, products: [], fetched: false }),
   );
 
   it("setQuery with empty string returns no hits", () => {
@@ -194,20 +213,25 @@ describe("useSearchStore", () => {
     expect(useSearchStore.getState().isOpen).toBe(false);
   });
 
-  it("setQuery with 'amber' returns at least one hit", () => {
+  it("setQuery with 'amber' returns at least one hit when products are loaded", () => {
+    // Pre-load products into the store for client-side search
+    useSearchStore.setState({ products: products.map(toSummary) });
     useSearchStore.getState().setQuery("amber");
     expect(useSearchStore.getState().hits.length).toBeGreaterThan(0);
     expect(useSearchStore.getState().isOpen).toBe(true);
   });
 
-  it("setQuery with 'golden' matches by name", () => {
+  it("setQuery with 'golden' matches by title", () => {
+    const mapped = products.map(toSummary);
+    useSearchStore.setState({ products: mapped });
     useSearchStore.getState().setQuery("golden");
     const hit = useSearchStore.getState().hits[0];
-    expect(hit.product.name).toBe("Golden Hour");
-    expect(hit.matchedOn).toBe("name");
+    expect(hit.product.title).toBe("Golden Hour");
+    expect(hit.matchedOn).toBe("title");
   });
 
   it("clear() resets state", () => {
+    useSearchStore.setState({ products: products.map(toSummary) });
     useSearchStore.getState().setQuery("oud");
     useSearchStore.getState().clear();
     const s = useSearchStore.getState();
@@ -217,6 +241,7 @@ describe("useSearchStore", () => {
   });
 
   it("returns at most 6 hits", () => {
+    useSearchStore.setState({ products: products.map(toSummary) });
     useSearchStore.getState().setQuery("a"); // broad match
     expect(useSearchStore.getState().hits.length).toBeLessThanOrEqual(6);
   });

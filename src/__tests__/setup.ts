@@ -1,5 +1,5 @@
-/**
- * Test setup file — extends Vitest matchers with
- * @testing-library/jest-dom assertions (toBeInTheDocument, etc.)
- */
+import { afterEach } from "vitest";
+import { cleanup } from "@testing-library/react";
 import "@testing-library/jest-dom/vitest";
+
+afterEach(() => cleanup());

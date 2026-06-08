@@ -1,92 +1,65 @@
+import { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 import LayoutShell from "./components/LayoutShell";
-import Home from "./pages/Home";
-import Product from "./pages/Product";
-import Auth from "./pages/Auth";
-import Account from "./pages/Account";
-import Collections from "./pages/Collections";
-import Search from "./pages/Search";
-import Checkout from "./pages/Checkout";
-import Contact from "./pages/Contact";
-import Policy from "./pages/Policy";
-import Blog from "./pages/Blog";
-import BlogArticle from "./pages/BlogArticle";
-import AdminLayout from "./pages/admin/AdminLayout";
-import AdminOverview from "./pages/admin/AdminOverview";
-import AdminProducts from "./pages/admin/AdminProducts";
-import AdminOrders from "./pages/admin/AdminOrders";
-import AdminInventory from "./pages/admin/AdminInventory";
-import AdminLogs from "./pages/admin/AdminLogs";
-import AdminExperiments from "./pages/admin/AdminExperiments";
-import AdminFeed from "./pages/admin/AdminFeed";
-import AdminLoyalty from "./pages/admin/AdminLoyalty";
-import AdminCohorts from "./pages/admin/AdminCohorts";
-import AdminIntelligence from "./pages/admin/AdminIntelligence";
-import AdminLaunch from "./pages/admin/AdminLaunch";
-import Rewards from "./pages/Rewards";
-import AccountLoyalty from "./pages/AccountLoyalty";
-import GiftRegistry from "./pages/GiftRegistry";
-import ScentMatchQuiz from "./components/ScentMatchQuiz";
-import Campaign from "./pages/Campaign";
+import ErrorBoundary from "./components/ErrorBoundary";
+import LoadingSpinner from "./components/LoadingSpinner";
+
+/* ── Lazy-loaded page components ──────────────── */
+const Home = lazy(() => import("./pages/Home"));
+const Product = lazy(() => import("./pages/Product"));
+const Auth = lazy(() => import("./pages/Auth"));
+const Account = lazy(() => import("./pages/Account"));
+const Collections = lazy(() => import("./pages/Collections"));
+const Search = lazy(() => import("./pages/Search"));
+const Checkout = lazy(() => import("./pages/Checkout"));
+const Policy = lazy(() => import("./pages/Policy"));
+
+/* Admin */
+const AdminLayout = lazy(() => import("./pages/admin/AdminLayout"));
+const AdminOverview = lazy(() => import("./pages/admin/AdminOverview"));
+const AdminProducts = lazy(() => import("./pages/admin/AdminProducts"));
+const AdminOrders = lazy(() => import("./pages/admin/AdminOrders"));
+const AdminInventory = lazy(() => import("./pages/admin/AdminInventory"));
 
 /**
  * Root application component.
- * All routes wrapped in the shared LayoutShell (Nav + Footer + SupportWidget).
+ * All page components are lazy-loaded with a shared Suspense + LoadingSpinner
+ * fallback. A top-level ErrorBoundary catches render errors on any route.
  */
 export default function App() {
   return (
-    <Routes>
-      <Route element={<LayoutShell />}>
-        {/* Core */}
-        <Route index element={<Home />} />
-        <Route path="product/:slug" element={<Product />} />
+    <ErrorBoundary>
+      <Suspense fallback={<LoadingSpinner />}>
+        <Routes>
+          <Route element={<LayoutShell />}>
+            {/* Core */}
+            <Route index element={<Home />} />
+            <Route path="product/:slug" element={<Product />} />
 
-        {/* Catalog */}
-        <Route path="collections" element={<Collections />} />
-        <Route path="search" element={<Search />} />
+            {/* Catalog */}
+            <Route path="collections" element={<Collections />} />
+            <Route path="search" element={<Search />} />
 
-        {/* Checkout */}
-        <Route path="checkout" element={<Checkout />} />
+            {/* Checkout */}
+            <Route path="checkout" element={<Checkout />} />
 
-        {/* Auth & Account */}
-        <Route path="auth" element={<Auth />} />
-        <Route path="account" element={<Account />} />
-        <Route path="account/loyalty" element={<AccountLoyalty />} />
-        <Route path="rewards" element={<Rewards />} />
+            {/* Auth & Account */}
+            <Route path="auth" element={<Auth />} />
+            <Route path="account" element={<Account />} />
 
-        {/* Gifting */}
-        <Route path="registry" element={<GiftRegistry />} />
+            {/* Content & Legal */}
+            <Route path="policy/:slug" element={<Policy />} />
+          </Route>
 
-        {/* Personalization */}
-        <Route path="scent-match" element={<ScentMatchQuiz />} />
-
-        {/* CMS Campaigns */}
-        <Route path="campaign/:slug" element={<Campaign />} />
-        <Route path="campaign" element={<Campaign />} />
-
-        {/* Blog / Editorial */}
-        <Route path="blog" element={<Blog />} />
-        <Route path="blog/:slug" element={<BlogArticle />} />
-
-        {/* Content & Legal */}
-        <Route path="contact" element={<Contact />} />
-        <Route path="policy/:slug" element={<Policy />} />
-      </Route>
-
-      {/* Admin — own layout with sidebar + role guard */}
-      <Route path="admin" element={<AdminLayout />}>
-        <Route index element={<AdminOverview />} />
-        <Route path="products" element={<AdminProducts />} />
-        <Route path="orders" element={<AdminOrders />} />
-        <Route path="inventory" element={<AdminInventory />} />
-        <Route path="logs" element={<AdminLogs />} />
-        <Route path="experiments" element={<AdminExperiments />} />
-        <Route path="feed" element={<AdminFeed />} />
-        <Route path="loyalty" element={<AdminLoyalty />} />
-        <Route path="cohorts" element={<AdminCohorts />} />
-        <Route path="intelligence" element={<AdminIntelligence />} />
-        <Route path="launch" element={<AdminLaunch />} />
-      </Route>
-    </Routes>
+          {/* Admin — own layout with sidebar + role guard */}
+          <Route path="admin" element={<AdminLayout />}>
+            <Route index element={<AdminOverview />} />
+            <Route path="products" element={<AdminProducts />} />
+            <Route path="orders" element={<AdminOrders />} />
+            <Route path="inventory" element={<AdminInventory />} />
+          </Route>
+        </Routes>
+      </Suspense>
+    </ErrorBoundary>
   );
 }

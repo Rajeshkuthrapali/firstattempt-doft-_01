@@ -1,15 +1,26 @@
 "use client";
 import { useState } from "react";
-import type { Product, Variant } from "@prisma/client";
 import { AddToCartButton } from "@/components/cart/AddToCartButton";
 
 interface ProductInfoProps {
-  product: Product;
-  variants: Variant[];
+  product: {
+    id: string;
+    title: string;
+    description: string;
+    scentFamily: string;
+    images: string;
+    slug: string;
+  };
+  variants: Array<{
+    id: string;
+    title: string;
+    price: number;
+    stock: number;
+  }>;
 }
 
 export function ProductInfo({ product, variants }: ProductInfoProps) {
-  const [selectedVariant, setSelectedVariant] = useState<Variant>(variants[0]!);
+  const [selectedVariant, setSelectedVariant] = useState(variants[0]);
 
   return (
     <div className="flex flex-col justify-center">

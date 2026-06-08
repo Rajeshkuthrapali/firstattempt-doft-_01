@@ -1,32 +1,57 @@
-import { products } from "../../data/products";
+import { useEffect } from "react";
+import { api } from "../../lib/api/client";
+import { useApi } from "../../lib/hooks/useApi";
+import type { ProductSummary, PaginatedResponse } from "../../types/catalog";
 
-const stats = [
-  { label: "Total Products", value: products.length },
-  { label: "In Stock", value: products.filter((p) => p.inStock).length },
-  { label: "Low Stock / Sold Out", value: products.filter((p) => !p.inStock).length },
-  { label: "Limited Editions", value: products.filter((p) => p.category === "limited").length },
-];
+function getCategoryFromSlugs(collectionSlugs: string[]): string {
+  if (collectionSlugs.includes("limited")) return "limited";
+  if (collectionSlugs.includes("seasonal")) return "seasonal";
+  return "signature";
+}
 
 /**
  * Admin dashboard overview — key stats at a glance.
- * In production, these would come from real-time Prisma queries via API routes.
  */
 export default function AdminOverview() {
+  const productsApi = useApi<ProductSummary[]>(
+    () => api.get<PaginatedResponse<ProductSummary>>("/api/products"),
+    [],
+  );
+
+  useEffect(() => {
+    productsApi.execute();
+  }, [productsApi.execute]);
+
+  const allProducts = productsApi.data ?? [];
+
+  const stats = [
+    { label: "Total Products", value: allProducts.length },
+    { label: "In Stock", value: allProducts.filter((p) => p.inStock).length },
+    { label: "Low Stock / Sold Out", value: allProducts.filter((p) => !p.inStock).length },
+    { label: "Limited Editions", value: allProducts.filter((p) => getCategoryFromSlugs(p.collectionSlugs) === "limited").length },
+  ];
+
   return (
     <div>
       <h1 className="font-['Cormorant_Garamond',serif] text-3xl font-medium text-[#2d2926] mb-8">
         Dashboard
       </h1>
 
-      {/* Stats grid */}
-      <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-12" role="list">
-        {stats.map(({ label, value }) => (
-          <li key={label} className="rounded-lg border border-[#e8e0d8] bg-white p-6">
-            <p className="text-[10px] uppercase tracking-[0.2em] text-[#9a8d82]">{label}</p>
-            <p className="mt-2 text-4xl font-semibold text-[#2d2926]">{value}</p>
-          </li>
-        ))}
-      </ul>
+      {productsApi.loading ? (
+        <p className="text-sm text-[#9a8d82] py-4">Loading stats...</p>
+      ) : (
+        <>
+          {/* Stats grid */}
+          <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-12" role="list">
+            {stats.map(({ label, value }) => (
+              <li key={label} className="rounded-lg border border-[#e8e0d8] bg-white p-6">
+                <p className="text-[10px] uppercase tracking-[0.2em] text-[#9a8d82]">{label}</p>
+                <p className="mt-2 text-4xl font-semibold text-[#2d2926]">{value}</p>
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
 
       {/* Quick links */}
       <div className="grid gap-4 sm:grid-cols-3 mb-12">

@@ -2,7 +2,46 @@ import crypto from "node:crypto";
 import { prisma } from "../lib/prisma.js";
 import { razorpayClient } from "../lib/razorpay.js";
 import { env } from "../config/env.js";
+import { validateOrderTransition } from "./order.service.js";
+import { securityLogger } from "./security-logger.js";
 import type { RazorpayWebhookPayload } from "../types/payment.types.js";
+
+// ---------------------------------------------------------------------------
+// State machine — Payment status transitions
+// ---------------------------------------------------------------------------
+
+/** Valid payment status transitions. Only these state changes are allowed. */
+const PAYMENT_TRANSITIONS: Record<string, string[]> = {
+  CREATED: ["AUTHORIZED", "FAILED"],
+  AUTHORIZED: ["CAPTURED", "FAILED"],
+  CAPTURED: ["REFUNDED"],
+  FAILED: [],      // terminal — can retry with new payment
+  REFUNDED: [],    // terminal
+};
+
+/**
+ * Validates that a transition from `currentStatus` to `newStatus` is allowed.
+ * Throws a PaymentError (409) if the transition is not in the allowed set.
+ */
+function validatePaymentTransition(
+  currentStatus: string,
+  newStatus: string,
+  context?: Record<string, unknown>,
+): void {
+  const allowed = PAYMENT_TRANSITIONS[currentStatus];
+  if (!allowed || !allowed.includes(newStatus)) {
+    securityLogger.warn("payment_invalid_transition", {
+      from: currentStatus,
+      to: newStatus,
+      ...context,
+    });
+    throw new PaymentError(
+      `Invalid payment status transition: ${currentStatus} → ${newStatus}. ` +
+        `Allowed transitions from ${currentStatus}: ${allowed?.join(", ") || "none"}`,
+      409,
+    );
+  }
+}
 
 /**
  * Creates a Razorpay order for a given internal order and persists the
@@ -92,10 +131,27 @@ export async function verifyRazorpayPayment(
     .digest("hex");
 
   if (expectedSignature !== razorpaySignature) {
+    securityLogger.warn("webhook_invalid_signature", {
+      gateway: "RAZORPAY",
+      orderId,
+      razorpayOrderId,
+      razorpayPaymentId,
+    });
     throw new PaymentError("Invalid payment signature", 400);
   }
 
-  // 2. Update payment + order status in a transaction
+  // 2. Validate state transitions before applying
+  const payment = await prisma.payment.findUnique({ where: { orderId } });
+  if (payment) {
+    validatePaymentTransition(payment.status, "CAPTURED", { orderId, paymentId: payment.id });
+  }
+
+  const order = await prisma.order.findUnique({ where: { id: orderId } });
+  if (order) {
+    validateOrderTransition(order.status, "CONFIRMED", { orderId });
+  }
+
+  // 3. Update payment + order status in a transaction
   await prisma.$transaction(async (tx) => {
     await tx.payment.update({
       where: { orderId },
@@ -145,6 +201,9 @@ export function validateRazorpayWebhookSignature(
  * Processes an incoming Razorpay webhook event.
  * Handles `payment.captured`, `payment.failed`, and `refund.created`.
  *
+ * Includes idempotency check, amount verification, state machine guards,
+ * and stock management.
+ *
  * @param payload - Parsed webhook JSON body
  */
 export async function handleRazorpayWebhook(
@@ -157,12 +216,75 @@ export async function handleRazorpayWebhook(
       const paymentEntity = payload.payload.payment?.entity;
       if (!paymentEntity) break;
 
+      // Idempotency: check if this event was already processed
+      const idempotencyKey = `razorpay/${event}/${paymentEntity.id}`;
+      const alreadyProcessed = await prisma.webhookEvent.findUnique({
+        where: { idempotencyKey },
+      });
+      if (alreadyProcessed) {
+        console.log(
+          `[Webhook] Razorpay ${event} ${paymentEntity.id} already processed at ${alreadyProcessed.processedAt}`,
+        );
+        break;
+      }
+
       await prisma.$transaction(async (tx) => {
         const payment = await tx.payment.findFirst({
           where: { gatewayOrderId: paymentEntity.order_id },
         });
-        if (!payment) return;
+        if (!payment) {
+          securityLogger.warn("webhook_order_not_found", {
+            gateway: "RAZORPAY",
+            gatewayOrderId: paymentEntity.order_id,
+            event,
+          });
+          return;
+        }
 
+        // Security check: verify gatewayOrderId matches webhook payload
+        if (payment.gatewayOrderId !== paymentEntity.order_id) {
+          securityLogger.critical("webhook_invalid_signature", {
+            gateway: "RAZORPAY",
+            paymentId: payment.id,
+            expected: payment.gatewayOrderId,
+            received: paymentEntity.order_id,
+            event,
+          });
+          return;
+        }
+
+        // State machine guard: validate payment transition
+        validatePaymentTransition(payment.status, "CAPTURED", { paymentId: payment.id, event });
+
+        // Fetch order for amount verification and state guard
+        const order = await tx.order.findUnique({
+          where: { id: payment.orderId },
+        });
+        if (!order) {
+          securityLogger.warn("webhook_order_not_found", {
+            gateway: "RAZORPAY",
+            paymentId: payment.id,
+            event,
+          });
+          return;
+        }
+
+        // Amount verification: compare webhook amount against order total
+        if (paymentEntity.amount !== order.totalCents) {
+          securityLogger.critical("webhook_amount_mismatch", {
+            gateway: "RAZORPAY",
+            orderId: order.id,
+            expectedCents: order.totalCents,
+            receivedCents: paymentEntity.amount,
+            event,
+          });
+          return;
+        }
+
+        // State machine guard: validate order transition
+        validateOrderTransition(order.status, "CONFIRMED", { orderId: order.id, event });
+
+        // Update payment status
         await tx.payment.update({
           where: { id: payment.id },
           data: {
@@ -172,9 +294,30 @@ export async function handleRazorpayWebhook(
           },
         });
 
+        // Update order status
         await tx.order.update({
           where: { id: payment.orderId },
           data: { status: "CONFIRMED" },
+        });
+
+        // Decrement stock (payment was captured — stock is now committed)
+        const orderItems = await tx.orderItem.findMany({
+          where: { orderId: payment.orderId },
+        });
+        for (const item of orderItems) {
+          await tx.variant.update({
+            where: { id: item.variantId },
+            data: { stock: { decrement: item.quantity } },
+          });
+        }
+
+        // Record idempotency
+        await tx.webhookEvent.create({
+          data: {
+            idempotencyKey,
+            gateway: "RAZORPAY",
+            eventType: event,
+          },
         });
       });
       break;
@@ -184,12 +327,47 @@ export async function handleRazorpayWebhook(
       const paymentEntity = payload.payload.payment?.entity;
       if (!paymentEntity) break;
 
+      // Idempotency
+      const idempotencyKey = `razorpay/${event}/${paymentEntity.id}`;
+      const alreadyProcessed = await prisma.webhookEvent.findUnique({
+        where: { idempotencyKey },
+      });
+      if (alreadyProcessed) {
+        console.log(
+          `[Webhook] Razorpay ${event} ${paymentEntity.id} already processed at ${alreadyProcessed.processedAt}`,
+        );
+        break;
+      }
+
       const payment = await prisma.payment.findFirst({
         where: { gatewayOrderId: paymentEntity.order_id },
       });
-      if (!payment) break;
+      if (!payment) {
+        securityLogger.warn("webhook_order_not_found", {
+          gateway: "RAZORPAY",
+          gatewayOrderId: paymentEntity.order_id,
+          event,
+        });
+        break;
+      }
 
       await prisma.$transaction(async (tx) => {
+        // State machine guard
+        const currentPayment = await tx.payment.findUnique({
+          where: { id: payment.id },
+        });
+        if (currentPayment) {
+          validatePaymentTransition(currentPayment.status, "FAILED", { paymentId: payment.id, event });
+        }
+
+        // Fetch and guard order transition
+        const order = await tx.order.findUnique({
+          where: { id: payment.orderId },
+        });
+        if (order) {
+          validateOrderTransition(order.status, "CANCELLED", { orderId: order.id, event });
+        }
+
         await tx.payment.update({
           where: { id: payment.id },
           data: {
@@ -198,21 +376,23 @@ export async function handleRazorpayWebhook(
           },
         });
 
-        // Restore stock for failed payments
-        const orderItems = await tx.orderItem.findMany({
-          where: { orderId: payment.orderId },
-        });
+        // NOTE: No stock restoration needed — stock is decremented only on
+        // CAPTURED, so a failed payment never changed stock levels.
 
-        for (const item of orderItems) {
-          await tx.variant.update({
-            where: { id: item.variantId },
-            data: { stock: { increment: item.quantity } },
+        if (order) {
+          await tx.order.update({
+            where: { id: payment.orderId },
+            data: { status: "CANCELLED" },
           });
         }
 
-        await tx.order.update({
-          where: { id: payment.orderId },
-          data: { status: "CANCELLED" },
+        // Record idempotency
+        await tx.webhookEvent.create({
+          data: {
+            idempotencyKey,
+            gateway: "RAZORPAY",
+            eventType: event,
+          },
         });
       });
       break;
@@ -222,12 +402,59 @@ export async function handleRazorpayWebhook(
       const refundEntity = payload.payload.refund?.entity;
       if (!refundEntity) break;
 
+      // Idempotency
+      const idempotencyKey = `razorpay/${event}/${refundEntity.id}`;
+      const alreadyProcessed = await prisma.webhookEvent.findUnique({
+        where: { idempotencyKey },
+      });
+      if (alreadyProcessed) {
+        console.log(
+          `[Webhook] Razorpay ${event} ${refundEntity.id} already processed at ${alreadyProcessed.processedAt}`,
+        );
+        break;
+      }
+
       const payment = await prisma.payment.findFirst({
         where: { gatewayPaymentId: refundEntity.payment_id },
       });
-      if (!payment) break;
+      if (!payment) {
+        securityLogger.warn("webhook_order_not_found", {
+          gateway: "RAZORPAY",
+          gatewayPaymentId: refundEntity.payment_id,
+          event,
+        });
+        break;
+      }
 
       await prisma.$transaction(async (tx) => {
+        // State machine guards
+        const currentPayment = await tx.payment.findUnique({
+          where: { id: payment.id },
+        });
+        if (currentPayment) {
+          validatePaymentTransition(currentPayment.status, "REFUNDED", { paymentId: payment.id, event });
+        }
+
+        const order = await tx.order.findUnique({
+          where: { id: payment.orderId },
+        });
+        if (order) {
+          validateOrderTransition(order.status, "REFUNDED", { orderId: order.id, event });
+        }
+
+        // Verify refund amount does not exceed original payment
+        if (refundEntity.amount > payment.amountCents) {
+          securityLogger.critical("webhook_amount_mismatch", {
+            gateway: "RAZORPAY",
+            paymentId: payment.id,
+            orderId: payment.orderId,
+            refundAmount: refundEntity.amount,
+            originalAmount: payment.amountCents,
+            event,
+          });
+          return;
+        }
+
         await tx.payment.update({
           where: { id: payment.id },
           data: {
@@ -236,9 +463,31 @@ export async function handleRazorpayWebhook(
           },
         });
 
-        await tx.order.update({
-          where: { id: payment.orderId },
-          data: { status: "REFUNDED" },
+        if (order) {
+          await tx.order.update({
+            where: { id: payment.orderId },
+            data: { status: "REFUNDED" },
+          });
+
+          // Restore stock since the order is refunded
+          const orderItems = await tx.orderItem.findMany({
+            where: { orderId: payment.orderId },
+          });
+          for (const item of orderItems) {
+            await tx.variant.update({
+              where: { id: item.variantId },
+              data: { stock: { increment: item.quantity } },
+            });
+          }
+        }
+
+        // Record idempotency
+        await tx.webhookEvent.create({
+          data: {
+            idempotencyKey,
+            gateway: "RAZORPAY",
+            eventType: event,
+          },
         });
       });
       break;

@@ -11,14 +11,17 @@ import { trackSearchQuery } from "../../lib/analytics";
  * Keyboard accessible: Escape closes, Enter navigates to /search.
  */
 export default function SearchBar() {
-  const { query, hits, setQuery, clear } = useSearchStore();
+  const { query, hits, setQuery, clear, fetchProducts } = useSearchStore();
   const { searchOpen, closeSearch } = useUiStore();
   const navigate = useNavigate();
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (searchOpen) inputRef.current?.focus();
-  }, [searchOpen]);
+    if (searchOpen) {
+      inputRef.current?.focus();
+      fetchProducts();
+    }
+  }, [searchOpen, fetchProducts]);
 
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
@@ -150,14 +153,14 @@ export default function SearchBar() {
                   />
                   <div className="min-w-0">
                     <p className="text-sm font-medium text-[#2d2926] truncate">
-                      {product.name}
+                      {product.title}
                     </p>
                     <p className="text-xs text-[#9a8d82] truncate">
                       {product.tagline}
                     </p>
                   </div>
                   <span className="ml-auto text-xs font-semibold text-[#2d2926] flex-shrink-0">
-                    {formatPrice(product.price)}
+                    {formatPrice(product.priceCents / 100)}
                   </span>
               </li>
             ))}

@@ -1,20 +1,44 @@
-import { useState } from "react";
-import { products as initialProducts, type Product } from "../../data/products";
+import { useEffect, useState } from "react";
+import { api } from "../../lib/api/client";
+import { useApi } from "../../lib/hooks/useApi";
 import { formatPrice } from "../../lib/format";
+import type { ProductSummary, PaginatedResponse } from "../../types/catalog";
+
+function getCategoryFromSlugs(collectionSlugs: string[]): string {
+  if (collectionSlugs.includes("limited")) return "limited";
+  if (collectionSlugs.includes("seasonal")) return "seasonal";
+  return "signature";
+}
 
 /**
  * Admin Products — inline edit for name, price, and stock status.
  * In production, changes would be persisted via PATCH /api/admin/products.
  */
 export default function AdminProducts() {
-  const [items, setItems] = useState<Product[]>(initialProducts);
+  const productsApi = useApi<ProductSummary[]>(
+    () => api.get<PaginatedResponse<ProductSummary>>("/api/products"),
+    [],
+  );
+
+  useEffect(() => {
+    productsApi.execute();
+  }, [productsApi.execute]);
+
+  const [items, setItems] = useState<ProductSummary[]>([]);
   const [editing, setEditing] = useState<string | null>(null);
-  const [draft, setDraft] = useState<Partial<Product>>({});
+  const [draft, setDraft] = useState<Partial<{ title: string; priceCents: number; inStock: boolean }>>({});
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
 
-  function startEdit(p: Product) {
+  // Sync items from API data
+  useEffect(() => {
+    if (productsApi.data) {
+      setItems(productsApi.data);
+    }
+  }, [productsApi.data]);
+
+  function startEdit(p: ProductSummary) {
     setEditing(p.id);
-    setDraft({ name: p.name, price: p.price, inStock: p.inStock });
+    setDraft({ title: p.title, priceCents: p.priceCents, inStock: p.inStock });
   }
 
   function saveEdit(id: string) {
@@ -26,6 +50,14 @@ export default function AdminProducts() {
   function confirmDelete(id: string) {
     setItems((prev) => prev.filter((p) => p.id !== id));
     setDeleteConfirm(null);
+  }
+
+  if (productsApi.loading) {
+    return (
+      <div>
+        <p className="text-sm text-[#9a8d82] py-4">Loading products...</p>
+      </div>
+    );
   }
 
   return (
@@ -52,32 +84,34 @@ export default function AdminProducts() {
             {items.map((p) => (
               <tr key={p.id} className="hover:bg-[#faf7f4] transition-colors">
                 <td className="px-4 py-3">
-                  <img src={p.image} alt={p.name} className="h-12 w-12 rounded object-cover bg-[#f3ece4]" />
+                  <img src={p.image} alt={p.title} className="h-12 w-12 rounded object-cover bg-[#f3ece4]" />
                 </td>
                 <td className="px-4 py-3 font-medium text-[#2d2926]">
                   {editing === p.id ? (
                     <input
-                      aria-label={`Edit name for ${p.name}`}
-                      value={draft.name ?? ""}
-                      onChange={(e) => setDraft((d) => ({ ...d, name: e.target.value }))}
+                      aria-label={`Edit name for ${p.title}`}
+                      value={draft.title ?? ""}
+                      onChange={(e) => setDraft((d) => ({ ...d, title: e.target.value }))}
                       className="w-full border border-[#c4a093] rounded px-2 py-1 text-sm outline-none"
                     />
                   ) : (
-                    p.name
+                    p.title
                   )}
                 </td>
-                <td className="px-4 py-3 text-[#6b5e54] capitalize">{p.category}</td>
+                <td className="px-4 py-3 text-[#6b5e54] capitalize">
+                  {getCategoryFromSlugs(p.collectionSlugs)}
+                </td>
                 <td className="px-4 py-3">
                   {editing === p.id ? (
                     <input
                       type="number"
-                      aria-label={`Edit price for ${p.name}`}
-                      value={draft.price ?? ""}
-                      onChange={(e) => setDraft((d) => ({ ...d, price: Number(e.target.value) }))}
+                      aria-label={`Edit price for ${p.title}`}
+                      value={draft.priceCents ?? ""}
+                      onChange={(e) => setDraft((d) => ({ ...d, priceCents: Number(e.target.value) }))}
                       className="w-24 border border-[#c4a093] rounded px-2 py-1 text-sm outline-none"
                     />
                   ) : (
-                    formatPrice(p.price)
+                    formatPrice(p.priceCents / 100)
                   )}
                 </td>
                 <td className="px-4 py-3">

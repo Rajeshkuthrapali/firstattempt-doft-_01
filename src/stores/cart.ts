@@ -1,72 +1,96 @@
 import { create } from "zustand";
-import type { Product } from "../data/products";
+import { persist } from "zustand/middleware";
 
-/** A product in the cart with its quantity. */
 export interface CartItem {
-  product: Product;
-  qty: number;
+  productId: string;
+  variantId: string;
+  title: string;
+  variantTitle: string;
+  price: number;
+  image: string;
+  slug: string;
+  quantity: number;
+  maxStock: number;
 }
 
 interface CartState {
-  /** Ordered list of items in the cart */
   items: CartItem[];
-
-  /** Add a product (increments qty if already present) */
-  addItem: (product: Product) => void;
-
-  /** Remove one unit; removes line when qty hits 0 */
-  removeItem: (productId: string) => void;
-
-  /** Delete the entire line regardless of qty */
-  deleteLine: (productId: string) => void;
-
-  /** Empty the whole cart */
+  isOpen: boolean;
+  addItem: (item: Omit<CartItem, "quantity">, quantity?: number) => void;
+  removeItem: (variantId: string) => void;
+  updateQuantity: (variantId: string, quantity: number) => void;
   clearCart: () => void;
-
-  /** Total number of units across all lines */
-  totalQty: () => number;
-
-  /** Grand total in ₹ (paise-free, prices stored as integers) */
+  openCart: () => void;
+  closeCart: () => void;
+  toggleCart: () => void;
+  totalItems: () => number;
   totalPrice: () => number;
 }
 
-/**
- * Zustand cart store.
- * Prices are stored as plain integers (e.g. 2499 = ₹2 499).
- */
-export const useCartStore = create<CartState>((set, get) => ({
-  items: [],
+export const useCartStore = create<CartState>()(
+  persist(
+    (set, get) => ({
+      items: [],
+      isOpen: false,
 
-  addItem: (product) =>
-    set((state) => {
-      const existing = state.items.find((i) => i.product.id === product.id);
-      if (existing) {
-        return {
-          items: state.items.map((i) =>
-            i.product.id === product.id ? { ...i, qty: i.qty + 1 } : i,
-          ),
-        };
-      }
-      return { items: [...state.items, { product, qty: 1 }] };
+      addItem: (item, quantity = 1) => {
+        set((state) => {
+          const existing = state.items.find(
+            (i) => i.variantId === item.variantId,
+          );
+          if (existing) {
+            return {
+              items: state.items.map((i) =>
+                i.variantId === item.variantId
+                  ? {
+                      ...i,
+                      quantity: Math.min(i.quantity + quantity, i.maxStock),
+                    }
+                  : i,
+              ),
+              isOpen: true,
+            };
+          }
+          return {
+            items: [
+              ...state.items,
+              { ...item, quantity: Math.min(quantity, item.maxStock) },
+            ],
+            isOpen: true,
+          };
+        });
+      },
+
+      removeItem: (variantId) =>
+        set((state) => ({
+          items: state.items.filter((i) => i.variantId !== variantId),
+        })),
+
+      updateQuantity: (variantId, quantity) =>
+        set((state) => {
+          if (quantity <= 0) {
+            return {
+              items: state.items.filter((i) => i.variantId !== variantId),
+            };
+          }
+          return {
+            items: state.items.map((i) =>
+              i.variantId === variantId
+                ? { ...i, quantity: Math.min(quantity, i.maxStock) }
+                : i,
+            ),
+          };
+        }),
+
+      clearCart: () => set({ items: [] }),
+      openCart: () => set({ isOpen: true }),
+      closeCart: () => set({ isOpen: false }),
+      toggleCart: () => set((s) => ({ isOpen: !s.isOpen })),
+
+      totalItems: () => get().items.reduce((sum, i) => sum + i.quantity, 0),
+      totalPrice: () =>
+        get().items.reduce((sum, i) => sum + i.price * i.quantity, 0),
     }),
-
-  removeItem: (productId) =>
-    set((state) => {
-      const updated = state.items
-        .map((i) => (i.product.id === productId ? { ...i, qty: i.qty - 1 } : i))
-        .filter((i) => i.qty > 0);
-      return { items: updated };
-    }),
-
-  deleteLine: (productId) =>
-    set((state) => ({
-      items: state.items.filter((i) => i.product.id !== productId),
-    })),
-
-  clearCart: () => set({ items: [] }),
-
-  totalQty: () => get().items.reduce((sum, i) => sum + i.qty, 0),
-
-  totalPrice: () =>
-    get().items.reduce((sum, i) => sum + i.product.price * i.qty, 0),
-}));
+    { name: "doft-cart", partialize: (state) => ({ items: state.items }) },
+  ),
+);

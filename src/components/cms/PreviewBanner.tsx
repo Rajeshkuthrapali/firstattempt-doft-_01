@@ -1,5 +1,5 @@
 "use client";
-import Link from "next/link";
+import { Link } from "react-router-dom";
 
 export function PreviewBanner() {
   return (
@@ -8,7 +8,7 @@ export function PreviewBanner() {
         ⚡ Preview Mode — You are viewing draft content
       </span>
       <Link
-        href="/api/preview/exit"
+        to="/"
         className="rounded bg-[#111] px-4 py-1 text-xs font-bold uppercase text-gold transition-colors hover:bg-[#333]"
       >
         Exit Preview

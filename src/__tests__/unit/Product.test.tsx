@@ -1,12 +1,83 @@
-import { describe, it, expect, beforeEach } from "vitest";
+import { describe, it, expect, beforeEach, vi } from "vitest";
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { renderWithRoute } from "../helpers";
 import Product from "../../pages/Product";
 import { useCartStore } from "../../stores/cart";
-import { products } from "../../data/products";
+import type { ProductDetail } from "../../types/catalog";
 
-const goldenHour = products[0];
+// ── Mock API client ──────────────────────────────────────────────────────────
+
+const mockProduct: ProductDetail = {
+  id: "candle-golden-hour",
+  title: "Golden Hour",
+  slug: "golden-hour",
+  tagline: "A warm Mediterranean sunset in a jar",
+  description:
+    "Notes of saffron, amber, and a whisper of sea salt — a mediterranean sunset captured in wax.",
+  priceCents: 249900,
+  compareAtPriceCents: null,
+  image: "/images/golden-hour.jpg",
+  images: ["/images/golden-hour.jpg", "/images/golden-hour-alt.jpg"],
+  inStock: true,
+  fragranceFamily: "Warm & Spicy",
+  scentNotes: ["Saffron", "Amber", "Sea Salt"],
+  burnTime: 55,
+  weight: 300,
+  waxType: "Soy",
+  giftEligible: true,
+  collectionSlugs: ["signature"],
+  hsnCode: "34060010",
+  ingredients: "100% natural soy wax, phthalate-free fragrance oils",
+  variants: [],
+  collections: [{ id: "col-signature", title: "Signature", slug: "signature" }],
+  relatedProducts: [
+    {
+      id: "candle-midnight-oud",
+      title: "Midnight Oud",
+      slug: "midnight-oud",
+      tagline: "Deep and mysterious",
+      priceCents: 349900,
+      compareAtPriceCents: null,
+      image: "/images/midnight-oud.jpg",
+      inStock: true,
+      fragranceFamily: "Woody",
+      scentNotes: ["Oud", "Rose"],
+      giftEligible: true,
+      collectionSlugs: ["signature"],
+    },
+  ],
+};
+
+const mockOutOfStockProduct: ProductDetail = {
+  ...mockProduct,
+  id: "candle-velvet-rose",
+  title: "Velvet Rose",
+  slug: "velvet-rose",
+  inStock: false,
+  collectionSlugs: ["limited"],
+};
+
+vi.mock("../../lib/api/client", () => ({
+  api: {
+    get: vi.fn((url: string) => {
+      if (url === "/api/products/velvet-rose") {
+        return Promise.resolve({ success: true, data: mockOutOfStockProduct });
+      }
+      if (url === "/api/products/does-not-exist") {
+        return Promise.resolve({
+          success: false,
+          data: null,
+          error: "Product not found",
+        });
+      }
+      // default — golden-hour
+      return Promise.resolve({ success: true, data: mockProduct });
+    }),
+  },
+}));
+
+// ── Tests ────────────────────────────────────────────────────────────────────
 
 beforeEach(() => {
   useCartStore.setState({ items: [] });
@@ -14,132 +85,129 @@ beforeEach(() => {
 
 /**
  * Helper: render the Product page at a specific slug.
- * Uses `renderWithRoute` so that `useParams()` resolves correctly.
  */
 function renderPDP(slug: string) {
   return renderWithRoute("/product/:slug", <Product />, `/product/${slug}`);
 }
 
 describe("Product page — valid product (Golden Hour)", () => {
-  it("renders the product name", () => {
-    renderPDP(goldenHour.slug);
-    // Name appears as h1 and potentially also in breadcrumb
-    const headings = screen.getAllByText(goldenHour.name);
-    expect(headings.length).toBeGreaterThanOrEqual(1);
+  it("renders the product name", async () => {
+    renderPDP("golden-hour");
+    const heading = await screen.findByRole("heading", { name: /golden hour/i });
+    expect(heading).toBeInTheDocument();
   });
 
-  it("renders the tagline", () => {
-    renderPDP(goldenHour.slug);
-    expect(screen.getByText(goldenHour.tagline)).toBeInTheDocument();
+  it("renders the tagline", async () => {
+    renderPDP("golden-hour");
+    expect(await screen.findByText(mockProduct.tagline!)).toBeInTheDocument();
   });
 
-  it("renders the formatted price with ₹", () => {
-    renderPDP(goldenHour.slug);
-    const priceElements = screen.getAllByText(/₹/);
-    expect(priceElements.length).toBeGreaterThan(0);
+  it("renders the formatted price with ₹", async () => {
+    renderPDP("golden-hour");
+    // Match the specific product price (₹2,499), not the shipping message ₹3,000
+    expect(await screen.findByText(/₹2,499/)).toBeInTheDocument();
   });
 
-  it("renders the product description", () => {
-    renderPDP(goldenHour.slug);
-    expect(screen.getByText(/mediterranean sunset/i)).toBeInTheDocument();
+  it("renders the product description", async () => {
+    renderPDP("golden-hour");
+    expect(
+      await screen.findByText(/saffron, amber/i),
+    ).toBeInTheDocument();
   });
 
-  it("renders all fragrance notes", () => {
-    renderPDP(goldenHour.slug);
-    goldenHour.notes.forEach((note) => {
-      expect(screen.getByText(note)).toBeInTheDocument();
-    });
+  it("renders all fragrance notes", async () => {
+    renderPDP("golden-hour");
+    for (const note of mockProduct.scentNotes) {
+      expect(await screen.findByText(note)).toBeInTheDocument();
+    }
   });
 
-  it("renders specs grid (burn time, weight, wax)", () => {
-    renderPDP(goldenHour.slug);
-    expect(screen.getByText("Burn Time")).toBeInTheDocument();
-    expect(screen.getByText(`~${goldenHour.burnTime}h`)).toBeInTheDocument();
-    expect(screen.getByText("Weight")).toBeInTheDocument();
-    expect(screen.getByText(`${goldenHour.weight}g`)).toBeInTheDocument();
-    expect(screen.getByText("Wax")).toBeInTheDocument();
-    expect(screen.getByText("100% Soy")).toBeInTheDocument();
+  it("renders specs grid (burn time, weight, wax)", async () => {
+    renderPDP("golden-hour");
+    expect(await screen.findByText("Burn Time")).toBeInTheDocument();
+    expect(await screen.findByText(`~${mockProduct.burnTime}h`)).toBeInTheDocument();
+    expect(await screen.findByText("Weight")).toBeInTheDocument();
+    expect(await screen.findByText(`${mockProduct.weight}g`)).toBeInTheDocument();
+    expect(await screen.findByText("Wax")).toBeInTheDocument();
+    expect(await screen.findByText("100% Soy")).toBeInTheDocument();
   });
 
-  it("renders the category pill", () => {
-    renderPDP(goldenHour.slug);
-    expect(screen.getByText(goldenHour.category)).toBeInTheDocument();
+  it("renders the category pill", async () => {
+    renderPDP("golden-hour");
+    expect(await screen.findByText("signature")).toBeInTheDocument();
   });
 
-  it("renders trust badges", () => {
-    renderPDP(goldenHour.slug);
-    expect(screen.getByText(/cruelty free/i)).toBeInTheDocument();
-    expect(screen.getByText(/eco packaging/i)).toBeInTheDocument();
-    expect(screen.getByText(/cotton wick/i)).toBeInTheDocument();
+  it("renders trust badges", async () => {
+    renderPDP("golden-hour");
+    expect(await screen.findByText(/cruelty free/i)).toBeInTheDocument();
+    expect(await screen.findByText(/eco packaging/i)).toBeInTheDocument();
+    expect(await screen.findByText(/cotton wick/i)).toBeInTheDocument();
   });
 
-  it("renders the Add to Cart button (enabled for in-stock)", () => {
-    renderPDP(goldenHour.slug);
-    const btn = screen.getByText("Add to Cart");
+  it("renders the Add to Cart button (enabled for in-stock)", async () => {
+    renderPDP("golden-hour");
+    const btn = await screen.findByText("Add to Cart");
     expect(btn).toBeInTheDocument();
     expect(btn).not.toBeDisabled();
   });
 
-  it("renders breadcrumb navigation with aria-label", () => {
-    renderPDP(goldenHour.slug);
-    const breadcrumb = screen.getByLabelText("Breadcrumb");
-    expect(breadcrumb).toBeInTheDocument();
+  it("renders breadcrumb navigation with aria-label", async () => {
+    renderPDP("golden-hour");
+    expect(await screen.findByLabelText("Breadcrumb")).toBeInTheDocument();
   });
 
-  it("breadcrumb contains Home and Shop links", () => {
-    renderPDP(goldenHour.slug);
-    const breadcrumb = screen.getByLabelText("Breadcrumb");
-    // "Home" and "Shop" are inside the breadcrumb
+  it("breadcrumb contains Home and Shop links", async () => {
+    renderPDP("golden-hour");
+    const breadcrumb = await screen.findByLabelText("Breadcrumb");
     const links = breadcrumb.querySelectorAll("a");
     const linkTexts = Array.from(links).map((l) => l.textContent);
     expect(linkTexts).toContain("Home");
     expect(linkTexts).toContain("Shop");
   });
 
-  it("renders the 'You May Also Like' section", () => {
-    renderPDP(goldenHour.slug);
-    expect(screen.getByText("You May Also Like")).toBeInTheDocument();
+  it("renders the 'You May Also Like' section", async () => {
+    renderPDP("golden-hour");
+    expect(await screen.findByText("You May Also Like")).toBeInTheDocument();
   });
 
   it("adds product to cart on button click", async () => {
     const user = userEvent.setup();
-    renderPDP(goldenHour.slug);
+    renderPDP("golden-hour");
 
-    await user.click(screen.getByText("Add to Cart"));
+    const btn = await screen.findByText("Add to Cart");
+    await user.click(btn);
 
     const { items } = useCartStore.getState();
     expect(items).toHaveLength(1);
-    expect(items[0].product.id).toBe(goldenHour.id);
-    expect(items[0].qty).toBe(1);
+    expect(items[0].productId).toBe(mockProduct.id);
+    expect(items[0].quantity).toBe(1);
   });
 
-  it("shows in-stock message with shipping info", () => {
-    renderPDP(goldenHour.slug);
+  it("shows in-stock message with shipping info", async () => {
+    renderPDP("golden-hour");
     expect(
-      screen.getByText(/free shipping on orders above/i),
+      await screen.findByText(/free shipping on orders above/i),
     ).toBeInTheDocument();
   });
 });
 
 describe("Product page — out-of-stock product (Velvet Rose)", () => {
-  const velvetRose = products.find((p) => !p.inStock)!;
-
-  it("renders the Sold Out CTA (disabled)", () => {
-    renderPDP(velvetRose.slug);
-    const btn = screen.getByText("Sold Out");
+  it("renders the Sold Out CTA (disabled)", async () => {
+    renderPDP("velvet-rose");
+    const btn = await screen.findByText("Sold Out");
     expect(btn).toBeInTheDocument();
     expect(btn).toBeDisabled();
   });
 });
 
 describe("Product page — invalid slug (404)", () => {
-  it("renders Product Not Found heading", () => {
+  it("renders Product Not Found heading", async () => {
     renderPDP("does-not-exist");
-    expect(screen.getByText("Product Not Found")).toBeInTheDocument();
+    expect(await screen.findByText("Product Not Found")).toBeInTheDocument();
   });
 
-  it("renders a Back to Home link", () => {
+  it("renders a Back to Home link", async () => {
     renderPDP("does-not-exist");
-    expect(screen.getByText("Back to Home")).toBeInTheDocument();
+    expect(await screen.findByText("Back to Home")).toBeInTheDocument();
   });
 });

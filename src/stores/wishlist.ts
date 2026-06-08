@@ -1,11 +1,11 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import type { Product } from "../data/products";
+import type { ProductSummary } from "../types/catalog";
 
 interface WishlistState {
   ids: string[]; // product IDs
   /** Toggle: adds if absent, removes if present. Returns new state. */
-  toggle: (product: Product) => "added" | "removed";
+  toggle: (product: ProductSummary) => "added" | "removed";
   has: (id: string) => boolean;
   clear: () => void;
 }

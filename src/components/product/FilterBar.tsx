@@ -1,20 +1,18 @@
 "use client";
-import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import { useSearchParams } from "react-router-dom";
 
 interface FilterBarProps {
   productCount: number;
 }
 
 export function FilterBar({ productCount }: FilterBarProps) {
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   function handleSort(value: string) {
     const params = new URLSearchParams(searchParams?.toString() ?? "");
     if (value) params.set("sort", value);
     else params.delete("sort");
-    router.push(`${pathname}?${params.toString()}`);
+    setSearchParams(params);
   }
 
   return (

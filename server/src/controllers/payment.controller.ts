@@ -1,5 +1,7 @@
 import type { Request, Response, NextFunction } from "express";
-import { z } from "zod";
+import { z, ZodError } from "zod";
+import { DomainError } from "../lib/domain-error.js";
+import { sendSuccess, sendError } from "../lib/response.js";
 import {
   createRazorpayOrder,
   verifyRazorpayPayment,
@@ -11,8 +13,10 @@ import {
   createStripePaymentIntent,
   constructStripeEvent,
   handleStripeWebhook as processStripeWebhook,
+  refundStripePayment,
   StripeServiceError,
 } from "../services/stripe.service.js";
+import { securityLogger } from "../services/security-logger.js";
 import type { VerifyPaymentInput } from "../types/order.types.js";
 import type { RazorpayWebhookPayload } from "../types/payment.types.js";
 
@@ -39,14 +43,14 @@ export async function handleInitiatePayment(
 
     if (gateway === "STRIPE") {
       const result = await createStripePaymentIntent(orderId);
-      res.json({ success: true, data: { gateway: "STRIPE", ...result } });
+      sendSuccess(res, { gateway: "STRIPE", ...result });
     } else {
       const result = await createRazorpayOrder(orderId);
-      res.json({ success: true, data: { gateway: "RAZORPAY", ...result } });
+      sendSuccess(res, { gateway: "RAZORPAY", ...result });
     }
   } catch (err) {
-    if (err instanceof PaymentError || err instanceof StripeServiceError) {
-      res.status(err.statusCode).json({ success: false, error: err.message });
+    if (err instanceof DomainError || err instanceof PaymentError || err instanceof StripeServiceError) {
+      sendError(res, err.message, err.statusCode);
       return;
     }
     _next(err);
@@ -76,13 +80,10 @@ export async function handleVerifyPayment(
       input.razorpaySignature,
     );
 
-    res.json({
-      success: true,
-      data: { message: "Payment verified successfully" },
-    });
+    sendSuccess(res, { message: "Payment verified successfully" });
   } catch (err) {
-    if (err instanceof PaymentError) {
-      res.status(err.statusCode).json({ success: false, error: err.message });
+    if (err instanceof DomainError || err instanceof PaymentError) {
+      sendError(res, err.message, err.statusCode);
       return;
     }
     _next(err);
@@ -104,18 +105,24 @@ export async function handleRazorpayWebhook(
   try {
     const signature = req.headers["x-razorpay-signature"] as string;
     if (!signature) {
-      res
-        .status(400)
-        .json({ success: false, error: "Missing signature header" });
+      securityLogger.warn("webhook_invalid_signature", {
+        gateway: "RAZORPAY",
+        reason: "Missing signature header",
+        ip: req.ip,
+      });
+      sendError(res, "Missing signature header", 400);
       return;
     }
 
     const rawBody = req.body as Buffer;
     const isValid = validateRazorpayWebhookSignature(rawBody, signature);
     if (!isValid) {
-      res
-        .status(401)
-        .json({ success: false, error: "Invalid webhook signature" });
+      securityLogger.warn("webhook_invalid_signature", {
+        gateway: "RAZORPAY",
+        reason: "Signature validation failed",
+        ip: req.ip,
+      });
+      sendError(res, "Invalid webhook signature", 401);
       return;
     }
 
@@ -123,11 +130,11 @@ export async function handleRazorpayWebhook(
     await processRazorpayWebhook(payload);
 
     // Always respond 200 to acknowledge receipt
-    res.json({ success: true });
+    sendSuccess(res, {});
   } catch (err) {
     // Log but still respond 200 to avoid webhook retries
     console.error("[Razorpay Webhook Error]", err);
-    res.status(200).json({ success: true });
+    sendSuccess(res, {}, 200);
   }
 }
 
@@ -146,9 +153,12 @@ export async function handleStripeWebhook(
   try {
     const signature = req.headers["stripe-signature"] as string;
     if (!signature) {
-      res
-        .status(400)
-        .json({ success: false, error: "Missing Stripe signature" });
+      securityLogger.warn("webhook_invalid_signature", {
+        gateway: "STRIPE",
+        reason: "Missing signature header",
+        ip: req.ip,
+      });
+      sendError(res, "Missing Stripe signature", 400);
       return;
     }
 
@@ -156,13 +166,55 @@ export async function handleStripeWebhook(
     const event = constructStripeEvent(rawBody, signature);
     await processStripeWebhook(event);
 
-    res.json({ success: true });
+    sendSuccess(res, {});
   } catch (err) {
-    if (err instanceof StripeServiceError) {
-      res.status(err.statusCode).json({ success: false, error: err.message });
+    if (err instanceof DomainError || err instanceof StripeServiceError) {
+      sendError(res, err.message, err.statusCode);
       return;
     }
     console.error("[Stripe Webhook Error]", err);
-    res.status(200).json({ success: true });
+    sendSuccess(res, {}, 200);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Admin: Initiate a Stripe refund
+// ---------------------------------------------------------------------------
+
+const adminRefundSchema = z.object({
+  paymentIntentId: z.string().min(1),
+});
+
+/**
+ * POST /api/payments/admin/refund
+ * Admin-only: initiates a Stripe refund for a given PaymentIntent.
+ */
+export async function handleAdminRefund(
+  req: Request,
+  res: Response,
+  _next: NextFunction,
+): Promise<void> {
+  try {
+    const { paymentIntentId } = adminRefundSchema.parse(req.body);
+    const result = await refundStripePayment(paymentIntentId);
+    sendSuccess(res, result);
+  } catch (err) {
+    if (err instanceof ZodError) {
+      sendError(
+        res,
+        "Validation failed",
+        400,
+        err.errors.map((e) => ({
+          path: e.path.join("."),
+          message: e.message,
+        })),
+      );
+      return;
+    }
+    if (err instanceof DomainError || err instanceof StripeServiceError) {
+      sendError(res, err.message, err.statusCode);
+      return;
+    }
+    _next(err);
   }
 }

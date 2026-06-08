@@ -1,4 +1,5 @@
 import type { Request, Response, NextFunction } from "express";
+import { sendSuccess, sendPaginated, sendError } from "../lib/response.js";
 import {
   createOrder,
   getOrderById,
@@ -21,10 +22,10 @@ export async function handleCreateOrder(
 
     const order = await createOrder(input, userId);
 
-    res.status(201).json({ success: true, data: order });
+    sendSuccess(res, order, 201);
   } catch (err) {
     if (err instanceof OrderError) {
-      res.status(err.statusCode).json({ success: false, error: err.message });
+      sendError(res, err.message, err.statusCode);
       return;
     }
     next(err);
@@ -46,10 +47,10 @@ export async function handleGetOrder(
       : req.params.id;
     const order = await getOrderById(orderId, userId);
 
-    res.json({ success: true, data: order });
+    sendSuccess(res, order);
   } catch (err) {
     if (err instanceof OrderError) {
-      res.status(err.statusCode).json({ success: false, error: err.message });
+      sendError(res, err.message, err.statusCode);
       return;
     }
     next(err);
@@ -71,19 +72,10 @@ export async function handleListOrders(
 
     const result = await listUserOrders(userId, page, limit);
 
-    res.json({
-      success: true,
-      data: result.orders,
-      meta: {
-        page,
-        limit,
-        total: result.total,
-        totalPages: Math.ceil(result.total / limit),
-      },
-    });
+    sendPaginated(res, result.orders, { page, limit, total: result.total });
   } catch (err) {
     if (err instanceof OrderError) {
-      res.status(err.statusCode).json({ success: false, error: err.message });
+      sendError(res, err.message, err.statusCode);
       return;
     }
     next(err);

@@ -1,8 +1,11 @@
+import { useEffect } from "react";
 import { Navigate, Link } from "react-router-dom";
+import { api } from "../lib/api/client";
+import { useApi } from "../lib/hooks/useApi";
 import { useAuthStore } from "../stores/auth";
 import { useWishlistStore } from "../stores/wishlist";
-import { products } from "../data/products";
 import { formatPrice } from "../lib/format";
+import type { ProductSummary, PaginatedResponse } from "../types/catalog";
 
 /**
  * Account dashboard — order history, saved addresses, wishlist.
@@ -12,7 +15,18 @@ export default function Account() {
   const { user, orders, addresses, logout, removeAddress, setDefaultAddress } =
     useAuthStore();
   const wishlistIds = useWishlistStore((s) => s.ids);
-  const wishlistProducts = products.filter((p) => wishlistIds.includes(p.id));
+
+  const productsApi = useApi<ProductSummary[]>(
+    () => api.get<PaginatedResponse<ProductSummary>>("/api/products?limit=100"),
+    [],
+  );
+
+  useEffect(() => {
+    productsApi.execute();
+  }, [productsApi.execute]);
+
+  const allProducts = productsApi.data ?? [];
+  const wishlistProducts = allProducts.filter((p) => wishlistIds.includes(p.id));
 
   if (!user) return <Navigate to="/auth" replace />;
 
@@ -218,7 +232,7 @@ export default function Account() {
                   >
                     <img
                       src={p.image}
-                      alt={p.name}
+                      alt={p.title}
                       className="h-16 w-16 rounded object-cover flex-shrink-0"
                     />
                     <div className="min-w-0">
@@ -226,10 +240,10 @@ export default function Account() {
                         to={`/product/${p.slug}`}
                         className="text-sm font-medium text-[#2d2926] hover:text-[#c4a093] transition-colors line-clamp-1"
                       >
-                        {p.name}
+                        {p.title}
                       </Link>
                       <p className="text-xs text-[#9a8d82] mt-0.5">
-                        {formatPrice(p.price)}
+                        {formatPrice(p.priceCents / 100)}
                       </p>
                     </div>
                   </li>

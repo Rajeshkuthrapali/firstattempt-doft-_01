@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { sendSuccess } from "../lib/response.js";
 
 const router = Router();
 
@@ -7,13 +8,10 @@ const router = Router();
  * Simple health-check endpoint for monitoring and load balancers.
  */
 router.get("/", (_req, res) => {
-  res.json({
-    success: true,
-    data: {
-      status: "healthy",
-      timestamp: new Date().toISOString(),
-      uptime: process.uptime(),
-    },
+  sendSuccess(res, {
+    status: "healthy",
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime(),
   });
 });
 

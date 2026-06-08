@@ -5,9 +5,22 @@ import { renderWithRouter } from "../helpers";
 import CartDrawer from "../../components/CartDrawer";
 import { useCartStore } from "../../stores/cart";
 import { useUiStore } from "../../stores/ui";
-import { products } from "../../data/products";
+import { products } from "../../../backup/06-mock-data/products";
 
 const goldenHour = products[0];
+
+function makeCartItem(product: (typeof products)[number]) {
+  return {
+    productId: product.id,
+    variantId: product.id,
+    title: product.name,
+    variantTitle: "Single",
+    price: product.price,
+    image: product.image,
+    slug: product.slug,
+    maxStock: product.inStock ? 100 : 0,
+  };
+}
 
 beforeEach(() => {
   useCartStore.setState({ items: [] });
@@ -60,7 +73,7 @@ describe("CartDrawer — empty state", () => {
 
 describe("CartDrawer — with items", () => {
   beforeEach(() => {
-    useCartStore.getState().addItem(goldenHour);
+    useCartStore.getState().addItem(makeCartItem(goldenHour));
   });
 
   it("displays the product name in the cart", () => {
@@ -93,7 +106,7 @@ describe("CartDrawer — with items", () => {
 
 describe("CartDrawer — quantity controls", () => {
   beforeEach(() => {
-    useCartStore.getState().addItem(goldenHour);
+    useCartStore.getState().addItem(makeCartItem(goldenHour));
   });
 
   it("has increase quantity button with ARIA label", () => {
@@ -126,7 +139,7 @@ describe("CartDrawer — quantity controls", () => {
     );
     await user.click(incBtn);
 
-    expect(useCartStore.getState().items[0].qty).toBe(2);
+    expect(useCartStore.getState().items[0].quantity).toBe(2);
   });
 
   it("removes the item when − is clicked at qty=1", async () => {
@@ -144,7 +157,7 @@ describe("CartDrawer — quantity controls", () => {
 
 describe("CartDrawer — clear cart", () => {
   it("clears all items when Clear cart is clicked", async () => {
-    useCartStore.getState().addItem(goldenHour);
+    useCartStore.getState().addItem(makeCartItem(goldenHour));
     const user = userEvent.setup();
     renderWithRouter(<CartDrawer />);
 

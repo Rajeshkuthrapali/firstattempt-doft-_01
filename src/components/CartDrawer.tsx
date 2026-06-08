@@ -9,7 +9,7 @@ import { useCartStore } from "../stores/cart";
  */
 export default function CartDrawer() {
   const { cartOpen, closeCart } = useUiStore();
-  const { items, addItem, removeItem, deleteLine, clearCart, totalPrice } =
+  const { items, removeItem, updateQuantity, clearCart, totalPrice } =
     useCartStore();
   const closeBtnRef = useRef<HTMLButtonElement>(null);
 
@@ -97,25 +97,25 @@ export default function CartDrawer() {
             </div>
           ) : (
             <ul className="flex flex-col gap-5">
-              {items.map(({ product, qty }) => (
+              {items.map((item) => (
                 <li
-                  key={product.id}
+                  key={item.variantId}
                   className="flex gap-4 border-b border-[#f0ebe5] pb-5 last:border-0 last:pb-0"
                 >
                   {/* Product image */}
                   <img
-                    src={product.image}
-                    alt={product.name}
+                    src={item.image}
+                    alt={item.title}
                     className="h-24 w-20 flex-shrink-0 rounded-md object-cover bg-[#f3ece4]"
                   />
 
                   <div className="flex flex-1 flex-col justify-between">
                     <div>
                       <p className="text-[13px] font-medium text-[#2d2926]">
-                        {product.name}
+                        {item.title}
                       </p>
                       <p className="mt-0.5 text-[11px] text-[#9a8d82]">
-                        {formatPrice(product.price)} each
+                        {formatPrice(item.price)} each
                       </p>
                     </div>
 
@@ -123,19 +123,19 @@ export default function CartDrawer() {
                       {/* Qty controls */}
                       <div className="flex items-center border border-[#e8e0d8] rounded-sm">
                         <button
-                          onClick={() => removeItem(product.id)}
+                          onClick={() => updateQuantity(item.variantId, item.quantity - 1)}
                           className="px-2.5 py-1 text-[13px] text-[#6b5e54] hover:text-[#2d2926] transition-colors"
-                          aria-label={`Decrease ${product.name} quantity`}
+                          aria-label={`Decrease ${item.title} quantity`}
                         >
                           −
                         </button>
                         <span className="min-w-[2rem] text-center text-[12px] font-medium text-[#2d2926] border-x border-[#e8e0d8] py-1">
-                          {qty}
+                          {item.quantity}
                         </span>
                         <button
-                          onClick={() => addItem(product)}
+                          onClick={() => updateQuantity(item.variantId, item.quantity + 1)}
                           className="px-2.5 py-1 text-[13px] text-[#6b5e54] hover:text-[#2d2926] transition-colors"
-                          aria-label={`Increase ${product.name} quantity`}
+                          aria-label={`Increase ${item.title} quantity`}
                         >
                           +
                         </button>
@@ -144,12 +144,12 @@ export default function CartDrawer() {
                       {/* Line total + remove */}
                       <div className="flex items-center gap-3">
                         <span className="text-[13px] font-medium text-[#2d2926]">
-                          {formatPrice(product.price * qty)}
+                          {formatPrice(item.price * item.quantity)}
                         </span>
                         <button
-                          onClick={() => deleteLine(product.id)}
+                          onClick={() => removeItem(item.variantId)}
                           className="text-[#9a8d82] hover:text-[#c96b6b] transition-colors"
-                          aria-label={`Remove ${product.name} from cart`}
+                          aria-label={`Remove ${item.title} from cart`}
                         >
                           <svg
                             width="14"

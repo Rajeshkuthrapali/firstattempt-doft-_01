@@ -1,0 +1,42 @@
+name: Database Migration
+on:
+  push:
+    branches: [main]
+    paths:
+      - "server/prisma/**"
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: "npm"
+          cache-dependency-path: server/package-lock.json
+
+      - name: Install dependencies
+        run: cd server && npm ci
+
+      - name: Run migrations
+        run: cd server && npx prisma migrate deploy
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+      - name: Verify migration
+        run: cd server && npx prisma migrate status
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+      - name: Notify on failure
+        if: failure()
+        run: |
+          echo "::error::Database migration failed for commit ${{ github.sha }}"
+          echo "Rollback procedure:"
+          echo "  1. Revert the migration commit: git revert <commit>"
+          echo "  2. Push the revert and let the workflow re-run"
+          echo "  3. If the migration was already applied, run:"
+          echo "     npx prisma migrate resolve --rolled-back <migration_name>"

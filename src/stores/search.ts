@@ -1,10 +1,11 @@
 import { create } from "zustand";
-import { products, type Product } from "../data/products";
+import { api } from "../lib/api/client";
+import type { ProductSummary, PaginatedResponse } from "../types/catalog";
 
 /** Single autocomplete suggestion. */
 export interface SearchHit {
-  product: Product;
-  /** Matched field: name, tagline, notes */
+  product: ProductSummary;
+  /** Matched field: title, tagline, scentNotes, collection */
   matchedOn: string;
 }
 
@@ -12,28 +13,32 @@ interface SearchState {
   query: string;
   hits: SearchHit[];
   isOpen: boolean;
+  products: ProductSummary[];
+  loading: boolean;
+  fetched: boolean;
 
   setQuery: (q: string) => void;
   clear: () => void;
   open: () => void;
   close: () => void;
+  fetchProducts: () => Promise<void>;
 }
 
-/** Naive client-side search over the static product catalogue. */
-function searchProducts(q: string): SearchHit[] {
+/** Naive client-side search over the fetched product catalogue. */
+function searchProducts(q: string, products: ProductSummary[]): SearchHit[] {
   if (!q.trim()) return [];
   const lower = q.toLowerCase();
   return products
     .filter((p) => p.inStock)
     .flatMap((p) => {
-      if (p.name.toLowerCase().includes(lower))
-        return [{ product: p, matchedOn: "name" }];
-      if (p.tagline.toLowerCase().includes(lower))
+      if (p.title.toLowerCase().includes(lower))
+        return [{ product: p, matchedOn: "title" }];
+      if (p.tagline?.toLowerCase().includes(lower))
         return [{ product: p, matchedOn: "tagline" }];
-      if (p.notes.some((n) => n.toLowerCase().includes(lower)))
-        return [{ product: p, matchedOn: "notes" }];
-      if (p.category.toLowerCase().includes(lower))
-        return [{ product: p, matchedOn: "category" }];
+      if (p.scentNotes.some((n) => n.toLowerCase().includes(lower)))
+        return [{ product: p, matchedOn: "scentNotes" }];
+      if (p.collectionSlugs.some((s) => s.toLowerCase().includes(lower)))
+        return [{ product: p, matchedOn: "collection" }];
       return [];
     })
     .slice(0, 6);
@@ -41,17 +46,34 @@ function searchProducts(q: string): SearchHit[] {
 
 /**
  * Zustand search store.
- * Provides autocomplete hits derived from the static products array.
- * In production, replace searchProducts() with a debounced API call.
+ * Fetches products from the API on first use, then filters locally.
  */
-export const useSearchStore = create<SearchState>()((set) => ({
+export const useSearchStore = create<SearchState>()((set, get) => ({
   query: "",
   hits: [],
   isOpen: false,
+  products: [],
+  loading: false,
+  fetched: false,
 
-  setQuery: (q) =>
-    set({ query: q, hits: searchProducts(q), isOpen: q.length > 0 }),
+  setQuery: (q) => {
+    const state = get();
+    const hits = state.products.length > 0 ? searchProducts(q, state.products) : [];
+    set({ query: q, hits, isOpen: q.length > 0 });
+  },
+
   clear: () => set({ query: "", hits: [], isOpen: false }),
   open: () => set({ isOpen: true }),
   close: () => set({ isOpen: false }),
+
+  fetchProducts: async () => {
+    if (get().fetched) return;
+    set({ loading: true });
+    try {
+      const res = await api.get<PaginatedResponse<ProductSummary>>("/api/products?limit=100");
+      set({ products: res.data, loading: false, fetched: true });
+    } catch {
+      set({ loading: false });
+    }
+  },
 }));

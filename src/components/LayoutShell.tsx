@@ -1,16 +1,37 @@
-import { Outlet, Link } from "react-router-dom";
+import { useEffect, useRef } from "react";
+import { Outlet, Link, useLocation } from "react-router-dom";
 import Nav from "./Nav";
 import CartDrawer from "./CartDrawer";
 import SearchBar from "./search/SearchBar";
 import QuickViewModal from "./QuickViewModal";
-import SupportWidget from "./SupportWidget";
+import { pageEnter, initScrollAnimations } from "../lib/animations";
 
 /**
  * Root layout shell — warm cream background, clean footer
  * with brand info, quick links, and newsletter signup.
  * Light, airy, feminine luxury aesthetic.
+ *
+ * Animations:
+ *  - Page enter fade-up on route change
+ *  - Scroll-triggered fade-up / stagger for sections
  */
 export default function LayoutShell() {
+  const mainRef = useRef<HTMLDivElement>(null);
+  const location = useLocation();
+
+  /* ── Page enter animation ─────────────── */
+  useEffect(() => {
+    if (mainRef.current) {
+      pageEnter(mainRef.current);
+    }
+  }, [location.pathname]);
+
+  /* ── Scroll-triggered animations ───────── */
+  useEffect(() => {
+    const cleanup = initScrollAnimations();
+    return cleanup;
+  }, [location.pathname]);
+
   return (
     <div className="min-h-screen bg-[#faf7f4] text-[#2d2926] font-['Inter',sans-serif]">
       {/* Skip-to-content link for keyboard navigation */}
@@ -24,7 +45,7 @@ export default function LayoutShell() {
       <QuickViewModal />
 
       {/* Page content offset for fixed nav + announcement bar */}
-      <main className="pt-[108px]" id="main-content" role="main">
+      <main className="pt-[108px]" id="main-content" role="main" ref={mainRef}>
         <Outlet />
       </main>
 
@@ -34,9 +55,12 @@ export default function LayoutShell() {
         role="contentinfo"
       >
         <div className="mx-auto max-w-7xl px-6 py-16">
-          <div className="grid grid-cols-1 gap-10 md:grid-cols-4">
+          <div
+            className="grid grid-cols-1 gap-10 md:grid-cols-4"
+            data-animate="stagger"
+          >
             {/* Brand */}
-            <div className="md:col-span-1">
+            <div data-animate-child>
               <Link to="/" className="inline-block">
                 <span className="font-['Cormorant_Garamond',serif] text-[28px] font-semibold tracking-[0.15em] text-[#2d2926]">
                   LUMIÈRE
@@ -49,7 +73,7 @@ export default function LayoutShell() {
             </div>
 
             {/* Quick links */}
-            <div>
+            <div data-animate-child>
               <h4 className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#9a8d82] mb-4">
                 Quick Links
               </h4>
@@ -70,7 +94,7 @@ export default function LayoutShell() {
             </div>
 
             {/* Support */}
-            <div>
+            <div data-animate-child>
               <h4 className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#9a8d82] mb-4">
                 Support
               </h4>
@@ -94,7 +118,7 @@ export default function LayoutShell() {
             </div>
 
             {/* Newsletter */}
-            <div>
+            <div data-animate-child>
               <h4 className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#9a8d82] mb-4">
                 Stay in Touch
               </h4>
@@ -123,12 +147,11 @@ export default function LayoutShell() {
           </div>
 
           {/* Bottom bar */}
-          <div className="mt-12 border-t border-[#e8e0d8] pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="mt-12 border-t border-[#e8e0d8] pt-6 flex flex-col md:flex-row items-center justify-between gap-4" data-animate="fade-up">
             <p className="text-[11px] text-[#9a8d82]">
               © {new Date().getFullYear()} Lumière. All rights reserved.
             </p>
             <div className="flex gap-5">
-              {/* Social icons */}
               {[
                 {
                   label: "Instagram",
@@ -165,7 +188,6 @@ export default function LayoutShell() {
           </div>
         </div>
       </footer>
-      <SupportWidget />
     </div>
   );
 }

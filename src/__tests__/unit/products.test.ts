@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { products, getProductBySlug, type Product } from "../../data/products";
+import { products, getProductBySlug, type Product } from "../../../backup/06-mock-data/products";
 
 describe("products data", () => {
   it("exports a non-empty product array", () => {

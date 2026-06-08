@@ -10,9 +10,24 @@ const mockAddItem = vi.fn();
 
 // QuickViewModal calls useUiStore() with NO selector — it destructures the
 // entire state. So the mock must return the full state object directly.
+const mockProduct = {
+  id: "lum-001",
+  title: "Golden Hour",
+  slug: "golden-hour",
+  tagline: "Warm amber meets sun-kissed vanilla",
+  priceCents: 249900,
+  compareAtPriceCents: null,
+  image: "/golden-hour.png",
+  inStock: true,
+  fragranceFamily: "oriental",
+  scentNotes: ["Amber", "Vanilla", "Sandalwood"],
+  giftEligible: true,
+  collectionSlugs: ["signature"],
+};
+
 vi.mock("../../stores/ui", () => ({
   useUiStore: () => ({
-    quickViewProductId: "lum-001",
+    quickViewProduct: mockProduct,
     openQuickView: vi.fn(),
     closeQuickView: mockCloseQuickView,
     navOpen: false,
@@ -71,12 +86,6 @@ describe("QuickViewModal", () => {
     expect(screen.getByText("Amber")).toBeInTheDocument();
     expect(screen.getByText("Vanilla")).toBeInTheDocument();
     expect(screen.getByText("Sandalwood")).toBeInTheDocument();
-  });
-
-  it("renders burn time and weight details", () => {
-    renderModal();
-    expect(screen.getByText("55h")).toBeInTheDocument();
-    expect(screen.getByText("280g")).toBeInTheDocument();
   });
 
   it("calls closeQuickView when close button is clicked", () => {

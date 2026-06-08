@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
+import { Link } from "react-router-dom";
 import { Search, User, ShoppingBag, Menu, X } from "lucide-react";
-import { useCartStore } from "@/lib/store/cart";
+import { useCartStore } from "@/stores/cart";
 
 const NAV_ITEMS = [
   { label: "Bestsellers", href: "/collections/bestsellers" },
@@ -55,7 +55,7 @@ export function Header() {
           {mobileOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
         <Link
-          href="/"
+          to="/"
           className="font-heading text-2xl font-bold tracking-[3px] text-primary"
         >
           DOFT
@@ -69,7 +69,7 @@ export function Header() {
               onMouseLeave={() => setActiveDropdown(null)}
             >
               <Link
-                href={item.href}
+                to={item.href}
                 className="text-sm uppercase tracking-wide text-text transition-colors hover:text-primary"
               >
                 {item.label}
@@ -79,7 +79,7 @@ export function Header() {
                   {item.children.map((child) => (
                     <Link
                       key={child.label}
-                      href={child.href}
+                      to={child.href}
                       className="block px-6 py-3 text-sm text-text transition-all hover:bg-bg-secondary hover:pl-8 hover:text-primary"
                     >
                       {child.label}
@@ -92,14 +92,14 @@ export function Header() {
         </nav>
         <div className="flex items-center gap-5">
           <Link
-            href="/search"
+            to="/search"
             className="text-text transition-colors hover:text-primary"
             aria-label="Search"
           >
             <Search size={20} />
           </Link>
           <Link
-            href="/account"
+            to="/account"
             className="text-text transition-colors hover:text-primary"
             aria-label="Account"
           >
@@ -122,7 +122,7 @@ export function Header() {
           {NAV_ITEMS.map((item) => (
             <div key={item.label} className="border-b border-border-light py-3">
               <Link
-                href={item.href}
+                to={item.href}
                 className="block text-sm uppercase tracking-wide"
                 onClick={() => setMobileOpen(false)}
               >
@@ -133,7 +133,7 @@ export function Header() {
                   {item.children.map((child) => (
                     <Link
                       key={child.label}
-                      href={child.href}
+                      to={child.href}
                       className="block text-sm text-text-light"
                       onClick={() => setMobileOpen(false)}
                     >
