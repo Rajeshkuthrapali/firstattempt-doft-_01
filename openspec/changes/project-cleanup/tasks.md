@@ -34,4 +34,4 @@
 - [x] 5.2 Run `npx vite build` from project root (successful build)
 - [x] 5.3 Run `cd server && npx tsc --noEmit` (0 errors)
 - [x] 5.4 Verify project root has ~28 entries (down from ~53)
-- [ ] 5.5 Commit all changes with a descriptive message
+- [x] 5.5 Commit all changes with a descriptive message
