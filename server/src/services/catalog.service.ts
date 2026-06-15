@@ -122,10 +122,23 @@ export async function searchProducts(
 }
 
 /**
- * Return featured products (first 6 by creation date).
+ * Return featured products for the home page.
+ *
+ * Prefers curated products from the Signature Collection.
+ * If fewer than 4 signature products exist, falls back to the 6 newest products.
  */
 export async function getFeaturedProducts(): Promise<ProductSummary[]> {
-  const products = await prisma.product.findMany({
+  // First, try to get products from Signature Collection
+  const signatureProducts = await prisma.product.findMany({
+    where: {
+      collections: {
+        some: {
+          collection: {
+            slug: "signature-collection",
+          },
+        },
+      },
+    },
     include: {
       variants: { orderBy: { priceCents: "asc" } },
       collections: { include: { collection: true } },
@@ -134,7 +147,21 @@ export async function getFeaturedProducts(): Promise<ProductSummary[]> {
     take: 6,
   });
 
-  return products.map(mapToSummary);
+  if (signatureProducts.length >= 4) {
+    return signatureProducts.map(mapToSummary);
+  }
+
+  // Fallback: 6 newest products
+  const latestProducts = await prisma.product.findMany({
+    include: {
+      variants: { orderBy: { priceCents: "asc" } },
+      collections: { include: { collection: true } },
+    },
+    orderBy: { createdAt: "desc" },
+    take: 6,
+  });
+
+  return latestProducts.map(mapToSummary);
 }
 
 // ── Mappers ───────────────────────────────────────────────────────────

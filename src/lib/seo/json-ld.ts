@@ -40,7 +40,7 @@ export function productJsonLd(
     url: `${BASE_URL}/products/${product.slug}`,
     brand: {
       "@type": "Brand",
-      name: "DOFT",
+      name: "Lumière",
     },
     offers:
       variants.length === 1
@@ -54,7 +54,7 @@ export function productJsonLd(
             url: `${BASE_URL}/products/${product.slug}`,
             seller: {
               "@type": "Organization",
-              name: "DOFT Candles",
+              name: "Lumière",
             },
           }
         : {
@@ -96,7 +96,7 @@ export function organizationJsonLd(): Record<string, unknown> {
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: "DOFT Candles",
+    name: "Lumière",
     url: BASE_URL,
     logo: `${BASE_URL}/logo.png`,
     description:
@@ -131,7 +131,7 @@ export function collectionJsonLd(
     numberOfItems: productCount,
     isPartOf: {
       "@type": "WebSite",
-      name: "DOFT Candles",
+      name: "Lumière",
       url: BASE_URL,
     },
   };

@@ -1,4 +1,4 @@
-# DOFT Candles — Payment Server
+# Lumière — Payment Server
 
 Express + Prisma backend for the Lumière Candles e-commerce application.
 

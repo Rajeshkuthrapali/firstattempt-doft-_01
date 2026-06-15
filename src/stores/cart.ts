@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { useToastStore } from "./toast";
 
 export interface CartItem {
   productId: string;
@@ -59,12 +60,37 @@ export const useCartStore = create<CartState>()(
             isOpen: true,
           };
         });
+        // Show toast notification
+        setTimeout(() => {
+          useToastStore.getState().addToast({
+            type: "success",
+            title: "Added to cart",
+            description: item.title,
+          });
+        }, 0);
       },
 
-      removeItem: (variantId) =>
+      removeItem: (variantId) => {
+        const removedItem = get().items.find((i) => i.variantId === variantId);
         set((state) => ({
           items: state.items.filter((i) => i.variantId !== variantId),
-        })),
+        }));
+        if (removedItem) {
+          setTimeout(() => {
+            useToastStore.getState().addToast({
+              type: "info",
+              title: "Removed",
+              description: removedItem.title,
+              action: {
+                label: "Undo",
+                onClick: () => {
+                  get().addItem(removedItem);
+                },
+              },
+            });
+          }, 0);
+        }
+      },
 
       updateQuantity: (variantId, quantity) =>
         set((state) => {
@@ -82,7 +108,15 @@ export const useCartStore = create<CartState>()(
           };
         }),
 
-      clearCart: () => set({ items: [] }),
+      clearCart: () => {
+        set({ items: [] });
+        setTimeout(() => {
+          useToastStore.getState().addToast({
+            type: "info",
+            title: "Cart cleared",
+          });
+        }, 0);
+      },
       openCart: () => set({ isOpen: true }),
       closeCart: () => set({ isOpen: false }),
       toggleCart: () => set((s) => ({ isOpen: !s.isOpen })),

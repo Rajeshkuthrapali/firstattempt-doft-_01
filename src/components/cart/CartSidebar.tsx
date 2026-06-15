@@ -1,4 +1,3 @@
-"use client";
 import { X, Minus, Plus, Trash2 } from "lucide-react";
 import { useCartStore } from "@/stores/cart";
 import { Link } from "react-router-dom";

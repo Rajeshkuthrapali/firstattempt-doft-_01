@@ -31,7 +31,7 @@ export default function LoadingSpinner({ size = 32 }: { size?: number }) {
           strokeLinecap="round"
         />
       </svg>
-      <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#9a8d82]">
+      <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-muted">
         Loading
       </span>
     </div>

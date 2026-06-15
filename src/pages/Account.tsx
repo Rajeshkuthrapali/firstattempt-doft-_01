@@ -1,10 +1,12 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Navigate, Link } from "react-router-dom";
 import { api } from "../lib/api/client";
 import { useApi } from "../lib/hooks/useApi";
 import { useAuthStore } from "../stores/auth";
 import { useWishlistStore } from "../stores/wishlist";
 import { formatPrice } from "../lib/format";
+import PageTransition from "../components/PageTransition";
+import { PageSkeleton } from "../components/PageSkeleton";
 import type { ProductSummary, PaginatedResponse } from "../types/catalog";
 
 /**
@@ -21,30 +23,52 @@ export default function Account() {
     [],
   );
 
+  const [showAddForm, setShowAddForm] = useState(false);
+
   useEffect(() => {
     productsApi.execute();
   }, [productsApi.execute]);
 
   const allProducts = productsApi.data ?? [];
-  const wishlistProducts = allProducts.filter((p) => wishlistIds.includes(p.id));
+  const catalogError = productsApi.error;
+  const wishlistProducts = catalogError ? [] : allProducts.filter((p) => wishlistIds.includes(p.id));
 
   if (!user) return <Navigate to="/auth" replace />;
 
+  if (productsApi.loading) {
+    return (
+      <PageTransition>
+        <PageSkeleton />
+      </PageTransition>
+    );
+  }
+
+  if (productsApi.error) {
+    return (
+      <PageTransition>
+        <div className="mx-auto max-w-5xl px-6 py-section text-center">
+          <p className="body text-muted">Unable to load products. Please try again later.</p>
+        </div>
+      </PageTransition>
+    );
+  }
+
   return (
-    <div className="mx-auto max-w-5xl px-6 py-12">
+    <PageTransition>
+    <div className="mx-auto max-w-5xl px-6 py-section">
       {/* Header */}
       <div className="flex items-center justify-between mb-10">
         <div>
-          <h1 className="font-['Cormorant_Garamond',serif] text-3xl font-semibold text-[#2d2926]">
+          <h1 className="heading-l text-ink">
             My Account
           </h1>
-          <p className="mt-1 text-sm text-[#6b5e54]">
+          <p className="mt-1 body text-dark">
             Welcome back, {user.name}
           </p>
         </div>
         <button
           onClick={logout}
-          className="text-xs uppercase tracking-widest text-[#9a8d82] hover:text-[#c4a093] transition-colors"
+          className="micro text-muted hover:text-brass-gold transition-colors"
         >
           Sign Out
         </button>
@@ -58,7 +82,7 @@ export default function Account() {
               <li key={section}>
                 <a
                   href={`#${section.toLowerCase()}`}
-                  className="block px-4 py-2.5 text-sm text-[#6b5e54] rounded hover:bg-[#f3ece4] hover:text-[#2d2926] transition-colors"
+                  className="block px-4 py-2.5 body text-dark hover:bg-warm-sand hover:text-ink transition-colors"
                 >
                   {section}
                 </a>
@@ -73,18 +97,21 @@ export default function Account() {
           <section id="orders" aria-labelledby="orders-heading">
             <h2
               id="orders-heading"
-              className="text-xs font-semibold uppercase tracking-[0.2em] text-[#9a8d82] mb-4"
+              className="micro text-muted mb-4"
             >
               Order History
             </h2>
             {orders.length === 0 ? (
-              <div className="rounded border border-dashed border-[#e8e0d8] p-8 text-center">
-                <p className="text-sm text-[#9a8d82]">No orders yet.</p>
-                <Link
-                  to="/"
-                  className="mt-3 inline-block text-xs text-[#c4a093] hover:underline uppercase tracking-widest"
-                >
-                  Shop Now
+              <div className="border border-dashed border-ink/20 p-8 text-center">
+                <p className="body text-muted">
+                  Orders feature coming soon — your orders will appear here when
+                  available.
+                </p>
+                  <Link
+                    to="/"
+                    className="mt-3 inline-block caption text-brass-gold hover:underline"
+                  >
+                    Shop Now
                 </Link>
               </div>
             ) : (
@@ -92,32 +119,32 @@ export default function Account() {
                 {orders.map((order) => (
                   <li
                     key={order.id}
-                    className="rounded border border-[#e8e0d8] p-4"
+                    className="border border-hairline p-4"
                   >
                     <div className="flex items-center justify-between mb-2">
-                      <span className="text-xs font-semibold uppercase tracking-wider text-[#2d2926]">
-                        #{order.id.slice(-8).toUpperCase()}
+                    <span className="micro text-ink">
+                      #{order.id.slice(-8).toUpperCase()}
                       </span>
                       <span
-                        className={`text-xs px-2 py-0.5 rounded-full ${
+                        className={`text-xs px-2 py-0.5 ${
                           order.status === "delivered"
-                            ? "bg-green-50 text-green-700"
+                            ? "bg-success/10 text-success"
                             : order.status === "cancelled"
-                              ? "bg-red-50 text-red-700"
-                              : "bg-amber-50 text-amber-700"
+                              ? "bg-error/10 text-error"
+                              : "bg-warning/10 text-warning"
                         }`}
                       >
                         {order.status}
                       </span>
                     </div>
-                    <p className="text-xs text-[#9a8d82]">
+                    <p className="text-xs text-muted">
                       {new Date(order.date).toLocaleDateString("en-IN")}
                     </p>
                     <ul className="mt-2 space-y-1">
                       {order.items.map((item, i) => (
                         <li
                           key={i}
-                          className="flex justify-between text-sm text-[#6b5e54]"
+                          className="flex justify-between body text-dark"
                         >
                           <span>
                             {item.name} × {item.qty}
@@ -126,7 +153,7 @@ export default function Account() {
                         </li>
                       ))}
                     </ul>
-                    <p className="mt-2 text-right text-sm font-semibold text-[#2d2926]">
+                    <p className="mt-2 text-right text-sm font-semibold text-ink">
                       {formatPrice(order.total)}
                     </p>
                   </li>
@@ -140,32 +167,32 @@ export default function Account() {
             <div className="flex items-center justify-between mb-4">
               <h2
                 id="addresses-heading"
-                className="text-xs font-semibold uppercase tracking-[0.2em] text-[#9a8d82]"
+                className="micro text-muted"
               >
                 Saved Addresses
               </h2>
-              <Link
-                to="/account/address/new"
-                className="text-xs text-[#c4a093] hover:underline uppercase tracking-widest"
+              <button
+                onClick={() => setShowAddForm(true)}
+                className="caption text-brass-gold hover:underline"
               >
                 + Add
-              </Link>
+              </button>
             </div>
             {addresses.length === 0 ? (
-              <p className="text-sm text-[#9a8d82]">No saved addresses.</p>
+              <p className="body text-muted">No saved addresses.</p>
             ) : (
               <ul className="grid gap-4 sm:grid-cols-2" role="list">
                 {addresses.map((addr) => (
                   <li
                     key={addr.id}
-                    className={`rounded border p-4 ${addr.isDefault ? "border-[#c4a093]" : "border-[#e8e0d8]"}`}
+                    className={`border p-4 ${addr.isDefault ? "border-brass-gold" : "border-hairline"}`}
                   >
                     <div className="flex items-start justify-between">
                       <div>
-                        <p className="text-xs font-semibold uppercase tracking-wider text-[#2d2926]">
+                        <p className="micro text-ink">
                           {addr.label}
                         </p>
-                        <p className="mt-1 text-sm text-[#6b5e54] leading-relaxed">
+                        <p className="mt-1 body text-dark leading-relaxed">
                           {addr.name}
                           <br />
                           {addr.line1}
@@ -175,7 +202,7 @@ export default function Account() {
                         </p>
                       </div>
                       {addr.isDefault && (
-                        <span className="text-[10px] bg-[#f3ece4] text-[#c4a093] px-2 py-0.5 rounded-full font-medium">
+                        <span className="text-[10px] bg-warm-sand text-brass-gold px-2 py-0.5 font-medium">
                           Default
                         </span>
                       )}
@@ -184,14 +211,14 @@ export default function Account() {
                       {!addr.isDefault && (
                         <button
                           onClick={() => setDefaultAddress(addr.id)}
-                          className="text-xs text-[#9a8d82] hover:text-[#c4a093] transition-colors"
+                          className="text-xs text-muted hover:text-brass-gold transition-colors"
                         >
                           Set Default
                         </button>
                       )}
                       <button
                         onClick={() => removeAddress(addr.id)}
-                        className="text-xs text-[#9a8d82] hover:text-red-500 transition-colors"
+                        className="text-xs text-muted hover:text-red-500 transition-colors"
                         aria-label={`Remove ${addr.label} address`}
                       >
                         Remove
@@ -201,24 +228,39 @@ export default function Account() {
                 ))}
               </ul>
             )}
+
+            {showAddForm && (
+              <div className="mt-6 border border-hairline p-6 space-y-4 bg-warm-sand">
+                <h3 className="micro text-muted">Add New Address</h3>
+                <p className="body-small text-muted">
+                  Address management coming soon. Your saved addresses will appear here.
+                </p>
+                <button
+                  onClick={() => setShowAddForm(false)}
+                  className="caption text-brass-gold hover:underline"
+                >
+                  Cancel
+                </button>
+              </div>
+            )}
           </section>
 
           {/* ── Wishlist ── */}
           <section id="wishlist" aria-labelledby="wishlist-heading">
             <h2
               id="wishlist-heading"
-              className="text-xs font-semibold uppercase tracking-[0.2em] text-[#9a8d82] mb-4"
+              className="micro text-muted mb-4"
             >
               Wishlist
             </h2>
             {wishlistProducts.length === 0 ? (
-              <div className="rounded border border-dashed border-[#e8e0d8] p-8 text-center">
-                <p className="text-sm text-[#9a8d82]">
+              <div className="border border-dashed border-ink/20 p-8 text-center">
+                <p className="body text-muted">
                   Your wishlist is empty.
                 </p>
                 <Link
                   to="/"
-                  className="mt-3 inline-block text-xs text-[#c4a093] hover:underline uppercase tracking-widest"
+                  className="mt-3 inline-block caption text-brass-gold hover:underline"
                 >
                   Browse Products
                 </Link>
@@ -228,21 +270,21 @@ export default function Account() {
                 {wishlistProducts.map((p) => (
                   <li
                     key={p.id}
-                    className="flex gap-4 rounded border border-[#e8e0d8] p-3"
+                    className="flex gap-4 border border-hairline p-3"
                   >
                     <img
                       src={p.image}
                       alt={p.title}
-                      className="h-16 w-16 rounded object-cover flex-shrink-0"
+                      className="h-16 w-16 object-cover flex-shrink-0"
                     />
                     <div className="min-w-0">
                       <Link
                         to={`/product/${p.slug}`}
-                        className="text-sm font-medium text-[#2d2926] hover:text-[#c4a093] transition-colors line-clamp-1"
+                        className="body font-medium text-ink hover:text-brass-gold transition-colors line-clamp-1"
                       >
                         {p.title}
                       </Link>
-                      <p className="text-xs text-[#9a8d82] mt-0.5">
+                      <p className="text-xs text-muted mt-0.5">
                         {formatPrice(p.priceCents / 100)}
                       </p>
                     </div>
@@ -254,5 +296,6 @@ export default function Account() {
         </div>
       </div>
     </div>
+    </PageTransition>
   );
 }

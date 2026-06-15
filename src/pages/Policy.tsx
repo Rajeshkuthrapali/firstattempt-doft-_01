@@ -30,17 +30,17 @@ export default function Policy() {
   if (!policy) {
     return (
       <div className="min-h-[60vh] flex flex-col items-center justify-center gap-4 px-6">
-        <p className="text-sm text-[#9a8d82]">Policy page not found.</p>
+        <p className="text-sm text-muted">Policy page not found.</p>
       </div>
     );
   }
 
   return (
-    <div className="mx-auto max-w-2xl px-6 py-16">
-      <h1 className="font-['Cormorant_Garamond',serif] text-3xl font-semibold text-[#2d2926] mb-8">
+    <div className="mx-auto max-w-2xl px-6 py-section">
+      <h1 className="font-heading text-3xl font-semibold text-ink mb-8">
         {policy.title}
       </h1>
-      <div className="prose prose-sm max-w-none text-[#6b5e54] leading-relaxed">
+      <div className="prose prose-sm max-w-none text-dark leading-relaxed">
         {policy.content.split("\n\n").map((para, i) => (
           <p key={i} className="mb-4 whitespace-pre-line">
             {para}

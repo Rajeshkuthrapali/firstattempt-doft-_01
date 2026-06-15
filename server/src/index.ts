@@ -157,7 +157,7 @@ const PORT = env.PORT;
 app.listen(PORT, () => {
   console.log(`
 ╔══════════════════════════════════════════════════════╗
-║  🕯  DOFT Candles — Payment Server                   ║
+║  🕯  Lumière — Payment Server                   ║
 ║  🌐  http://localhost:${PORT}                          ║
 ║  📊  Environment: ${env.NODE_ENV.padEnd(15)}              ║
 ║  💳  Razorpay: configured                            ║

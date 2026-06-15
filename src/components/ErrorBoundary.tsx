@@ -57,15 +57,15 @@ export default class ErrorBoundary extends Component<Props, State> {
               strokeLinecap="round"
             />
           </svg>
-          <h2 className="font-['Cormorant_Garamond',serif] text-[24px] text-[#2d2926]">
+          <h2 className="font-heading text-[24px] text-ink">
             Something went wrong
           </h2>
-          <p className="max-w-md text-[14px] text-[#9a8d82]">
+          <p className="max-w-md text-[14px] text-muted">
             {this.state.error?.message || "An unexpected error occurred."}
           </p>
           <button
             onClick={() => window.location.reload()}
-            className="border border-[#c4a093] px-6 py-2.5 text-[12px] font-semibold uppercase tracking-[0.15em] text-[#c4a093] transition-all hover:bg-[#c4a093] hover:text-white"
+            className="border border-brass-gold px-6 py-2.5 text-[12px] font-semibold uppercase tracking-[0.15em] text-brass-gold transition-all hover:bg-brass-gold hover:text-white"
           >
             Reload Page
           </button>

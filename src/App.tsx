@@ -13,6 +13,12 @@ const Collections = lazy(() => import("./pages/Collections"));
 const Search = lazy(() => import("./pages/Search"));
 const Checkout = lazy(() => import("./pages/Checkout"));
 const Policy = lazy(() => import("./pages/Policy"));
+const About = lazy(() => import("./pages/About"));
+const Journal = lazy(() => import("./pages/Journal"));
+const JournalArticle = lazy(() => import("./pages/JournalArticle"));
+const Contact = lazy(() => import("./pages/Contact"));
+const ForgotPassword = lazy(() => import("./pages/ForgotPassword"));
+const NotFound = lazy(() => import("./pages/NotFound"));
 
 /* Admin */
 const AdminLayout = lazy(() => import("./pages/admin/AdminLayout"));
@@ -45,11 +51,22 @@ export default function App() {
 
             {/* Auth & Account */}
             <Route path="auth" element={<Auth />} />
+            <Route path="login" element={<Auth />} />
             <Route path="account" element={<Account />} />
+            <Route path="forgot-password" element={<ForgotPassword />} />
 
             {/* Content & Legal */}
             <Route path="policy/:slug" element={<Policy />} />
+
+            {/* New Pages — Phase 7 */}
+            <Route path="about" element={<About />} />
+            <Route path="journal" element={<Journal />} />
+            <Route path="journal/:slug" element={<JournalArticle />} />
+            <Route path="contact" element={<Contact />} />
           </Route>
+
+          {/* 404 — catch-all, must be last */}
+          <Route path="*" element={<NotFound />} />
 
           {/* Admin — own layout with sidebar + role guard */}
           <Route path="admin" element={<AdminLayout />}>

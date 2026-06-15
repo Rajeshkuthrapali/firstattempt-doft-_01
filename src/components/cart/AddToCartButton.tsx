@@ -1,4 +1,3 @@
-"use client";
 import { useState } from "react";
 import { ShoppingBag, Check } from "lucide-react";
 import { useCartStore } from "@/stores/cart";

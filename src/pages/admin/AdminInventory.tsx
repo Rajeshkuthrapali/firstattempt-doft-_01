@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { api } from "../../lib/api/client";
 import { useApi } from "../../lib/hooks/useApi";
 import { formatPrice } from "../../lib/format";
+import { PageSkeleton } from "../../components/PageSkeleton";
 import type { ProductSummary, PaginatedResponse } from "../../types/catalog";
 
 interface InventoryRow {
@@ -73,40 +74,36 @@ export default function AdminInventory() {
   }
 
   if (productsApi.loading) {
-    return (
-      <div>
-        <p className="text-sm text-[#9a8d82] py-4">Loading inventory...</p>
-      </div>
-    );
+    return <PageSkeleton />;
   }
 
   return (
     <div>
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="font-['Cormorant_Garamond',serif] text-3xl font-medium text-[#2d2926]">
+          <h1 className="font-heading text-3xl font-medium text-ink">
             Inventory
           </h1>
           {lowStockCount > 0 && (
-            <p className="mt-2 rounded-full bg-amber-50 px-3 py-1 text-xs font-medium text-amber-700 inline-block">
+            <p className="mt-2 bg-amber-50 px-3 py-1 text-xs font-medium text-amber-700 inline-block">
               ⚠ {lowStockCount} item{lowStockCount > 1 ? "s" : ""} low / out of stock
             </p>
           )}
         </div>
         <button
           onClick={exportCSV}
-          className="rounded bg-[#2d2926] px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.15em] text-white hover:bg-[#c4a093] transition-colors"
+          className="bg-ink px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.15em] text-white hover:bg-brass-gold transition-colors"
         >
           Export CSV
         </button>
       </div>
 
-      <div className="overflow-x-auto rounded-lg border border-[#e8e0d8] bg-white">
+      <div className="overflow-x-auto border border-hairline bg-white">
         <table className="w-full text-sm">
-          <thead className="border-b border-[#e8e0d8] bg-[#f3ece4]">
+          <thead className="border-b border-hairline bg-[#f3ece4]">
             <tr>
               {["Product", "Category", "Price", "Stock Level", "Status"].map((h) => (
-                <th key={h} className="px-4 py-3 text-left text-[10px] uppercase tracking-[0.15em] text-[#9a8d82]">
+                <th key={h} className="px-4 py-3 text-left text-[10px] uppercase tracking-[0.15em] text-muted">
                   {h}
                 </th>
               ))}
@@ -118,26 +115,26 @@ export default function AdminInventory() {
               return (
                 <tr
                   key={row.id}
-                  className={`transition-colors ${isLow ? "bg-amber-50/40" : "hover:bg-[#faf7f4]"}`}
+                  className={`transition-colors ${isLow ? "bg-amber-50/40" : "hover:bg-soft-cream"}`}
                 >
-                  <td className="px-4 py-3 font-medium text-[#2d2926]">{row.title}</td>
-                  <td className="px-4 py-3 text-[#6b5e54] capitalize">{row.category}</td>
-                  <td className="px-4 py-3 text-[#6b5e54]">{formatPrice(row.priceCents / 100)}</td>
+                  <td className="px-4 py-3 font-medium text-ink">{row.title}</td>
+                  <td className="px-4 py-3 text-dark capitalize">{row.category}</td>
+                  <td className="px-4 py-3 text-dark">{formatPrice(row.priceCents / 100)}</td>
                   <td className="px-4 py-3">
                     <input
                       type="number"
                       min={0}
                       value={row.stock}
                       onChange={(e) => updateStock(row.id, Math.max(0, Number(e.target.value)))}
-                      className={`w-20 rounded border px-2 py-1 text-sm outline-none focus:border-[#c4a093] ${
-                        isLow ? "border-amber-300" : "border-[#e8e0d8]"
+                      className={`w-20 border px-2 py-1 text-sm outline-none focus:border-ink ${
+                        isLow ? "border-amber-300" : "border-hairline"
                       }`}
                       aria-label={`Stock count for ${row.title}`}
                     />
                   </td>
                   <td className="px-4 py-3">
                     <span
-                      className={`rounded-full px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider ${
+                      className={`px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider ${
                         row.stock === 0
                           ? "bg-red-50 text-red-600"
                           : isLow
@@ -155,7 +152,7 @@ export default function AdminInventory() {
         </table>
       </div>
 
-      <p className="mt-4 text-[11px] text-[#9a8d82]">
+      <p className="mt-4 text-[11px] text-muted">
         * Items with stock ≤ {LOW_STOCK_THRESHOLD} are highlighted. Changes are saved locally; in production they persist via API.
       </p>
     </div>

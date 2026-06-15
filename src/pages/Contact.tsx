@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { api } from "../lib/api/client";
+import PageTransition from "../components/PageTransition";
 
 /**
  * Contact Us page.
@@ -7,23 +9,48 @@ import { useState } from "react";
  */
 export default function Contact() {
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [reason, setReason] = useState("general");
   const [message, setMessage] = useState("");
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    // In production: POST to /api/contact
-    setSubmitted(true);
+    if (sending) return;
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    setSending(true);
+    setError(null);
+
+    try {
+      const payload = {
+        name: formData.get("name") as string,
+        email: formData.get("email") as string,
+        reason: formData.get("reason") as string,
+        message: formData.get("message") as string,
+      };
+
+      await api.post("/api/contact", payload);
+      setSubmitted(true);
+      form.reset();
+    } catch (err) {
+      setError("Failed to send message. Please try again or email us directly.");
+    } finally {
+      setSending(false);
+    }
   }
 
   return (
-    <div className="mx-auto max-w-2xl px-6 py-16">
-      <h1 className="font-['Cormorant_Garamond',serif] text-4xl font-semibold text-[#2d2926] mb-3">
+    <PageTransition>
+    <div className="mx-auto max-w-2xl px-6 py-section">
+      <h1 className="heading-xl text-ink mb-3">
         Contact Us
       </h1>
-      <p className="text-sm text-[#6b5e54] mb-10 leading-relaxed">
+      <p className="body text-dark mb-10 leading-relaxed">
         We'd love to hear from you — whether it's a question about an order, a
         gifting enquiry, or just a love note for your favourite candle.
       </p>
@@ -32,13 +59,13 @@ export default function Contact() {
         <div
           role="alert"
           aria-live="polite"
-          className="rounded bg-[#f3ece4] border border-[#e8d8d0] p-8 text-center"
+          className="bg-warm-sand border border-hairline p-8 text-center"
         >
           <p className="text-2xl mb-2">🕯️</p>
-          <p className="text-base font-semibold text-[#2d2926]">
+          <p className="body font-semibold text-ink">
             Thank you, {name}!
           </p>
-          <p className="text-sm text-[#6b5e54] mt-2">
+          <p className="body text-dark mt-2">
             We'll get back to you at {email} within 1–2 business days.
           </p>
         </div>
@@ -48,7 +75,7 @@ export default function Contact() {
             <div>
               <label
                 htmlFor="contact-name"
-                className="block text-xs font-medium uppercase tracking-widest text-[#9a8d82] mb-1"
+                className="block micro text-muted mb-1"
               >
                 Your Name
               </label>
@@ -60,13 +87,13 @@ export default function Contact() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Priya Sharma"
-                className="w-full border border-[#e8e0d8] bg-white px-4 py-3 text-sm text-[#2d2926] placeholder:text-[#c4b8b0] outline-none focus:border-[#c4a093] transition-colors rounded-sm"
+                className="w-full border border-hairline bg-white px-4 py-3 text-sm text-ink placeholder:text-muted/50 outline-none focus:border-ink transition-colors"
               />
             </div>
             <div>
               <label
                 htmlFor="contact-email"
-                className="block text-xs font-medium uppercase tracking-widest text-[#9a8d82] mb-1"
+                className="block micro text-muted mb-1"
               >
                 Email Address
               </label>
@@ -78,13 +105,13 @@ export default function Contact() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@example.com"
-                className="w-full border border-[#e8e0d8] bg-white px-4 py-3 text-sm text-[#2d2926] placeholder:text-[#c4b8b0] outline-none focus:border-[#c4a093] transition-colors rounded-sm"
+                className="w-full border border-hairline bg-white px-4 py-3 text-sm text-ink placeholder:text-muted/50 outline-none focus:border-ink transition-colors"
               />
             </div>
           </div>
 
           <fieldset>
-            <legend className="text-xs font-medium uppercase tracking-widest text-[#9a8d82] mb-2">
+            <legend className="text-xs font-medium uppercase tracking-widest text-muted mb-2">
               I'm writing about…
             </legend>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
@@ -96,10 +123,10 @@ export default function Contact() {
               ].map(({ value, label }) => (
                 <label
                   key={value}
-                  className={`rounded border p-3 text-center cursor-pointer text-xs transition-colors ${
+                  className={`border p-3 text-center cursor-pointer text-xs transition-colors ${
                     reason === value
-                      ? "border-[#c4a093] bg-[#fdf6f3] text-[#c4a093] font-semibold"
-                      : "border-[#e8e0d8] text-[#6b5e54] hover:border-[#c4a093]"
+                      ? "border-brass-gold bg-brass-gold/5 text-brass-gold font-semibold"
+                      : "border-hairline text-dark hover:border-brass-gold"
                   }`}
                 >
                   <input
@@ -119,7 +146,7 @@ export default function Contact() {
           <div>
             <label
               htmlFor="contact-message"
-              className="block text-xs font-medium uppercase tracking-widest text-[#9a8d82] mb-1"
+              className="block micro text-muted mb-1"
             >
               Message
             </label>
@@ -130,34 +157,44 @@ export default function Contact() {
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               placeholder="Tell us how we can help…"
-              className="w-full border border-[#e8e0d8] bg-white px-4 py-3 text-sm text-[#2d2926] placeholder:text-[#c4b8b0] outline-none focus:border-[#c4a093] transition-colors rounded-sm resize-none"
+               className="w-full border border-hairline bg-white px-4 py-3 text-sm text-ink placeholder:text-muted/50 outline-none focus:border-ink transition-colors resize-none"
             />
           </div>
 
+          {error && (
+            <p
+              role="alert"
+              className="body text-error bg-error/10 border border-error/30 px-4 py-3"
+            >
+              {error}
+            </p>
+          )}
           <button
             type="submit"
-            className="w-full bg-[#2d2926] text-white py-4 text-xs font-semibold uppercase tracking-[0.15em] hover:bg-[#c4a093] transition-colors rounded-sm"
+            disabled={sending}
+            className="w-full bg-ink text-ivory py-4 caption hover:bg-brass-gold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Send Message
+            {sending ? "Sending…" : "Send Message"}
           </button>
         </form>
       )}
 
       {/* Contact details */}
-      <dl className="mt-12 grid sm:grid-cols-3 gap-6 border-t border-[#e8e0d8] pt-10">
+      <dl className="mt-12 grid sm:grid-cols-3 gap-6 border-t border-hairline pt-10" data-animate="fade-up">
         {[
           { term: "Email", value: "hello@lumiere.in" },
           { term: "Phone", value: "+91 98765 43210" },
           { term: "Hours", value: "Mon–Sat, 10 am – 6 pm IST" },
         ].map(({ term, value }) => (
           <div key={term}>
-            <dt className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#9a8d82] mb-1">
+            <dt className="micro text-muted mb-1">
               {term}
             </dt>
-            <dd className="text-sm text-[#2d2926]">{value}</dd>
+            <dd className="body text-ink">{value}</dd>
           </div>
         ))}
       </dl>
     </div>
+    </PageTransition>
   );
 }

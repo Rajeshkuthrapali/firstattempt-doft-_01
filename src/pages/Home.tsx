@@ -1,19 +1,16 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import { api } from "../lib/api/client";
 import { useApi } from "../lib/hooks/useApi";
 import ProductCard from "../components/ProductCard";
+import PageTransition from "../components/PageTransition";
+import { heroReveal } from "../lib/animations";
+import { ProductGridSkeleton } from "../components/ProductGridSkeleton";
 import type { ProductSummary, PaginatedResponse } from "../types/catalog";
 
-/**
- * Home page for the Lumière candle store.
- * Matches the reference: full-width hero with calligraphic headline,
- * product grid, bestsellers section, value props strip, and
- * a "Clean Burning" brand story section.
- *
- * GSAP scroll animations are applied via data-animate attributes
- * (handled by LayoutShell's initScrollAnimations).
- */
 export default function Home() {
+  const heroRef = useRef<HTMLDivElement>(null);
+
   const featuredApi = useApi<ProductSummary[]>(
     () => api.get<PaginatedResponse<ProductSummary>>("/api/products/featured"),
     [],
@@ -23,271 +20,353 @@ export default function Home() {
     featuredApi.execute();
   }, [featuredApi.execute]);
 
+  /* ── Hero reveal animation ────────────── */
+  useEffect(() => {
+    if (heroRef.current) {
+      const cleanup = heroReveal(heroRef.current);
+      return () => {
+        if (cleanup && typeof cleanup.revert === "function") cleanup.revert();
+        else if (cleanup && typeof cleanup.kill === "function") cleanup.kill();
+      };
+    }
+  }, []);
+
   const signatureProducts = (featuredApi.data ?? []).slice(0, 4);
-  const bestsellerProducts = (featuredApi.data ?? []).slice(0, 3);
+  const bestsellerProducts = (featuredApi.data ?? []).slice(2, 6);
 
   return (
-    <>
-      {/* ── Hero Section ────────────────────────── */}
+    <PageTransition>
+      {/* ═══════════════════════════════════════════
+           1. HERO — Editorial brand campaign
+           ═══════════════════════════════════════════ */}
       <section
-        id="hero"
-        className="relative overflow-hidden"
+        ref={heroRef}
+        className="relative h-[90vh] min-h-[650px] max-h-[1000px] overflow-hidden bg-deep-charcoal"
         aria-label="Hero banner"
       >
-        <div className="relative h-[75vh] min-h-[500px] max-h-[800px]">
-          {/* Background image */}
-          <img
-            src="/hero-candle.png"
-            alt="Signature scented candle collection by Lumière"
-            className="absolute inset-0 h-full w-full object-cover"
-          />
-          {/* Gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#2d2926]/50 via-[#2d2926]/25 to-transparent" />
+        {/* Background image with slow zoom */}
+        <img
+          src="/hero-candle.png"
+          alt=""
+          className="absolute inset-0 h-full w-full object-cover opacity-50 scale-105"
+          style={{ transform: "scale(1.08)" }}
+        />
+        {/* Multi-layer gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-deep-charcoal/50 via-deep-charcoal/30 to-deep-charcoal/85" />
+        <div className="absolute inset-0 bg-gradient-to-r from-deep-charcoal/40 to-transparent" />
 
-          {/* Hero copy */}
-          <div className="relative flex h-full flex-col justify-center px-8 md:px-16 lg:px-24 max-w-3xl">
-            <p className="animate-fade-in text-[11px] uppercase tracking-[0.35em] text-white/80">
-              Handcrafted Luxury
-            </p>
-            <h1 className="animate-slide-up mt-4 font-['Cormorant_Garamond',serif] text-[clamp(2.5rem,7vw,5rem)] italic font-light leading-[1.1] text-white">
-              signature
-              <br />
-              <span className="not-italic font-medium tracking-[0.04em]">
-                Scented Collection
-              </span>
-            </h1>
-            <p className="animate-fade-in delay-300 mt-5 max-w-md text-[14px] leading-relaxed text-white/75">
-              Discover our curated range of naturally scented candles —
-              hand-poured with 100% soy wax for a clean, luxurious burn.
-            </p>
-            <a
-              href="#collection"
-              className="animate-fade-in delay-500 mt-8 inline-flex w-fit items-center gap-2 border border-white/60 bg-white/10 px-8 py-3 text-[12px] font-semibold uppercase tracking-[0.2em] text-white backdrop-blur-sm transition-all duration-300 hover:bg-white hover:text-[#2d2926]"
+        {/* Editorial hero content — left-aligned, not centered */}
+        <div className="relative h-full flex flex-col justify-center px-8 md:px-16 lg:px-24 max-w-5xl">
+          <p
+            data-hero="label"
+            className="micro tracking-[0.15em] text-brass-gold mb-6"
+          >
+            Lumière — Artisanal Candles
+          </p>
+          <h1
+            data-hero="headline"
+            className="heading-hero-display text-white max-w-4xl"
+          >
+            Light,
+            <br />
+            <span className="text-brass-gold">responsibly</span>
+          </h1>
+          <p
+            data-hero="subtext"
+            className="mt-8 body text-white/65 max-w-xl leading-relaxed"
+          >
+            Handcrafted in small batches using 100% natural soy wax, cotton wicks,
+            and the finest fragrance oils. Each candle is a quiet ritual — a
+            moment of stillness in an otherwise restless world.
+          </p>
+          <div data-hero="cta" className="mt-10 flex items-center gap-6">
+            <Link
+              to="/collections"
+              className="group inline-flex items-center gap-3 border border-brass-gold px-10 py-4 caption text-brass-gold hover:bg-brass-gold hover:text-warm-ivory transition-all duration-500"
             >
-              Shop Now
+              Explore the Collection
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={1.5}
+                className="transition-transform duration-300 group-hover:translate-x-1"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+              </svg>
+            </Link>
+            <Link
+              to="/about"
+              className="caption text-white/70 hover:text-white transition-colors duration-300"
+            >
+              Our Story
+            </Link>
+          </div>
+        </div>
+
+        {/* Scroll indicator */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/30">
+          <span className="tiny">Scroll</span>
+          <div className="w-px h-8 bg-gradient-to-b from-white/40 to-transparent" />
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════
+          2. BRAND PHILOSOPHY — Editorial spread
+          ═══════════════════════════════════════════ */}
+      <section className="mx-auto max-w-7xl px-8 md:px-12 py-section" data-animate="fade-up">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-20 items-center">
+          <div className="space-y-8 max-w-lg">
+            <p className="micro tracking-[0.15em] text-brass-gold">
+              Our Philosophy
+            </p>
+            <h2 className="heading-xl text-ink leading-[1.05]">
+              Crafted for those who notice the details
+            </h2>
+            <div className="w-16 h-px bg-brass-gold" />
+            <div className="space-y-5">
+              <p className="body text-dark leading-relaxed">
+                Every Lumière candle begins with a single question: what makes a
+                space feel complete? We believe it is not merely fragrance, but
+                intention — the quiet ritual of striking a match, watching the flame
+                settle, and letting the scent unfold naturally.
+              </p>
+              <p className="body text-muted leading-relaxed">
+                Our candles are hand-poured in small batches using 100% natural soy
+                wax, cotton wicks, and phthalate-free fragrance oils. No dyes, no
+                shortcuts, no compromises. Just the purest expression of craft.
+              </p>
+            </div>
+          </div>
+          <div data-animate="image-reveal" className="relative overflow-hidden">
+            <img
+              src="/product-detail.png"
+              alt="Lumière candle in a calm interior setting"
+              className="w-full h-[550px] object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-soft-cream/20 to-transparent" />
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════
+          3. FEATURED COLLECTION — Curated showcase
+          ═══════════════════════════════════════════ */}
+      <section className="bg-warm-sand py-section">
+        <div className="mx-auto max-w-7xl px-8 md:px-12">
+          <div className="text-center mb-16">
+            <p className="micro tracking-[0.15em] text-brass-gold">
+              Curated Selection
+            </p>
+            <h2 className="heading-xl text-ink mt-4 leading-[1.05]">
+              Signature Fragrances
+            </h2>
+            <div className="mx-auto mt-6 w-16 h-px bg-brass-gold" />
+            <p className="mt-6 body text-muted max-w-lg mx-auto leading-relaxed">
+              A carefully edited collection of our most beloved scents — each one
+              designed to transform the atmosphere of any room.
+            </p>
+          </div>
+
+          {featuredApi.loading ? (
+            <ProductGridSkeleton count={4} />
+          ) : featuredApi.error ? (
+            <div className="py-16 text-center body text-muted">
+              <p>Unable to load products at this time.</p>
+              <Link to="/collections" className="mt-4 inline-block text-brass-gold caption tracking-[0.15em] hover:underline">
+                Browse all products
+              </Link>
+            </div>
+          ) : (
+            <div
+              className="grid grid-cols-2 gap-6 md:gap-8 lg:grid-cols-4"
+              data-animate="stagger"
+            >
+              {signatureProducts.length > 0 ? (
+                signatureProducts.map((product) => (
+                  <div key={product.id} data-animate-child>
+                    <ProductCard product={product} />
+                  </div>
+                ))
+              ) : (
+                <p className="col-span-full text-center body text-muted py-12">
+                  No featured products available.
+                </p>
+              )}
+            </div>
+          )}
+
+          <div className="mt-16 text-center">
+            <Link
+              to="/collections"
+              className="group inline-flex items-center gap-2 border border-brass-gold px-10 py-3.5 caption text-brass-gold hover:bg-brass-gold hover:text-warm-ivory transition-all duration-500"
+            >
+              View All Products
               <svg
                 width="14"
                 height="14"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
-                strokeWidth={2}
+                strokeWidth={1.5}
+                className="transition-transform duration-300 group-hover:translate-x-1"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
-                />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
               </svg>
-            </a>
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* ── New Arrivals Grid ────────────────────── */}
-      <section
-        id="collection"
-        className="mx-auto max-w-7xl px-6 py-16 md:py-24"
-        data-animate="fade-up"
-      >
-        <div className="mb-10 text-center">
-          <p className="text-[11px] uppercase tracking-[0.3em] text-[#c4a093]">
-            New Arrivals
+      {/* ═══════════════════════════════════════════
+          4. BEST SELLERS — Editorial product grid
+          ═══════════════════════════════════════════ */}
+      <section className="mx-auto max-w-7xl px-8 md:px-12 py-section" data-animate="fade-up">
+        <div className="text-center mb-16">
+          <p className="micro tracking-[0.15em] text-brass-gold">
+            Most Loved
           </p>
-          <h2 className="mt-2 font-['Cormorant_Garamond',serif] text-[32px] md:text-[40px] font-medium text-[#2d2926]">
-            Signature Fragrances
+          <h2 className="heading-xl text-ink mt-4 leading-[1.05]">
+            Bestsellers
           </h2>
-          <div className="mx-auto mt-3 h-px w-12 bg-[#c4a093]" />
+          <div className="mx-auto mt-6 w-16 h-px bg-brass-gold" />
         </div>
 
         {featuredApi.loading ? (
-          <div className="py-12 text-center text-sm text-[#9a8d82]">Loading...</div>
-        ) : featuredApi.error ? (
-          <div className="py-12 text-center text-sm text-[#9a8d82]">
-            Unable to load products.
-          </div>
-        ) : (
-          <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 md:gap-5">
-            {signatureProducts.map((product) => (
-              <div key={product.id} data-animate="scale-in">
-                <ProductCard product={product} />
-              </div>
-            ))}
-          </div>
-        )}
-
-        <div className="mt-10 text-center" data-animate="fade-up">
-          <a
-            href="#"
-            className="inline-block border border-[#c4a093] px-8 py-3 text-[12px] font-semibold uppercase tracking-[0.15em] text-[#c4a093] transition-all duration-300 hover:bg-[#c4a093] hover:text-white"
+          <ProductGridSkeleton count={4} />
+        ) : bestsellerProducts.length > 0 ? (
+          <div
+            className="grid grid-cols-2 gap-6 md:gap-8 lg:grid-cols-4"
+            data-animate="stagger"
           >
-            View All Products
-          </a>
-        </div>
-      </section>
-
-      {/* ── Lifestyle Banner ─────────────────────── */}
-      <section
-        className="relative h-[50vh] min-h-[350px] overflow-hidden"
-        aria-label="Lifestyle imagery and brand quote"
-        data-animate="scale-in"
-      >
-        <img
-          src="/product-detail.png"
-          alt="Lifestyle candle setting"
-          className="absolute inset-0 h-full w-full object-cover"
-        />
-        <div className="absolute inset-0 bg-[#2d2926]/30" />
-        <div className="relative flex h-full flex-col items-center justify-center text-center px-6">
-          <p className="font-['Cormorant_Garamond',serif] text-[clamp(1.8rem,5vw,3.5rem)] italic font-light text-white leading-snug">
-            &ldquo;allow for first scent of love&rdquo;
-          </p>
-          <a
-            href="#"
-            className="mt-6 bg-[#c4a093] px-6 py-2.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-white transition-colors hover:bg-[#a8877b]"
-          >
-            Shop Bestsellers
-          </a>
-        </div>
-      </section>
-
-      {/* ── Bestsellers Section ──────────────────── */}
-      <section className="mx-auto max-w-7xl px-6 py-16 md:py-24" data-animate="fade-up">
-        <div className="mb-10 text-center">
-          <p className="text-[11px] uppercase tracking-[0.3em] text-[#c4a093]">
-            Most Loved
-          </p>
-          <h2 className="mt-2 font-['Cormorant_Garamond',serif] text-[32px] md:text-[40px] font-medium text-[#2d2926]">
-            Bestsellers
-          </h2>
-          <div className="mx-auto mt-3 h-px w-12 bg-[#c4a093]" />
-        </div>
-
-        {bestsellerProducts.length > 0 ? (
-          <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:gap-5">
             {bestsellerProducts.map((product) => (
-              <div key={product.id} data-animate="fade-up">
+              <div key={product.id} data-animate-child>
                 <ProductCard product={product} />
               </div>
             ))}
           </div>
         ) : (
-          !featuredApi.loading && (
-            <div className="py-8 text-center text-sm text-[#9a8d82]">
-              No products to show yet.
-            </div>
-          )
+          <div className="py-16 text-center body text-muted">
+            <p>No products to show yet.</p>
+            <Link to="/collections" className="mt-4 inline-block text-brass-gold caption tracking-[0.15em] hover:underline">
+              Browse our collection
+            </Link>
+          </div>
         )}
+
+        {/* Editorial pull-quote between sections */}
+        <div className="mt-24 text-center">
+          <div className="section-separator max-w-2xl mx-auto mb-12" />
+          <p className="pull-quote max-w-2xl mx-auto text-muted">
+            "A candle is not merely an object. It is an atmosphere, a memory, a
+            quiet insistence on beauty in the everyday."
+          </p>
+          <div className="section-separator max-w-2xl mx-auto mt-12" />
+        </div>
       </section>
 
-      {/* ── Value Props Strip ────────────────────── */}
-      <section
-        className="bg-[#f3ece4] border-y border-[#e8e0d8]"
-        aria-label="Brand values"
-      >
-        <div
-          className="mx-auto grid max-w-5xl grid-cols-1 gap-8 px-6 py-14 sm:grid-cols-3 text-center"
-          data-animate="stagger"
-        >
-          {[
-            {
-              icon: (
-                <svg
-                  width="32"
-                  height="32"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="#c4a093"
-                  strokeWidth={1.2}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M15.362 5.214A8.252 8.252 0 0 1 12 21 8.25 8.25 0 0 1 6.038 7.047 8.287 8.287 0 0 0 9 9.601a8.983 8.983 0 0 1 3.361-6.867 8.21 8.21 0 0 0 3 2.48Z"
-                  />
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M12 18a3.75 3.75 0 0 0 .495-7.468 5.99 5.99 0 0 0-1.925 3.547 5.975 5.975 0 0 1-2.133-1.001A3.75 3.75 0 0 0 12 18Z"
-                  />
-                </svg>
-              ),
-              title: "Hand-Poured",
-              desc: "Crafted in small batches for unmatched quality & consistency.",
-            },
-            {
-              icon: (
-                <svg
-                  width="32"
-                  height="32"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="#8b9e7e"
-                  strokeWidth={1.2}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M12.75 3.03v.568c0 2.849.274 5.695.82 8.493l.004.013a5.036 5.036 0 0 1-2.224 4.766c-1.065.691-2.285 1.052-3.534 1.123a47.5 47.5 0 0 0 0 2.014M12 21a8.966 8.966 0 0 0 5.657-2m-5.657 2a8.966 8.966 0 0 1-5.657-2M12 21v-7.5"
-                  />
-                </svg>
-              ),
-              title: "100% Natural Soy",
-              desc: "Pure soy wax, cotton wicks & phthalate-free fragrance oils.",
-            },
-            {
-              icon: (
-                <svg
-                  width="32"
-                  height="32"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="#c4a093"
-                  strokeWidth={1.2}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M21 11.25v8.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5v-8.25M12 4.875A2.625 2.625 0 1 0 9.375 7.5H12m0-2.625V7.5m0-2.625A2.625 2.625 0 1 1 14.625 7.5H12m0 0V21m-8.625-9.75h18"
-                  />
-                </svg>
-              ),
-              title: "Gift-Ready",
-              desc: "Premium packaging — perfect for gifting someone special.",
-            },
-          ].map(({ icon, title, desc }) => (
-            <div key={title} className="flex flex-col items-center gap-3" data-animate-child>
-              {icon}
-              <h3 className="font-['Cormorant_Garamond',serif] text-[18px] font-semibold text-[#2d2926]">
-                {title}
-              </h3>
-              <p className="text-[13px] leading-relaxed text-[#6b5e54] max-w-[240px]">
-                {desc}
+      {/* ═══════════════════════════════════════════
+          5. CRAFTSMANSHIP — Artisan process feature
+          ═══════════════════════════════════════════ */}
+      <section className="bg-deep-charcoal py-section" data-animate="fade-up">
+        <div className="mx-auto max-w-7xl px-8 md:px-12 grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-20 items-center">
+          <div data-animate="image-reveal" className="order-2 md:order-1 overflow-hidden">
+            <img
+              src="/golden-hour.png"
+              alt="Hand-pouring soy wax into a candle vessel"
+              className="w-full h-[500px] object-cover"
+            />
+          </div>
+          <div className="space-y-8 max-w-lg order-1 md:order-2">
+            <p className="micro tracking-[0.15em] text-brass-gold">
+              Craftsmanship
+            </p>
+            <h2 className="heading-xl text-white leading-[1.05]">
+              Made by hand,<br />
+              <span className="text-brass-gold">with care</span>
+            </h2>
+            <div className="w-16 h-px bg-brass-gold" />
+            <div className="space-y-5">
+              <p className="body text-white/70 leading-relaxed">
+                Each candle is hand-poured in our studio, with every batch
+                tested for an even burn, optimal scent throw, and a clean
+                finish. We source our soy wax from non-GMO suppliers and our
+                fragrance oils from houses that share our commitment to
+                transparency.
+              </p>
+              <p className="body text-white/50 leading-relaxed">
+                The result is a candle that burns evenly, fills a room without
+                overwhelming it, and looks at home on any surface — from a
+                minimalist concrete shelf to an heirloom wooden table.
               </p>
             </div>
-          ))}
+          </div>
         </div>
       </section>
 
-      {/* ── Clean Burning Section ────────────────── */}
-      <section
-        className="mx-auto max-w-4xl px-6 py-20 text-center"
-        data-animate="fade-up"
-      >
-        <h2 className="font-['Cormorant_Garamond',serif] text-[28px] md:text-[36px] font-medium text-[#2d2926] leading-snug">
-          Clean Burning so you can light
-          <br />
-          your candle responsibly
-        </h2>
-        <p className="mx-auto mt-5 max-w-2xl text-[14px] leading-relaxed text-[#6b5e54]">
-          Lumière candles are 100% coconut, cruelty-free, plant-based, and
-          contain no artificial dyes, ensuring the purest and cleanest
-          fragrances. Our carefully curated ingredients ensure a cleaner burn
-          and a more sustainable product, all beautifully presented in
-          eco-conscious packaging.
-        </p>
-        <div className="mx-auto mt-6 h-px w-16 bg-[#c4a093]" />
+      {/* ═══════════════════════════════════════════
+          6. TESTIMONIALS — Social proof
+          ═══════════════════════════════════════════ */}
+      <section className="py-section" data-animate="fade-up">
+        <div className="mx-auto max-w-6xl px-8 md:px-12">
+          <div className="text-center mb-16">
+            <p className="micro tracking-[0.15em] text-brass-gold">
+              What Our Customers Say
+            </p>
+            <h2 className="heading-xl text-ink mt-4 leading-[1.05]">
+              Loved by those who know
+            </h2>
+            <div className="mx-auto mt-6 w-16 h-px bg-brass-gold" />
+          </div>
+
+          {/* Featured testimonial */}
+          <blockquote className="text-center max-w-3xl mx-auto mb-20">
+            <p className="pull-quote text-ink">
+              &ldquo;The Midnight Oud candle has become an evening ritual. It
+              fills the room without shouting — exactly what I wanted.&rdquo;
+            </p>
+            <div className="mt-8 w-12 h-px bg-brass-gold mx-auto" />
+            <p className="mt-6 caption text-dark tracking-[0.12em]">
+              — Priya S., Mumbai
+            </p>
+          </blockquote>
+
+          {/* Secondary testimonials grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8">
+            {[
+              {
+                quote: "The quality is evident from the first burn. Clean, even, and the scent lasts beautifully.",
+                author: "Ananya R.",
+                location: "Delhi",
+              },
+              {
+                quote: "I gifted the Golden Hour set to three friends. All of them asked where I found it.",
+                author: "Vikram P.",
+                location: "Bangalore",
+              },
+              {
+                quote: "Finally, a candle that looks as good as it smells. The packaging alone is a statement.",
+                author: "Maya K.",
+                location: "Pune",
+              },
+            ].map(({ quote, author, location }) => (
+              <div key={author} className="text-center space-y-4">
+                <p className="body text-dark leading-relaxed italic">
+                  &ldquo;{quote}&rdquo;
+                </p>
+                <div className="w-10 h-px bg-brass-gold/40 mx-auto" />
+                <div>
+                  <p className="caption text-dark tracking-[0.1em]">{author}</p>
+                  <p className="text-[11px] text-muted tracking-wider mt-1">{location}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </section>
-    </>
+
+    </PageTransition>
   );
 }

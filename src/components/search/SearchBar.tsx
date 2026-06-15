@@ -62,7 +62,7 @@ export default function SearchBar() {
       />
 
       {/* Search panel */}
-      <div className="relative bg-[#faf7f4] shadow-xl">
+      <div className="relative bg-soft-cream shadow-xl">
         <form
           onSubmit={handleSubmit}
           className="mx-auto flex max-w-3xl items-center gap-3 px-6 py-4"
@@ -74,7 +74,7 @@ export default function SearchBar() {
             fill="none"
             stroke="currentColor"
             strokeWidth={1.8}
-            className="text-[#9a8d82] flex-shrink-0"
+            className="text-muted flex-shrink-0"
             aria-hidden="true"
           >
             <circle cx="11" cy="11" r="7" />
@@ -90,7 +90,7 @@ export default function SearchBar() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search candles, scents, collections…"
-            className="flex-1 bg-transparent py-2 text-base text-[#2d2926] placeholder:text-[#9a8d82] outline-none"
+            className="flex-1 bg-transparent py-2 text-base text-ink placeholder:text-muted outline-none"
             aria-autocomplete="list"
             aria-controls="search-suggestions"
           />
@@ -100,7 +100,7 @@ export default function SearchBar() {
               closeSearch();
               clear();
             }}
-            className="text-[#9a8d82] hover:text-[#2d2926] transition-colors"
+            className="text-muted hover:text-ink transition-colors"
             aria-label="Close search"
           >
             <svg
@@ -152,14 +152,14 @@ export default function SearchBar() {
                     className="h-10 w-10 rounded object-cover flex-shrink-0"
                   />
                   <div className="min-w-0">
-                    <p className="text-sm font-medium text-[#2d2926] truncate">
+                    <p className="text-sm font-medium text-ink truncate">
                       {product.title}
                     </p>
-                    <p className="text-xs text-[#9a8d82] truncate">
+                    <p className="text-xs text-muted truncate">
                       {product.tagline}
                     </p>
                   </div>
-                  <span className="ml-auto text-xs font-semibold text-[#2d2926] flex-shrink-0">
+                  <span className="ml-auto text-xs font-semibold text-ink flex-shrink-0">
                     {formatPrice(product.priceCents / 100)}
                   </span>
               </li>

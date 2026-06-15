@@ -22,7 +22,7 @@ export default function HeroBlock({ title, subtitle, ctaText, ctaLink, backgroun
       </div>
       
       <div className="relative z-10 text-center px-4 max-w-3xl">
-        <h1 className="font-['Cormorant_Garamond',serif] text-5xl md:text-7xl font-medium text-white mb-6">
+        <h1 className="font-heading text-5xl md:text-7xl font-medium text-white mb-6">
           {title}
         </h1>
         <p className="text-white/90 text-sm md:text-base mb-10 tracking-wide font-light">
@@ -30,7 +30,7 @@ export default function HeroBlock({ title, subtitle, ctaText, ctaLink, backgroun
         </p>
         <Link 
           to={ctaLink} 
-          className="inline-block bg-white text-[#2d2926] px-8 py-3 text-xs uppercase tracking-[0.2em] font-medium hover:bg-[#c4a093] hover:text-white transition-colors"
+          className="inline-block bg-white text-ink px-8 py-3 text-xs uppercase tracking-[0.2em] font-medium hover:bg-brass-gold hover:text-white transition-colors"
         >
           {ctaText}
         </Link>

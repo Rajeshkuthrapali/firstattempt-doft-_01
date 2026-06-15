@@ -15,7 +15,9 @@ interface SearchState {
   isOpen: boolean;
   products: ProductSummary[];
   loading: boolean;
+  error: string | null;
   fetched: boolean;
+  lastFetched: number | null;
 
   setQuery: (q: string) => void;
   clear: () => void;
@@ -48,13 +50,17 @@ function searchProducts(q: string, products: ProductSummary[]): SearchHit[] {
  * Zustand search store.
  * Fetches products from the API on first use, then filters locally.
  */
+const STALE_MS = 5 * 60 * 1000; // 5 minutes
+
 export const useSearchStore = create<SearchState>()((set, get) => ({
   query: "",
   hits: [],
   isOpen: false,
   products: [],
   loading: false,
+  error: null,
   fetched: false,
+  lastFetched: null,
 
   setQuery: (q) => {
     const state = get();
@@ -67,13 +73,15 @@ export const useSearchStore = create<SearchState>()((set, get) => ({
   close: () => set({ isOpen: false }),
 
   fetchProducts: async () => {
-    if (get().fetched) return;
+    const { fetched, lastFetched } = get();
+    const isFresh = fetched && lastFetched !== null && Date.now() - lastFetched < STALE_MS;
+    if (isFresh) return;
     set({ loading: true });
     try {
       const res = await api.get<PaginatedResponse<ProductSummary>>("/api/products?limit=100");
-      set({ products: res.data, loading: false, fetched: true });
+      set({ products: res.data, loading: false, fetched: true, lastFetched: Date.now() });
     } catch {
-      set({ loading: false });
+      set({ loading: false, error: "Failed to load products. Please try again." });
     }
   },
 }));

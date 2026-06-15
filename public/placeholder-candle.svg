@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" fill="none">
+  <rect width="400" height="500" fill="#f5f0ea"/>
+  <ellipse cx="200" cy="300" rx="80" ry="100" fill="#e8d5b5" opacity="0.5"/>
+  <rect x="185" y="190" width="30" height="110" rx="3" fill="#c9a96e" opacity="0.3"/>
+  <ellipse cx="200" cy="190" rx="20" ry="8" fill="#c9a96e" opacity="0.4"/>
+  <line x1="200" y1="182" x2="200" y2="170" stroke="#c9a96e" stroke-width="1.5" stroke-dasharray="3 2" opacity="0.3"/>
+  <text x="200" y="430" text-anchor="middle" fill="#999" font-size="12" font-family="Inter, sans-serif">Product Image</text>
+</svg>

@@ -1,4 +1,3 @@
-"use client";
 import { useState } from "react";
 import { Heart } from "lucide-react";
 
@@ -44,7 +43,7 @@ export function WishlistToggle({
         toggle();
       }}
       disabled={loading}
-      className={`rounded-full p-2 shadow-sm backdrop-blur-sm transition-all hover:scale-110 ${wishlisted ? "bg-white text-accent" : "bg-white/80 text-text-muted hover:text-accent"} disabled:opacity-50`}
+      className={`p-2 shadow-sm backdrop-blur-sm transition-all hover:scale-110 ${wishlisted ? "bg-white text-accent" : "bg-white/80 text-text-muted hover:text-accent"} disabled:opacity-50`}
       aria-label={wishlisted ? "Remove from wishlist" : "Add to wishlist"}
     >
       <Heart size={16} fill={wishlisted ? "currentColor" : "none"} />

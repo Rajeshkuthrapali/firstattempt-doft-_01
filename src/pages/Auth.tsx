@@ -2,8 +2,37 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../stores/auth";
 import { trackAccountCreated } from "../lib/analytics";
+import PageTransition from "../components/PageTransition";
 
 type Mode = "login" | "register";
+
+interface FormErrors {
+  name?: string;
+  email?: string;
+  password?: string;
+  confirmPassword?: string;
+  terms?: string;
+}
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const PASSWORD_RE = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/;
+
+/**
+ * Validate email format.
+ */
+function isValidEmail(v: string): boolean {
+  return EMAIL_RE.test(v);
+}
+
+/**
+ * Client-side password strength check:
+ * - minimum 8 characters
+ * - at least one letter
+ * - at least one digit
+ */
+function isStrongPassword(v: string): boolean {
+  return PASSWORD_RE.test(v);
+}
 
 /**
  * Authentication page — Login & Registration.
@@ -15,13 +44,56 @@ export default function Auth() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [termsAccepted, setTermsAccepted] = useState(false);
+  const [formErrors, setFormErrors] = useState<FormErrors>({});
   const { login, register, loginWithGoogle, isLoading, error, clearError } =
     useAuthStore();
   const navigate = useNavigate();
 
+  function validate(): FormErrors {
+    const errors: FormErrors = {};
+
+    if (!email.trim()) {
+      errors.email = "Email is required.";
+    } else if (!isValidEmail(email)) {
+      errors.email = "Please enter a valid email address.";
+    }
+
+    if (!password) {
+      errors.password = "Password is required.";
+    } else if (!isStrongPassword(password)) {
+      errors.password =
+        "Must be at least 8 characters with at least one letter and one number.";
+    }
+
+    if (mode === "register") {
+      if (!name.trim()) {
+        errors.name = "Full name is required.";
+      }
+
+      if (!confirmPassword) {
+        errors.confirmPassword = "Please confirm your password.";
+      } else if (password !== confirmPassword) {
+        errors.confirmPassword = "Passwords do not match.";
+      }
+
+      if (!termsAccepted) {
+        errors.terms = "You must accept the terms & conditions.";
+      }
+    }
+
+    return errors;
+  }
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     clearError();
+
+    const errors = validate();
+    setFormErrors(errors);
+    if (Object.keys(errors).length > 0) return;
+
     if (mode === "login") {
       await login(email, password);
     } else {
@@ -32,15 +104,22 @@ export default function Auth() {
     if (user) navigate("/account");
   }
 
+  function switchMode(m: Mode) {
+    setMode(m);
+    clearError();
+    setFormErrors({});
+  }
+
   return (
+    <PageTransition>
     <div className="min-h-[70vh] flex items-center justify-center px-4 py-16">
       <div className="w-full max-w-md">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="font-['Cormorant_Garamond',serif] text-3xl font-semibold text-[#2d2926] tracking-wide">
+          <h1 className="heading-l text-ink">
             {mode === "login" ? "Welcome Back" : "Create Account"}
           </h1>
-          <p className="mt-2 text-sm text-[#6b5e54]">
+          <p className="mt-2 body text-dark">
             {mode === "login"
               ? "Sign in to access your orders and wishlist."
               : "Join Lumière for exclusive access and early launches."}
@@ -52,7 +131,7 @@ export default function Auth() {
           <div
             role="alert"
             aria-live="assertive"
-            className="mb-4 rounded bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-700"
+            className="mb-4 border border-error/30 bg-error/10 px-4 py-3 body text-error"
           >
             {error}
           </div>
@@ -60,11 +139,12 @@ export default function Auth() {
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-4" noValidate>
+          {/* ── Full Name (register only) ── */}
           {mode === "register" && (
             <div>
               <label
                 htmlFor="auth-name"
-                className="block text-xs font-medium uppercase tracking-widest text-[#9a8d82] mb-1"
+                className="block micro text-muted mb-1"
               >
                 Full Name
               </label>
@@ -74,16 +154,28 @@ export default function Auth() {
                 autoComplete="name"
                 required
                 value={name}
-                onChange={(e) => setName(e.target.value)}
-                className="w-full border border-[#e8e0d8] bg-white px-4 py-3 text-sm text-[#2d2926] placeholder:text-[#c4b8b0] outline-none focus:border-[#c4a093] transition-colors rounded-sm"
+                onChange={(e) => {
+                  setName(e.target.value);
+                  if (formErrors.name) setFormErrors((p) => ({ ...p, name: undefined }));
+                }}
+                aria-invalid={!!formErrors.name}
+                aria-describedby={formErrors.name ? "auth-name-error" : undefined}
+                className="w-full border border-hairline bg-white px-4 py-3 text-sm text-ink placeholder:text-muted/50 outline-none focus:border-ink transition-colors"
                 placeholder="Priya Sharma"
               />
+              {formErrors.name && (
+                <p id="auth-name-error" role="alert" className="mt-1 text-xs text-error">
+                  {formErrors.name}
+                </p>
+              )}
             </div>
           )}
+
+          {/* ── Email ── */}
           <div>
             <label
               htmlFor="auth-email"
-              className="block text-xs font-medium uppercase tracking-widest text-[#9a8d82] mb-1"
+              className="block micro text-muted mb-1"
             >
               Email Address
             </label>
@@ -93,15 +185,27 @@ export default function Auth() {
               autoComplete="username"
               required
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full border border-[#e8e0d8] bg-white px-4 py-3 text-sm text-[#2d2926] placeholder:text-[#c4b8b0] outline-none focus:border-[#c4a093] transition-colors rounded-sm"
+              onChange={(e) => {
+                setEmail(e.target.value);
+                if (formErrors.email) setFormErrors((p) => ({ ...p, email: undefined }));
+              }}
+              aria-invalid={!!formErrors.email}
+              aria-describedby={formErrors.email ? "auth-email-error" : undefined}
+              className="w-full border border-hairline bg-white px-4 py-3 text-sm text-ink placeholder:text-muted/50 outline-none focus:border-ink transition-colors"
               placeholder="you@example.com"
             />
+            {formErrors.email && (
+              <p id="auth-email-error" role="alert" className="mt-1 text-xs text-error">
+                {formErrors.email}
+              </p>
+            )}
           </div>
+
+          {/* ── Password ── */}
           <div>
             <label
               htmlFor="auth-password"
-              className="block text-xs font-medium uppercase tracking-widest text-[#9a8d82] mb-1"
+              className="block micro text-muted mb-1"
             >
               Password
             </label>
@@ -114,16 +218,101 @@ export default function Auth() {
               required
               minLength={8}
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full border border-[#e8e0d8] bg-white px-4 py-3 text-sm text-[#2d2926] placeholder:text-[#c4b8b0] outline-none focus:border-[#c4a093] transition-colors rounded-sm"
+              onChange={(e) => {
+                setPassword(e.target.value);
+                if (formErrors.password) setFormErrors((p) => ({ ...p, password: undefined }));
+              }}
+              aria-invalid={!!formErrors.password}
+              aria-describedby={formErrors.password ? "auth-password-error" : undefined}
+              className="w-full border border-hairline bg-white px-4 py-3 text-sm text-ink placeholder:text-muted/50 outline-none focus:border-ink transition-colors"
               placeholder="••••••••"
             />
+            {formErrors.password && (
+              <p id="auth-password-error" role="alert" className="mt-1 text-xs text-error">
+                {formErrors.password}
+              </p>
+            )}
           </div>
+
+          {/* ── Confirm Password (register only) ── */}
+          {mode === "register" && (
+            <div>
+              <label
+                htmlFor="auth-confirm-password"
+                className="block micro text-muted mb-1"
+              >
+                Confirm Password
+              </label>
+              <input
+                id="auth-confirm-password"
+                type="password"
+                autoComplete="new-password"
+                required
+                value={confirmPassword}
+                onChange={(e) => {
+                  setConfirmPassword(e.target.value);
+                  if (formErrors.confirmPassword) setFormErrors((p) => ({ ...p, confirmPassword: undefined }));
+                }}
+                aria-invalid={!!formErrors.confirmPassword}
+                aria-describedby={formErrors.confirmPassword ? "auth-confirm-password-error" : undefined}
+                className="w-full border border-hairline bg-white px-4 py-3 text-sm text-ink placeholder:text-muted/50 outline-none focus:border-ink transition-colors"
+                placeholder="••••••••"
+              />
+              {formErrors.confirmPassword && (
+                <p id="auth-confirm-password-error" role="alert" className="mt-1 text-xs text-error">
+                  {formErrors.confirmPassword}
+                </p>
+              )}
+            </div>
+          )}
+
+          {/* ── Terms checkbox (register only) ── */}
+          {mode === "register" && (
+            <div>
+              <label className="flex items-start gap-3 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={termsAccepted}
+                  onChange={(e) => {
+                    setTermsAccepted(e.target.checked);
+                    if (formErrors.terms) setFormErrors((p) => ({ ...p, terms: undefined }));
+                  }}
+                  aria-invalid={!!formErrors.terms}
+                  aria-describedby={formErrors.terms ? "auth-terms-error" : undefined}
+                  className="mt-0.5 h-4 w-4 shrink-0 accent-brass-gold"
+                />
+                <span className="text-xs text-dark leading-relaxed">
+                  I agree to the{" "}
+                  <Link
+                    to="/policy/terms"
+                    className="text-brass-gold hover:underline"
+                    tabIndex={-1}
+                  >
+                    Terms &amp; Conditions
+                  </Link>{" "}
+                  and{" "}
+                  <Link
+                    to="/policy/privacy"
+                    className="text-brass-gold hover:underline"
+                    tabIndex={-1}
+                  >
+                    Privacy Policy
+                  </Link>
+                  .
+                </span>
+              </label>
+              {formErrors.terms && (
+                <p id="auth-terms-error" role="alert" className="mt-1 text-xs text-error">
+                  {formErrors.terms}
+                </p>
+              )}
+            </div>
+          )}
 
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-[#2d2926] text-white py-3.5 text-xs font-semibold uppercase tracking-[0.15em] hover:bg-[#c4a093] disabled:opacity-50 transition-colors rounded-sm"
+            className="w-full bg-ink text-ivory py-3.5 caption hover:bg-brass-gold disabled:opacity-50 transition-colors"
           >
             {isLoading
               ? "Please wait…"
@@ -135,18 +324,18 @@ export default function Auth() {
 
         {/* Divider */}
         <div className="my-6 flex items-center gap-3">
-          <div className="flex-1 border-t border-[#e8e0d8]" />
-          <span className="text-xs text-[#9a8d82] uppercase tracking-widest">
+          <div className="flex-1 border-t border-hairline" />
+          <span className="micro text-muted">
             or
           </span>
-          <div className="flex-1 border-t border-[#e8e0d8]" />
+          <div className="flex-1 border-t border-hairline" />
         </div>
 
         {/* Google OAuth */}
         <button
           type="button"
           onClick={loginWithGoogle}
-          className="w-full flex items-center justify-center gap-3 border border-[#e8e0d8] bg-white py-3 text-sm text-[#2d2926] hover:border-[#c4a093] transition-colors rounded-sm"
+          className="w-full flex items-center justify-center gap-3 border border-hairline bg-white py-3 text-sm text-ink hover:border-brass-gold transition-colors"
           aria-label="Continue with Google"
         >
           <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
@@ -171,25 +360,22 @@ export default function Auth() {
         </button>
 
         {/* Toggle mode */}
-        <p className="mt-6 text-center text-xs text-[#9a8d82]">
+        <p className="mt-6 text-center text-xs text-muted">
           {mode === "login" ? "New to Lumière? " : "Already have an account? "}
           <button
             type="button"
-            onClick={() => {
-              setMode(mode === "login" ? "register" : "login");
-              clearError();
-            }}
-            className="text-[#c4a093] hover:underline font-medium"
+            onClick={() => switchMode(mode === "login" ? "register" : "login")}
+            className="text-brass-gold hover:underline font-medium"
           >
             {mode === "login" ? "Create account" : "Sign in"}
           </button>
         </p>
 
         {mode === "login" && (
-          <p className="mt-2 text-center text-xs text-[#9a8d82]">
+          <p className="mt-2 text-center text-xs text-muted">
             <Link
               to="/forgot-password"
-              className="text-[#c4a093] hover:underline"
+              className="text-brass-gold hover:underline"
             >
               Forgot your password?
             </Link>
@@ -197,5 +383,6 @@ export default function Auth() {
         )}
       </div>
     </div>
+    </PageTransition>
   );
 }

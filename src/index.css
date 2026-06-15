@@ -3,8 +3,6 @@
 @import "shadcn/tailwind.css";
 @import "@fontsource-variable/geist";
 
-@custom-variant dark (&:is(.dark *));
-
 /* ── Google Fonts loaded from index.html ── */
 
 /* ── Base resets & global styles ─────────── */
@@ -13,7 +11,7 @@
   *::before,
   *::after {
     scrollbar-width: thin;
-    scrollbar-color: #d9c2b7 transparent;
+    scrollbar-color: var(--color-soft-border) transparent;
   }
 
   *::-webkit-scrollbar {
@@ -24,7 +22,7 @@
     background: transparent;
   }
   *::-webkit-scrollbar-thumb {
-    background-color: #d9c2b7;
+    background-color: var(--color-soft-border);
     border-radius: 3px;
   }
 
@@ -36,15 +34,14 @@
   }
 
   body {
-    background-color: #faf7f4;
-    color: #2d2926;
-    font-family: "Inter", "DM Sans", sans-serif;
-    @apply bg-background text-foreground;
+    background-color: var(--color-soft-cream);
+    color: var(--color-ink);
+    font-family: "Inter", "Geist Variable", sans-serif;
   }
 
   ::selection {
-    background-color: rgba(196, 160, 147, 0.3);
-    color: #2d2926;
+    background-color: color-mix(in srgb, var(--color-brass-gold) 25%, transparent);
+    color: var(--color-ink);
   }
 
   /* Heading defaults */
@@ -54,24 +51,22 @@
   h4,
   h5,
   h6 {
-    font-family: "Cormorant Garamond", "Playfair Display", serif;
+    font-family: "Cormorant Garamond", serif;
     font-weight: 500;
   }
 
   /* ── Keyboard focus indicator ──────────── */
   *:focus-visible {
-    outline: 2px solid #c4a093;
+    outline: 2px solid var(--color-brass-gold);
     outline-offset: 2px;
-    border-radius: 2px;
+    border-radius: 0px;
   }
 
   /* Remove outline for mouse/touch users */
   *:focus:not(:focus-visible) {
     outline: none;
   }
-  * {
-    @apply border-border outline-ring/50;
-  }
+
 }
 
 /* ── Animation keyframes ─────────────────── */
@@ -167,6 +162,98 @@
   animation-delay: 500ms;
 }
 
+/* ── Heading type scale ─────────── */
+.heading-hero-display {
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(2.75rem, 6vw, 5.5rem);
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+}
+.heading-xl {
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(2.25rem, 4vw, 3.75rem);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+.heading-l {
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(1.75rem, 3vw, 2.75rem);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+}
+.heading-m {
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(1.375rem, 2vw, 1.75rem);
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: 0;
+}
+.heading-s {
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(1.125rem, 1.25vw, 1.375rem);
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: 0.01em;
+}
+.heading-xs {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* ── Body type scale ────────────── */
+.body-large {
+  font-family: "Inter", "Geist Variable", sans-serif;
+  font-size: 1.0625rem;
+  font-weight: 400;
+  line-height: 1.75;
+  letter-spacing: 0.01em;
+}
+.body {
+  font-family: "Inter", "Geist Variable", sans-serif;
+  font-size: 0.9375rem;
+  font-weight: 400;
+  line-height: 1.75;
+  letter-spacing: 0;
+}
+.body-small {
+  font-family: "Inter", "Geist Variable", sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 400;
+  line-height: 1.65;
+  letter-spacing: 0;
+}
+.caption {
+  font-family: "Inter", "Geist Variable", sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.micro {
+  font-family: "Inter", "Geist Variable", sans-serif;
+  font-size: 0.625rem;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.tiny {
+  font-family: "Inter", "Geist Variable", sans-serif;
+  font-size: 0.5625rem;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
 /* ── Line clamp utility ──────────────────── */
 .line-clamp-2 {
   display: -webkit-box;
@@ -174,6 +261,123 @@
   line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+/* ── Editorial image treatments ──── */
+.img-cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.img-overlay-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 40%, rgba(26,26,26,0.7) 100%);
+}
+.img-overlay-light {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 50%, rgba(250,247,244,0.6) 100%);
+}
+
+/* ── Luxury image treatments ──────── */
+.img-border {
+  border: 1px solid var(--color-hairline);
+}
+.img-border-brass {
+  border: 1px solid var(--color-brass-gold);
+}
+
+/* ── Luxury dividers ──────────────── */
+.divider-brass {
+  width: 2rem;
+  height: 1px;
+  background: var(--color-brass-gold);
+}
+
+/* ── Editorial pull-quote ────────── */
+.pull-quote {
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.3;
+  color: var(--color-ink);
+}
+
+/* ── Article prose block ─────────── */
+.prose-article {
+  font-family: "Inter", "Geist Variable", sans-serif;
+  font-size: 1rem;
+  line-height: 1.8;
+  letter-spacing: 0.01em;
+  color: var(--color-dark);
+}
+
+.prose-article p {
+  margin-bottom: 1.5em;
+}
+
+.prose-article h2 {
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(1.5rem, 2vw, 1.875rem);
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--color-ink);
+  margin-top: 2.5em;
+  margin-bottom: 0.75em;
+  letter-spacing: -0.01em;
+}
+
+.prose-article h3 {
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(1.25rem, 1.5vw, 1.5rem);
+  font-weight: 500;
+  line-height: 1.25;
+  color: var(--color-ink);
+  margin-top: 2em;
+  margin-bottom: 0.5em;
+}
+
+.prose-article .pull-quote {
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(1.375rem, 2.5vw, 1.75rem);
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.4;
+  color: var(--color-ink);
+  padding-left: 1.5rem;
+  border-left: 3px solid var(--color-brass-gold);
+  margin: 2.5em 0;
+}
+
+.prose-article .pull-quote::before {
+  content: "\201C";
+  display: block;
+  font-size: 2.5em;
+  line-height: 0.4;
+  color: var(--color-brass-gold);
+  margin-bottom: 0.25rem;
+  opacity: 0.6;
+}
+
+/* Drop cap on first paragraph */
+.prose-article .has-dropcap::first-letter {
+  font-family: "Cormorant Garamond", serif;
+  float: left;
+  font-size: 3.75em;
+  line-height: 0.8;
+  padding-right: 0.5rem;
+  padding-top: 0.125rem;
+  color: var(--color-ink);
+  font-weight: 500;
+}
+
+/* ── Section separator ──────────── */
+.section-separator {
+  width: 100%;
+  height: 1px;
+  background: var(--color-hairline);
 }
 
 /* ── Decorative divider ──────────────────── */
@@ -187,7 +391,7 @@
   content: "";
   flex: 1;
   height: 1px;
-  background: #e8e0d8;
+  background: var(--color-hairline);
 }
 
 /* ── Skip-to-content link (a11y) ─────────── */
@@ -197,7 +401,7 @@
   left: 50%;
   transform: translateX(-50%);
   z-index: 9999;
-  background: #c4a093;
+  background: var(--color-brass-gold);
   color: #ffffff;
   padding: 0.625rem 1.5rem;
   font-size: 0.75rem;
@@ -224,7 +428,49 @@
 }
 
 @theme inline {
-  --font-heading: var(--font-sans);
+  /* Brand colour tokens */
+  --color-ivory: #fefcf5;
+  --color-warm-ivory: #fefcf5;
+  --color-soft-cream: #faf7f4;
+  --color-warm-sand: #f5f0ea;
+  --color-deep-charcoal: #1a1a1a;
+  --color-almost-black: #0d0d0d;
+  --color-ink: #1a1a1a;
+  --color-dark: #333333;
+  --color-muted: #666666;
+  --color-light: #999999;
+  --color-brass-gold: #c9a96e;
+  --color-pale-gold: #e8d5b5;
+  --color-dusty-rose: #c4a093;
+  --color-deep-rose: #a8877b;
+  --color-hairline: #e5ddd4;
+  --color-soft-border: #d9cfc4;
+  --color-success: #7d9b6e;
+  --color-error: #c96b6b;
+  --color-warning: #d9a05b;
+
+  /* Spacing tokens */
+  --spacing-section: 120px;
+  --spacing-subsection: 80px;
+  --spacing-component: 40px;
+  --spacing-element: 24px;
+  --spacing-tight: 16px;
+  --spacing-compact: 8px;
+  --spacing-card-padding: 32px;
+  --spacing-button-padding-x: 24px;
+  --spacing-button-padding-y: 12px;
+
+  /* Border radius tokens */
+  --radius-none: 0px;
+  --radius-subtle: 0px;
+
+  /* Shadow tokens */
+  --shadow-card: 0 2px 16px rgba(26, 26, 26, 0.04);
+  --shadow-card-hover: 0 8px 32px rgba(26, 26, 26, 0.08);
+  --shadow-elevated: 0 12px 40px rgba(26, 26, 26, 0.10);
+
+  /* Keep existing shadcn sidebar tokens */
+  --font-heading: "Cormorant Garamond", serif;
   --font-sans: 'Geist Variable', sans-serif;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -246,7 +492,6 @@
   --color-accent-foreground: var(--accent-foreground);
   --color-accent: var(--accent);
   --color-muted-foreground: var(--muted-foreground);
-  --color-muted: var(--muted);
   --color-secondary-foreground: var(--secondary-foreground);
   --color-secondary: var(--secondary);
   --color-primary-foreground: var(--primary-foreground);
@@ -257,13 +502,13 @@
   --color-card: var(--card);
   --color-foreground: var(--foreground);
   --color-background: var(--background);
-  --radius-sm: calc(var(--radius) * 0.6);
-  --radius-md: calc(var(--radius) * 0.8);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) * 1.4);
-  --radius-2xl: calc(var(--radius) * 1.8);
-  --radius-3xl: calc(var(--radius) * 2.2);
-  --radius-4xl: calc(var(--radius) * 2.6);
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  --radius-2xl: 0px;
+  --radius-3xl: 0px;
+  --radius-4xl: 0px;
 }
 
 :root {
@@ -290,7 +535,7 @@
   --chart-3: oklch(0.439 0 0);
   --chart-4: oklch(0.371 0 0);
   --chart-5: oklch(0.269 0 0);
-  --radius: 0.625rem;
+  --radius: 0px;
   --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.145 0 0);
   --sidebar-primary: oklch(0.205 0 0);
@@ -301,36 +546,3 @@
   --sidebar-ring: oklch(0.708 0 0);
 }
 
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
-}

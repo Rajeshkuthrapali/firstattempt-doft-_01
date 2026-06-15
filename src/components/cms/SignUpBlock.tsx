@@ -14,15 +14,15 @@ export default function SignUpBlock({ title, description }: { title: string, des
   return (
     <section className="py-24 bg-[#E2DCD3] px-6 text-center">
       <div className="max-w-xl mx-auto">
-        <h2 className="font-['Cormorant_Garamond',serif] text-4xl font-medium text-[#2d2926] mb-4">
+        <h2 className="font-heading text-4xl font-medium text-ink mb-4">
           {title}
         </h2>
-        <p className="text-sm text-[#6b5e54] mb-8 font-light">
+        <p className="text-sm text-dark mb-8 font-light">
           {description}
         </p>
         
         {submitted ? (
-          <p className="text-sm font-medium text-[#2d2926] bg-white/50 py-4 rounded">
+          <p className="text-sm font-medium text-ink bg-white/50 py-4 rounded">
             Thank you. Your journey begins soon.
           </p>
         ) : (
@@ -32,12 +32,12 @@ export default function SignUpBlock({ title, description }: { title: string, des
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email" 
-              className="flex-1 px-4 py-3 text-sm bg-white/80 border border-transparent focus:bg-white focus:border-[#c4a093] outline-none rounded-sm transition-colors placeholder:text-[#9a8d82]"
+              className="flex-1 px-4 py-3 text-sm bg-white/80 border border-transparent focus:bg-white focus:border-ink outline-none transition-colors placeholder:text-muted"
               required
             />
             <button 
               type="submit"
-              className="px-8 py-3 bg-[#2d2926] text-white text-xs uppercase tracking-widest hover:bg-[#c4a093] transition-colors rounded-sm"
+              className="px-8 py-3 bg-ink text-white text-xs uppercase tracking-widest hover:bg-brass-gold transition-colors"
             >
               Subscribe
             </button>

@@ -1,4 +1,3 @@
-"use client";
 
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -58,7 +57,7 @@ export function Header() {
           to="/"
           className="font-heading text-2xl font-bold tracking-[3px] text-primary"
         >
-          DOFT
+          Lumière
         </Link>
         <nav className="hidden items-center gap-8 lg:flex">
           {NAV_ITEMS.map((item) => (

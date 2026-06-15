@@ -68,7 +68,7 @@ describe("JSON-LD Structured Data", () => {
       expect(ld["@context"]).toBe("https://schema.org");
       expect(ld["@type"]).toBe("Product");
       expect(ld.name).toBe("Rose Mini Bowl Candle");
-      expect(ld.brand).toEqual({ "@type": "Brand", name: "DOFT" });
+      expect(ld.brand).toEqual({ "@type": "Brand", name: "Lumière" });
     });
 
     it("should use AggregateOffer for multiple variants", () => {
@@ -119,7 +119,7 @@ describe("JSON-LD Structured Data", () => {
     it("should generate valid Organization schema", () => {
       const ld = organizationJsonLd();
       expect(ld["@type"]).toBe("Organization");
-      expect(ld.name).toBe("DOFT Candles");
+      expect(ld.name).toBe("Lumière");
       expect(ld.contactPoint).toBeDefined();
     });
   });

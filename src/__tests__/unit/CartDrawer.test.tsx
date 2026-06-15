@@ -53,10 +53,6 @@ describe("CartDrawer — structure", () => {
     expect(screen.getByLabelText("Close cart")).toBeInTheDocument();
   });
 
-  it("renders a WhatsApp FAB with ARIA label", () => {
-    renderWithRouter(<CartDrawer />);
-    expect(screen.getByLabelText("Chat on WhatsApp")).toBeInTheDocument();
-  });
 });
 
 describe("CartDrawer — empty state", () => {

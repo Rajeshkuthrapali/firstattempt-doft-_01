@@ -27,10 +27,10 @@ export default function AdminLayout() {
   if (!user || (user as { role?: string }).role !== "admin") return null;
 
   return (
-    <div className="flex min-h-screen bg-[#faf7f4]">
+    <div className="flex min-h-screen bg-soft-cream">
       {/* Sidebar */}
-      <aside className="w-56 shrink-0 border-r border-[#e8e0d8] bg-white pt-10 px-4 flex flex-col gap-1">
-        <p className="text-[10px] uppercase tracking-[0.25em] text-[#9a8d82] px-3 mb-4">
+      <aside className="w-56 shrink-0 border-r border-hairline bg-white pt-10 px-4 flex flex-col gap-1">
+        <p className="text-[10px] uppercase tracking-[0.25em] text-muted px-3 mb-4">
           Admin
         </p>
         {adminLinks.map(({ to, label, end }) => (
@@ -41,8 +41,8 @@ export default function AdminLayout() {
             className={({ isActive }) =>
               `block rounded px-3 py-2 text-sm transition-colors ${
                 isActive
-                  ? "bg-[#f3ece4] text-[#2d2926] font-medium"
-                  : "text-[#6b5e54] hover:bg-[#f3ece4] hover:text-[#2d2926]"
+                  ? "bg-[#f3ece4] text-ink font-medium"
+                  : "text-dark hover:bg-[#f3ece4] hover:text-ink"
               }`
             }
           >

@@ -4,7 +4,7 @@ import { z } from "zod";
 
 export const GetProductsSchema = z.object({
   page: z.coerce.number().int().min(1).default(1),
-  limit: z.coerce.number().int().min(1).max(50).default(20),
+  limit: z.coerce.number().int().min(1).max(100).default(20),
   collection: z.string().optional(),
   fragranceFamily: z.string().optional(),
 });
@@ -12,7 +12,7 @@ export const GetProductsSchema = z.object({
 export const SearchProductsSchema = z.object({
   q: z.string().min(2, "Search query must be at least 2 characters"),
   page: z.coerce.number().int().min(1).default(1),
-  limit: z.coerce.number().int().min(1).max(50).default(20),
+  limit: z.coerce.number().int().min(1).max(100).default(20),
 });
 
 export type GetProductsParams = z.infer<typeof GetProductsSchema>;
